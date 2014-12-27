@@ -21,7 +21,8 @@ public class Language
 {
 	public static void main(String... args) throws FileNotFoundException
 	{
-		String filepath = "example/global.ji"; // TODO make this read from args
+		//String filepath = "example/global.ji"; // TODO make this read from args
+		String filepath = "example/fib.ji"; // TODO make this read from args
 
 		BufferedReader reader = new BufferedReader(new FileReader(new File(filepath)));
 		CharacterSequence charsec = CharacterSequence.make(reader);

@@ -1,0 +1,7 @@
+(#def fib (x)
+  (fibcalc x 0 1))
+
+(#def fibcalc (x a b)
+  (if (= x 0) a (fibcalc (- x 1) b (+ a b))))
+
+(print (fib 40))
