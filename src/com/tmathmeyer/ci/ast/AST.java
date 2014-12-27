@@ -17,11 +17,13 @@ import com.tmathmeyer.ci.Print;
 import com.tmathmeyer.ci.Real;
 import com.tmathmeyer.ci.Rest;
 import com.tmathmeyer.ci.Symbol;
+import com.tmathmeyer.ci.Type;
 import com.tmathmeyer.ci.With;
 import com.tmathmeyer.ci.maths.BinaryMathExpression;
 import com.tmathmeyer.ci.types.Expression;
 import com.tmathmeyer.ci.values.ImmutableList;
 import com.tmathmeyer.ci.values.Number;
+import com.tmathmeyer.ci.values.Str;
 
 import static com.tmathmeyer.ci.values.ImmutableList.foldl;
 
@@ -95,10 +97,9 @@ public interface AST
 				{
 					case "lambda":
 						return new Lambda(list.rest().rest().first().asExpression(), Lambda.getArgs(list.rest().first()));
-					case "+":
-					case "-":
-					case "*":
-					case "/":
+					case "+": case "/": case "=" :
+					case "-": case ">":
+					case "*": case "<":
 						return BinaryMathExpression.fromAST(list.rest(), node.value);
 					case "let":
 						return new With(list.rest());
@@ -114,6 +115,8 @@ public interface AST
 						return new Rest(list.rest());
 					case "#def":
 						return Def.getDefn(list.rest());
+					case "type":
+						return new Type(list.rest());
 					default:
 						return new Application(list);
 						
@@ -122,44 +125,6 @@ public interface AST
 			
 			return new Application(list);
         }
-
-		/*
-		@Override
-        public AST macrOperate()
-        {
-			ImmutableList<AST> list = ImmutableList.fromSTD(parts);
-			if (list.first() instanceof ASNode)
-			{
-				ASNode node = (ASNode) list.first();
-				
-				switch(node.value)
-				{
-					case "#def":
-						return makeLambda(list.rest().first(), list.rest().rest());
-						
-				}
-			}
-			
-			return null;
-        }
-        
-
-		private AST makeLambda(AST first, ImmutableList<AST> rest)
-        {
-	        String name = ((ASNode) first).value;
-	        ASTree arglist = (ASTree)rest.first();
-	        AST body = rest.rest().first();
-	        
-	        ASTree result = new ASTree();
-	        result.parts.add(new ASNode("lambda"));
-	        while(body.hasNode(name))
-	        {
-	        	name = "_"+name;
-	        }
-	        arglist.parts.add(new ASNode(name));
-	        
-        }
-		*/
 	}
 	
 	public class ASNode implements AST
@@ -206,6 +171,10 @@ public interface AST
 		@Override
         public Expression asExpression()
         {
+			if (isStringString(value))
+			{
+				return new Str(value.subSequence(1, value.length()-1));
+			}
 			try
 			{
 				return new Number(Real.parseReal(value));
@@ -221,6 +190,12 @@ public interface AST
 				}
 			}
         }
+		
+		private boolean isStringString(String string)
+		{
+			int length = string.length();
+			return length>0 && string.charAt(0)=='"' && string.charAt(length-1)=='"';
+		}
 		
 		public static final ASNode LAMBDA = new ASNode("lambda");
 		public static final ASNode LET = new ASNode("let");

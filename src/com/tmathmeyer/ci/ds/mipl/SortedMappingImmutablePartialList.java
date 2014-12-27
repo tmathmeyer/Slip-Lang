@@ -97,4 +97,39 @@ public class SortedMappingImmutablePartialList<E extends Partial<E>> implements 
     {
 	    return ", "+elem+rest.asCSV();
     }
+
+	@Override
+    public int hashCode()
+    {
+	    final int prime = 31;
+	    int result = 1;
+	    result = prime * result + ((elem == null) ? 0 : elem.hashCode());
+	    result = prime * result + ((rest == null) ? 0 : rest.hashCode());
+	    return result;
+    }
+
+	@Override
+    public boolean equals(Object obj)
+    {
+	    if (this == obj)
+		    return true;
+	    if (obj == null)
+		    return false;
+	    if (getClass() != obj.getClass())
+		    return false;
+	    SortedMappingImmutablePartialList<?> other = (SortedMappingImmutablePartialList<?>) obj;
+	    if (elem == null)
+	    {
+		    if (other.elem != null)
+			    return false;
+	    } else if (!elem.equals(other.elem))
+		    return false;
+	    if (rest == null)
+	    {
+		    if (other.rest != null)
+			    return false;
+	    } else if (!rest.equals(other.rest))
+		    return false;
+	    return true;
+    }
 }

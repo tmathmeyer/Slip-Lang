@@ -1,5 +1,6 @@
 package com.tmathmeyer.ci;
 
+import com.tmathmeyer.ci.ds.EmptyList;
 import com.tmathmeyer.ci.ds.MappingPartial;
 import com.tmathmeyer.ci.types.Expression;
 import com.tmathmeyer.ci.types.Value;

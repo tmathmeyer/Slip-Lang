@@ -28,7 +28,7 @@ public abstract class Def implements Expression
 	    public Expression desugar()
 	    {
 			ImmutableList<Expression> arglist = args.args;
-			arglist = arglist.reverse().add(args.func);
+			arglist = arglist.add(args.func);
 			Lambda inner = new Lambda(body.desugar(), map(ImmutableList.exprToSymbol(), arglist));
 			Lambda outer = new Lambda(inner, name);
 			

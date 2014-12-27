@@ -7,11 +7,11 @@ import java.io.FileReader;
 
 import com.tmathmeyer.ci.Binding;
 import com.tmathmeyer.ci.DefSans;
-import com.tmathmeyer.ci.EmptyList;
 import com.tmathmeyer.ci.Function;
 import com.tmathmeyer.ci.ast.AST;
 import com.tmathmeyer.ci.ast.ASTGen;
 import com.tmathmeyer.ci.ast.CharacterSequence;
+import com.tmathmeyer.ci.ds.EmptyList;
 import com.tmathmeyer.ci.ds.MappingPartial;
 import com.tmathmeyer.ci.ds.mipl.EmptyMappingImmutablePartialList;
 import com.tmathmeyer.ci.types.Expression;

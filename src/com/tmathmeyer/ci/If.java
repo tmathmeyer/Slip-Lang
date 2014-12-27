@@ -4,8 +4,8 @@ import com.tmathmeyer.ci.ast.AST;
 import com.tmathmeyer.ci.ds.MappingPartial;
 import com.tmathmeyer.ci.types.Expression;
 import com.tmathmeyer.ci.types.Value;
+import com.tmathmeyer.ci.values.Bool;
 import com.tmathmeyer.ci.values.ImmutableList;
-import com.tmathmeyer.ci.values.Number;
 
 public class If implements Expression
 {
@@ -35,8 +35,8 @@ public class If implements Expression
     
     @Override
     public Value interp(MappingPartial<Binding> env)
-    {
-        if (Real.ZERO.equals(((Number)conditional.interp(env)).value))
+    {	
+        if (conditional.interp(env) == Bool.TRUE)
         {
         	return left.interp(env);
         }
@@ -45,6 +45,6 @@ public class If implements Expression
     
     public String toString()
     {
-    	return "(if ("+conditional+"=0) then::"+left+"  else::"+right+")";
+    	return "(if "+conditional+" then>>"+left+"  else>>"+right+")";
     }
 }

@@ -1,4 +1,4 @@
-package com.tmathmeyer.ci;
+package com.tmathmeyer.ci.ds;
 
 import com.tmathmeyer.ci.values.ImmutableList;
 
@@ -49,4 +49,9 @@ public class EmptyList<T> extends ImmutableList<T>
     {
         return "";
     }
+	
+	public boolean equals(Object other)
+	{
+		return other != null && other instanceof EmptyList;
+	}
 }

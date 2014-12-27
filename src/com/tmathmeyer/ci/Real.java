@@ -1,5 +1,7 @@
 package com.tmathmeyer.ci;
 
+import com.tmathmeyer.ci.values.Bool;
+
 /**
  * Created by ted on 12/19/14.
  */
@@ -109,5 +111,12 @@ public class Real
 	    }
 	    
 	    return new Real(Integer.parseInt(value));
+    }
+
+	public Bool greaterThan(Real valu)
+    {
+	    return (numerator * valu.denominator) > (valu.numerator * denominator) ?
+	    		Bool.TRUE :
+	    		Bool.FALSE;
     }
 }

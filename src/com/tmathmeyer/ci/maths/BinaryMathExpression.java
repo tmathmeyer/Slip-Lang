@@ -21,6 +21,12 @@ public class BinaryMathExpression
 				return new Mult(l, r);
 			case "/":
 				return new Divide(l, r);
+			case ">":
+				return new GreaterThan(l, r);
+			case "<":
+				return new LessThan(l, r);
+			case "=":
+				return new Equals(l, r);
 		}
 		
 		return null;

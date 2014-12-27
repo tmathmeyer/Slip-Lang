@@ -41,4 +41,8 @@ public class EmptyMappingImmutablePartialList<E extends Partial<E>> implements M
 	    return "";
     }
 
+	public boolean equals(Object other)
+	{
+		return other != null && other instanceof EmptyMappingImmutablePartialList;
+	}
 }

@@ -1,13 +1,19 @@
 package com.tmathmeyer.ci.values;
 
 import com.tmathmeyer.ci.Binding;
-import com.tmathmeyer.ci.Real;
 import com.tmathmeyer.ci.ds.MappingPartial;
 import com.tmathmeyer.ci.types.Expression;
 import com.tmathmeyer.ci.types.Value;
 
-public class Number implements Expression, Value
+public class Str implements Expression, Value
 {
+	public final String value;
+
+    public Str(CharSequence charSequence)
+    {
+        value = charSequence.toString();
+    }
+
     @Override
     public int hashCode()
     {
@@ -26,7 +32,7 @@ public class Number implements Expression, Value
 		    return false;
 	    if (getClass() != obj.getClass())
 		    return false;
-	    Number other = (Number) obj;
+	    Str other = (Str) obj;
 	    if (value == null)
 	    {
 		    if (other.value != null)
@@ -36,19 +42,7 @@ public class Number implements Expression, Value
 	    return true;
     }
 
-	public final Real value;
-
-    public Number(int n)
-    {
-        value = new Real(n, 1);
-    }
-
-    public Number(Real r)
-    {
-        value = r;
-    }
-
-    @Override
+	@Override
     public Expression desugar()
     {
         return this;
@@ -57,11 +51,11 @@ public class Number implements Expression, Value
     @Override
     public Value interp(MappingPartial<Binding> env)
     {
-        return new Number(value);
+        return new Str(value);
     }
     
     public String toString()
     {
-    	return value.toString();
+    	return value;
     }
 }

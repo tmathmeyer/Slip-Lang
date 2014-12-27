@@ -19,8 +19,50 @@ public class Closure implements Value
         args = arg;
     }
     
-    public String toString()
+    @Override
+    public int hashCode()
     {
-    	return "#Closure : "+body;
+	    final int prime = 31;
+	    int result = 1;
+	    result = prime * result + ((args == null) ? 0 : args.hashCode());
+	    result = prime * result + ((body == null) ? 0 : body.hashCode());
+	    result = prime * result + ((environment == null) ? 0 : environment.hashCode());
+	    return result;
+    }
+
+	@Override
+    public boolean equals(Object obj)
+    {
+	    if (this == obj)
+		    return true;
+	    if (obj == null)
+		    return false;
+	    if (getClass() != obj.getClass())
+		    return false;
+	    Closure other = (Closure) obj;
+	    if (args == null)
+	    {
+		    if (other.args != null)
+			    return false;
+	    } else if (!args.equals(other.args))
+		    return false;
+	    if (body == null)
+	    {
+		    if (other.body != null)
+			    return false;
+	    } else if (!body.equals(other.body))
+		    return false;
+	    if (environment == null)
+	    {
+		    if (other.environment != null)
+			    return false;
+	    } else if (!environment.equals(other.environment))
+		    return false;
+	    return true;
+    }
+
+	public String toString()
+    {
+    	return "#Closure";
     }
 }

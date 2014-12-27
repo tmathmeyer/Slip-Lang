@@ -1,11 +1,11 @@
 package com.tmathmeyer.ci.values;
 
 import com.tmathmeyer.ci.Defn;
-import com.tmathmeyer.ci.EmptyList;
 import com.tmathmeyer.ci.Function;
 import com.tmathmeyer.ci.ID;
 import com.tmathmeyer.ci.Symbol;
 import com.tmathmeyer.ci.Function.Pair;
+import com.tmathmeyer.ci.ds.EmptyList;
 import com.tmathmeyer.ci.types.Expression;
 import com.tmathmeyer.ci.types.Value;
 
