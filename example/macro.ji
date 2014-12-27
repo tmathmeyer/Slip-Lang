@@ -1,0 +1,5 @@
+(let ((count (#def count (x)
+                         (if x 0
+                               (+ 1 (count (- x 1)))))))
+  (count 5))
+

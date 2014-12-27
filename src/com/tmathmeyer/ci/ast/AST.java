@@ -3,14 +3,27 @@ package com.tmathmeyer.ci.ast;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.tmathmeyer.ci.Expression;
+import com.tmathmeyer.ci.Application;
+import com.tmathmeyer.ci.Cons;
+import com.tmathmeyer.ci.Def;
+import com.tmathmeyer.ci.Defn;
+import com.tmathmeyer.ci.Empty;
+import com.tmathmeyer.ci.First;
 import com.tmathmeyer.ci.Function;
-import com.tmathmeyer.ci.ImmutableList;
+import com.tmathmeyer.ci.ID;
+import com.tmathmeyer.ci.If;
+import com.tmathmeyer.ci.Lambda;
+import com.tmathmeyer.ci.Print;
 import com.tmathmeyer.ci.Real;
+import com.tmathmeyer.ci.Rest;
 import com.tmathmeyer.ci.Symbol;
-import com.tmathmeyer.ci.Expression.Defn;
+import com.tmathmeyer.ci.With;
+import com.tmathmeyer.ci.maths.BinaryMathExpression;
+import com.tmathmeyer.ci.types.Expression;
+import com.tmathmeyer.ci.values.ImmutableList;
+import com.tmathmeyer.ci.values.Number;
 
-import static com.tmathmeyer.ci.ImmutableList.foldl;
+import static com.tmathmeyer.ci.values.ImmutableList.foldl;
 
 public interface AST
 {
@@ -81,34 +94,33 @@ public interface AST
 				switch(node.value)
 				{
 					case "lambda":
-						return new Expression.Lambda(list.rest().rest().first().asExpression(), Expression.Lambda.getArgs(list.rest().first()));
+						return new Lambda(list.rest().rest().first().asExpression(), Lambda.getArgs(list.rest().first()));
 					case "+":
-						return new Expression.Plus(list.rest().first().asExpression(), list.rest().rest().first().asExpression());
 					case "-":
-						return new Expression.Minus(list.rest().first().asExpression(), list.rest().rest().first().asExpression());
 					case "*":
-						return new Expression.Mult(list.rest().first().asExpression(), list.rest().rest().first().asExpression());
+					case "/":
+						return BinaryMathExpression.fromAST(list.rest(), node.value);
 					case "let":
-						return new Expression.With(list.rest());
+						return new With(list.rest());
 					case "if":
-						return new Expression.If(list.rest());
+						return new If(list.rest());
 					case "print":
-						return new Expression.Print(list.rest());
+						return new Print(list.rest());
 					case "cons":
-						return new Expression.Cons(list.rest());
+						return new Cons(list.rest());
 					case "first":
-						return new Expression.First(list.rest());
+						return new First(list.rest());
 					case "rest":
-						return new Expression.Rest(list.rest());
+						return new Rest(list.rest());
 					case "#def":
-						return new Expression.Def(list.rest());
+						return Def.getDefn(list.rest());
 					default:
-						return new Expression.Application(list);
+						return new Application(list);
 						
 				}
 			}
 			
-			return new Expression.Application(list);
+			return new Application(list);
         }
 
 		/*
@@ -196,16 +208,16 @@ public interface AST
         {
 			try
 			{
-				return new Expression.Number(Real.parseReal(value));
+				return new Number(Real.parseReal(value));
 			}
 			catch(Exception e)
 			{
 				switch(value)
 				{
 					case "empty":
-						return new Expression.Empty();
+						return new Empty();
 					default:
-						return new Expression.ID(new Symbol(value));
+						return new ID(new Symbol(value));
 				}
 			}
         }

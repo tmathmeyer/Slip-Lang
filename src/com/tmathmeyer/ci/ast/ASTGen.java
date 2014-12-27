@@ -39,20 +39,24 @@ public class ASTGen
 		return new AST.ASTree();
 	}
 	
-	AST stringToAST(CharacterSequence cs)
+	public AST stringToAST(CharacterSequence cs)
 	{
 		while (whitespace(cs))
 		{
 			cs.pop();
 		}
-		switch(cs.get())
+		if (cs.has())
 		{
-			case '(':
-				cs.pop();
-				return stringToASTree(cs);
-			default:
-				return stringToASTNode(cs);
+			switch(cs.get())
+			{
+				case '(':
+					cs.pop();
+					return stringToASTree(cs);
+				default:
+					return stringToASTNode(cs);
+			}
 		}
+		return null;
 	}
 	
 	AST stringToASTree(CharacterSequence cs)

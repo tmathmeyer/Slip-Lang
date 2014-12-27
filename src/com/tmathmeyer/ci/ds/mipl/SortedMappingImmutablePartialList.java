@@ -97,5 +97,4 @@ public class SortedMappingImmutablePartialList<E extends Partial<E>> implements 
     {
 	    return ", "+elem+rest.asCSV();
     }
-
 }

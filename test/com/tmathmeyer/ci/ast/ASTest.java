@@ -6,15 +6,16 @@ import java.io.File;
 
 import org.junit.Test;
 
-import com.tmathmeyer.ci.Expression;
 import com.tmathmeyer.ci.Real;
-import com.tmathmeyer.ci.Value;
+import com.tmathmeyer.ci.types.Expression;
+import com.tmathmeyer.ci.types.Value;
+import com.tmathmeyer.ci.values.Number;
 
 public class ASTest
 {
 	public static Value asValue(int i)
 	{
-		return new Value.Number(new Real(i));
+		return new Number(new Real(i));
 	}
 	
 	@Test
@@ -43,7 +44,7 @@ public class ASTest
 		
 		Value v = Expression.run(tree);
 		
-		assertEquals(v, new Value.Number(new Real(120)));
+		assertEquals(v, new Number(new Real(120)));
 	}
 	
 	@Test
@@ -53,7 +54,7 @@ public class ASTest
 		
 		Value v = Expression.run(tree);
 		
-		assertEquals(v, new Value.Number(new Real(11)));
+		assertEquals(v, new Number(new Real(11)));
 	}
 	
 	@Test
@@ -63,7 +64,7 @@ public class ASTest
 		
 		Value v = Expression.run(tree);
 		
-		assertEquals(v, new Value.Number(new Real(1)));
+		assertEquals(v, new Number(new Real(1)));
 	}
 	
 	@Test
@@ -73,7 +74,7 @@ public class ASTest
 		
 		Value v = Expression.run(tree);
 		
-		assertEquals(v, new Value.Number(new Real(3)));
+		assertEquals(v, new Number(new Real(3)));
 	}
 	
 	@Test
@@ -83,7 +84,7 @@ public class ASTest
 		
 		Value v = Expression.run(tree);
 		
-		assertEquals(v, new Value.Number(new Real(1)));
+		assertEquals(v, new Number(new Real(1)));
 	}
 	
 	@Test

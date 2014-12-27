@@ -1,11 +1,12 @@
 package com.tmathmeyer.ci;
 
 import com.tmathmeyer.ci.ds.Partial;
+import com.tmathmeyer.ci.types.Value;
 
 /**
  * Created by ted on 12/20/14.
  */
-public class Binding implements Partial<Binding>
+public class Binding implements Partial<Binding>, Value
 {
     public final Symbol name;
     public final Value val;

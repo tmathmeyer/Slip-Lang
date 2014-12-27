@@ -1,0 +1,18 @@
+(#def pow (x y)
+  (if y 1
+    (if (- y 1) x
+      (* x (pow x (- y 1))))))
+
+(print (pow 3 4))
+
+
+(#def begin (x y) y)
+
+(#def mut1 (x)
+  (begin (print x)
+         (mut2 (+ x 1))))
+
+(#def mut2 (x)
+  (if x 0 (mut1 (- x 2))))
+
+(mut2 20)
