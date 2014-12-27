@@ -9,27 +9,27 @@ import com.tmathmeyer.ci.values.ImmutableList;
 public class First implements Expression
 {
 	final Expression list;
-	
+
 	public First(Expression l)
 	{
 		list = l;
 	}
-	
+
 	public First(ImmutableList<AST> rest)
-    {
-        list = rest.first().asExpression();
-    }
+	{
+		list = rest.first().asExpression();
+	}
 
 	@Override
-    public Expression desugar()
-    {
-        return new First(list.desugar());
-    }
+	public Expression desugar()
+	{
+		return new First(list.desugar());
+	}
 
 	@SuppressWarnings("unchecked")
-    @Override
-    public Value interp(MappingPartial<Binding> env)
-    {
-        return ((ImmutableList<Value>) list.interp(env)).first();
-    }
+	@Override
+	public Value interp(MappingPartial<Binding> env)
+	{
+		return ((ImmutableList<Value>) list.interp(env)).first();
+	}
 }

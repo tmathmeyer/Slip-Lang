@@ -5,39 +5,42 @@ import com.tmathmeyer.ci.values.ImmutableList;
 public class EmptyList<T> extends ImmutableList<T>
 {
 
-    @Override
-    public T first() {
-        return null;
-    }
-
-    @Override
-    public ImmutableList<T> rest() {
-        return this;
-    }
-
-    @Override
-    public ImmutableList<T> add(T t) {
-        return new List<T>(t, this);
-    }
+	@Override
+	public T first()
+	{
+		return null;
+	}
 
 	@Override
-    public boolean isEmpty()
-    {
-        return true;
-    }
+	public ImmutableList<T> rest()
+	{
+		return this;
+	}
 
 	@Override
-    public ImmutableList<T> reverse()
-    {
-        return this;
-    }
+	public ImmutableList<T> add(T t)
+	{
+		return new List<T>(t, this);
+	}
 
 	@Override
-    public ImmutableList<T> addEnd(T t)
-    {
-        return add(t);
-    }
-	
+	public boolean isEmpty()
+	{
+		return true;
+	}
+
+	@Override
+	public ImmutableList<T> reverse()
+	{
+		return this;
+	}
+
+	@Override
+	public ImmutableList<T> addEnd(T t)
+	{
+		return add(t);
+	}
+
 	@Override
 	public String toString()
 	{
@@ -45,11 +48,11 @@ public class EmptyList<T> extends ImmutableList<T>
 	}
 
 	@Override
-    public String asCSV()
-    {
-        return "";
-    }
-	
+	public String asCSV()
+	{
+		return "";
+	}
+
 	public boolean equals(Object other)
 	{
 		return other != null && other instanceof EmptyList;

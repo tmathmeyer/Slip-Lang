@@ -18,24 +18,21 @@ public class LispTest
 	{
 		Real five = new Real(5);
 		Real four = new Real(4);
-		
-		
-		Expression basicAddition = new Plus(new Number(five),
-													   new Number(four));
-		
+
+		Expression basicAddition = new Plus(new Number(five), new Number(four));
+
 		Value v = basicAddition.desugar().interp(new EmptyMappingImmutablePartialList<>());
-		
+
 		assertEquals(v.getClass(), Number.class);
-		
-		Real r = ((Number)v).value;
-		
+
+		Real r = ((Number) v).value;
+
 		assertEquals(r, new Real(9));
 	}
 
-	
 	@Test
 	public void testLambda()
 	{
-		
+
 	}
 }

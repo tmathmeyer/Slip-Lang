@@ -8,17 +8,17 @@ import com.tmathmeyer.ci.types.Value;
 public class Empty implements Expression
 {
 	@Override
-    public Expression desugar()
-    {
-        return this;
-    }
+	public Expression desugar()
+	{
+		return this;
+	}
 
 	@Override
-    public Value interp(MappingPartial<Binding> env)
-    {
-        return new EmptyList<>();
-    }
-	
+	public Value interp(MappingPartial<Binding> env)
+	{
+		return new EmptyList<>();
+	}
+
 	public String toString()
 	{
 		return "empty";

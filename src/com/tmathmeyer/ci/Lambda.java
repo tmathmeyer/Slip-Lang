@@ -15,57 +15,58 @@ import com.tmathmeyer.ci.values.ImmutableList;
 
 public class Lambda implements Expression
 {
-    public final Expression body;
-    public final ImmutableList<Symbol> args;
+	public final Expression body;
+	public final ImmutableList<Symbol> args;
 
-    public Lambda(Expression bod, Symbol ... arguments)
-    {
-        body = bod;
-        ImmutableList<Symbol> temp = new EmptyList<Symbol>();
-        for(Symbol e : arguments) {
-            temp = temp.add(e);
-        }
-        args = temp;
-    }
+	public Lambda(Expression bod, Symbol... arguments)
+	{
+		body = bod;
+		ImmutableList<Symbol> temp = new EmptyList<Symbol>();
+		for (Symbol e : arguments)
+		{
+			temp = temp.add(e);
+		}
+		args = temp;
+	}
 
-    public Lambda(Expression function, ImmutableList<Symbol> arguments)
-    {
-        body = function;
-        args = arguments;
-    }
+	public Lambda(Expression function, ImmutableList<Symbol> arguments)
+	{
+		body = function;
+		args = arguments;
+	}
 
-    @Override
-    public Expression desugar()
-    {
-        return new Lambda(body.desugar(), args);
-    }
-    
-    @Override
-    public Value interp(MappingPartial<Binding> env)
-    {
-        return new Closure(env, body, args);
-    }
+	@Override
+	public Expression desugar()
+	{
+		return new Lambda(body.desugar(), args);
+	}
+
+	@Override
+	public Value interp(MappingPartial<Binding> env)
+	{
+		return new Closure(env, body, args);
+	}
 
 	public static ImmutableList<Symbol> getArgs(AST first)
-    {
-        if (first instanceof ASNode)
-        {
-        	throw new RuntimeException("these arent args!!");
-        }
-        
-        ASTree tree = (ASTree)first;
-        
-        return ImmutableList.map(AST.toSymbol(), ImmutableList.fromSTD(tree.parts));
-    }
-	
+	{
+		if (first instanceof ASNode)
+		{
+			throw new RuntimeException("these arent args!!");
+		}
+
+		ASTree tree = (ASTree) first;
+
+		return ImmutableList.map(AST.toSymbol(), ImmutableList.fromSTD(tree.parts));
+	}
+
 	public String toString()
-    {
-    	return "(lambda (" + args.first() + foldl(new Function<Pair<Symbol, String>, String>() {
+	{
+		return "(lambda (" + args.first() + foldl(new Function<Pair<Symbol, String>, String>() {
 			@Override
-            public String eval(Pair<Symbol, String> in)
-            {
-                return in.b + " " + in.a;
-            }
-    	}, args.rest(), "") + ") " + body + ")";
-    }
+			public String eval(Pair<Symbol, String> in)
+			{
+				return in.b + " " + in.a;
+			}
+		}, args.rest(), "") + ") " + body + ")";
+	}
 }

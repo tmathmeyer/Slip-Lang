@@ -12,29 +12,29 @@ import com.tmathmeyer.ci.types.Value;
 
 public class Repl
 {
-	public static void main(String ... args)
+	public static void main(String... args)
 	{
 		new Repl();
 	}
-	
-	
+
 	public Repl()
 	{
 		MappingPartial<Binding> saved = new EmptyMappingImmutablePartialList<>();
 
 		@SuppressWarnings("resource")
-        Scanner s = new Scanner(System.in);
-		while(true) {
+		Scanner s = new Scanner(System.in);
+		while (true)
+		{
 			System.out.print("\n> ");
-			
+
 			AST tree = new ASTGen().generate(s.nextLine());
-			
+
 			Expression plain = tree.asExpression();
-	    	Expression sansGlucose = plain.desugar();
-	    	Value v =  sansGlucose.interp(saved);
-			
+			Expression sansGlucose = plain.desugar();
+			Value v = sansGlucose.interp(saved);
+
 			System.out.println(v);
-			
+
 			if (v instanceof Binding)
 			{
 				saved = saved.add((Binding) v);

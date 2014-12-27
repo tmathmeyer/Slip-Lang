@@ -10,32 +10,32 @@ public class Cons implements Expression
 {
 	final Expression app;
 	final Expression list;
-	
+
 	public Cons(Expression a, Expression l)
 	{
 		app = a;
 		list = l;
 	}
-	
+
 	public Cons(ImmutableList<AST> rest)
-    {
-        app = rest.first().asExpression();
-        list = rest.rest().first().asExpression();
-    }
+	{
+		app = rest.first().asExpression();
+		list = rest.rest().first().asExpression();
+	}
 
 	@Override
-    public Expression desugar()
-    {
-        return new Cons(app.desugar(), list.desugar());
-    }
+	public Expression desugar()
+	{
+		return new Cons(app.desugar(), list.desugar());
+	}
 
 	@SuppressWarnings("unchecked")
-    @Override
-    public Value interp(MappingPartial<Binding> env)
-    {
-        return ((ImmutableList<Value>) list.interp(env)).add(app.interp(env));
-    }
-	
+	@Override
+	public Value interp(MappingPartial<Binding> env)
+	{
+		return ((ImmutableList<Value>) list.interp(env)).add(app.interp(env));
+	}
+
 	public String toString()
 	{
 		return "(cons " + app + " " + list + ")";

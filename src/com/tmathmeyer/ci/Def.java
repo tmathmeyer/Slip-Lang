@@ -18,70 +18,69 @@ public abstract class Def implements Expression
 		final Expression body;
 
 		public FunctionDefinition(Symbol name2, Application args2, Expression body2)
-        {
-	        name = name2;
-	        args = args2;
-	        body = body2;
-        }
+		{
+			name = name2;
+			args = args2;
+			body = body2;
+		}
 
 		@Override
-	    public Expression desugar()
-	    {
+		public Expression desugar()
+		{
 			ImmutableList<Expression> arglist = args.args;
 			arglist = arglist.add(args.func);
 			Lambda inner = new Lambda(body.desugar(), map(ImmutableList.exprToSymbol(), arglist));
 			Lambda outer = new Lambda(inner, name);
-			
+
 			Application yca = new Application(Y, outer);
-			
+
 			return new DefSans(name, yca.desugar());
-	    }
+		}
 
 		@Override
-	    public Value interp(MappingPartial<Binding> env)
-	    {
-	        throw new RuntimeException("attempting to interp a #def, please desugar first");
-	    }
+		public Value interp(MappingPartial<Binding> env)
+		{
+			throw new RuntimeException("attempting to interp a #def, please desugar first");
+		}
 	}
-	
+
 	public static class ValueDefinition extends Def
 	{
 		public final Symbol name;
 		public final Expression expr;
-		
+
 		public ValueDefinition(Symbol name, Expression asExpression)
-        {
-	        this.name = name;
-	        this.expr = asExpression;
-        }
+		{
+			this.name = name;
+			this.expr = asExpression;
+		}
 
 		@Override
-        public Expression desugar()
-        {
-	        return new DefSans(name, expr.desugar());
-        }
+		public Expression desugar()
+		{
+			return new DefSans(name, expr.desugar());
+		}
 
 		@Override
-        public Value interp(MappingPartial<Binding> env)
-        {
+		public Value interp(MappingPartial<Binding> env)
+		{
 			throw new RuntimeException("attempting to interp a #def, please desugar first");
-        }
+		}
 	}
-	
+
 	public static Def getDefn(ImmutableList<AST> rest)
 	{
-		Symbol name = new Symbol(((ASNode)rest.first()).value);
+		Symbol name = new Symbol(((ASNode) rest.first()).value);
 		Expression expr = rest.rest().first().asExpression();
-		
+
 		if (expr instanceof Application)
 		{
 			Application args = (Application) expr;
-	        Expression body = rest.rest().rest().first().asExpression();
+			Expression body = rest.rest().rest().first().asExpression();
 			return new FunctionDefinition(name, args, body);
 		}
-		
+
 		return new ValueDefinition(name, rest.rest().first().asExpression());
 	}
-	
-	
+
 }

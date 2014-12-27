@@ -29,77 +29,82 @@ import static com.tmathmeyer.ci.values.ImmutableList.foldl;
 
 public interface AST
 {
-	
+
 	Expression asExpression();
-	
+
 	public class ASTree implements AST
 	{
 		public List<AST> parts = new LinkedList<AST>();
 
 		@Override
-        public int hashCode()
-        {
-	        final int prime = 31;
-	        int result = 1;
-	        result = prime * result + ((parts == null) ? 0 : parts.hashCode());
-	        return result;
-        }
+		public int hashCode()
+		{
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((parts == null) ? 0 : parts.hashCode());
+			return result;
+		}
 
 		@Override
-        public boolean equals(Object obj)
-        {
-	        if (this == obj)
-		        return true;
-	        if (obj == null)
-		        return false;
-	        if (getClass() != obj.getClass())
-		        return false;
-	        ASTree other = (ASTree) obj;
-	        if (parts == null)
-	        {
-		        if (other.parts != null)
-			        return false;
-	        } else if (!parts.equals(other.parts))
-		        return false;
-	        return true;
-        }
-		
-		public ASTree(AST ... parts)
+		public boolean equals(Object obj)
 		{
-			for(AST tt : parts)
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			ASTree other = (ASTree) obj;
+			if (parts == null)
+			{
+				if (other.parts != null)
+					return false;
+			} else if (!parts.equals(other.parts))
+				return false;
+			return true;
+		}
+
+		public ASTree(AST... parts)
+		{
+			for (AST tt : parts)
 			{
 				this.parts.add(tt);
 			}
 		}
-		
+
 		public String toString()
 		{
-			return foldl(new Function<Function.Pair<AST, String>, String>(){
+			return foldl(new Function<Function.Pair<AST, String>, String>() {
 
 				@Override
-                public String eval(Function.Pair<AST, String> in)
-                {
+				public String eval(Function.Pair<AST, String> in)
+				{
 					return in.b + " " + in.a.toString();
-                }
-				
-			}, ImmutableList.fromSTD(parts), "(")+")";
+				}
+
+			}, ImmutableList.fromSTD(parts), "(") + ")";
 		}
 
 		@Override
-        public Expression asExpression()
-        {
+		public Expression asExpression()
+		{
 			ImmutableList<AST> list = ImmutableList.fromSTD(parts);
 			if (list.first() instanceof ASNode)
 			{
 				ASNode node = (ASNode) list.first();
-				
-				switch(node.value)
+
+				switch (node.value)
 				{
 					case "lambda":
-						return new Lambda(list.rest().rest().first().asExpression(), Lambda.getArgs(list.rest().first()));
-					case "+": case "/": case "=" :
-					case "-": case ">":
-					case "*": case "<":
+						return new Lambda(list.rest().rest().first().asExpression(),
+						        Lambda.getArgs(list.rest().first()));
+					case "+":
+					case "/":
+					case "=":
+					case "-":
+					case ">":
+					case "*":
+					case "<":
 						return BinaryMathExpression.fromAST(list.rest(), node.value);
 					case "let":
 						return new With(list.rest());
@@ -119,69 +124,69 @@ public interface AST
 						return new Type(list.rest());
 					default:
 						return new Application(list);
-						
+
 				}
 			}
-			
+
 			return new Application(list);
-        }
+		}
 	}
-	
+
 	public class ASNode implements AST
 	{
 		public String value;
-		
-		public ASNode(String v) {
+
+		public ASNode(String v)
+		{
 			value = v;
 		}
 
 		@Override
-        public int hashCode()
-        {
-	        final int prime = 31;
-	        int result = 1;
-	        result = prime * result + ((value == null) ? 0 : value.hashCode());
-	        return result;
-        }
+		public int hashCode()
+		{
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((value == null) ? 0 : value.hashCode());
+			return result;
+		}
 
 		@Override
-        public boolean equals(Object obj)
-        {
-	        if (this == obj)
-		        return true;
-	        if (obj == null)
-		        return false;
-	        if (getClass() != obj.getClass())
-		        return false;
-	        ASNode other = (ASNode) obj;
-	        if (value == null)
-	        {
-		        if (other.value != null)
-			        return false;
-	        } else if (!value.equals(other.value))
-		        return false;
-	        return true;
-        }
-		
+		public boolean equals(Object obj)
+		{
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			ASNode other = (ASNode) obj;
+			if (value == null)
+			{
+				if (other.value != null)
+					return false;
+			} else if (!value.equals(other.value))
+				return false;
+			return true;
+		}
+
 		public String toString()
 		{
 			return value;
 		}
 
 		@Override
-        public Expression asExpression()
-        {
+		public Expression asExpression()
+		{
 			if (isStringString(value))
 			{
-				return new Str(value.subSequence(1, value.length()-1));
+				return new Str(value.subSequence(1, value.length() - 1));
 			}
 			try
 			{
 				return new Number(Real.parseReal(value));
-			}
-			catch(Exception e)
+			} catch (Exception e)
 			{
-				switch(value)
+				switch (value)
 				{
 					case "empty":
 						return new Empty();
@@ -189,14 +194,14 @@ public interface AST
 						return new ID(new Symbol(value));
 				}
 			}
-        }
-		
+		}
+
 		private boolean isStringString(String string)
 		{
 			int length = string.length();
-			return length>0 && string.charAt(0)=='"' && string.charAt(length-1)=='"';
+			return length > 0 && string.charAt(0) == '"' && string.charAt(length - 1) == '"';
 		}
-		
+
 		public static final ASNode LAMBDA = new ASNode("lambda");
 		public static final ASNode LET = new ASNode("let");
 		public static final ASNode IF = new ASNode("if");
@@ -209,39 +214,39 @@ public interface AST
 		return new Function<AST, Expression>() {
 
 			@Override
-            public Expression eval(AST in)
-            {
-	            return in.asExpression();
-            }
-			
+			public Expression eval(AST in)
+			{
+				return in.asExpression();
+			}
+
 		};
 	}
-	
+
 	static public Function<AST, Symbol> toSymbol()
 	{
-		return new Function<AST, Symbol>(){
+		return new Function<AST, Symbol>() {
 			@Override
-            public Symbol eval(AST in)
-            {
-                if (in instanceof ASNode)
-                {
-                	return new Symbol(((ASNode)in).value);
-                }
-                throw new RuntimeException("not an arg!");
-            }
-        };
+			public Symbol eval(AST in)
+			{
+				if (in instanceof ASNode)
+				{
+					return new Symbol(((ASNode) in).value);
+				}
+				throw new RuntimeException("not an arg!");
+			}
+		};
 	}
-	
+
 	static public Function<AST, Defn> toDefn()
 	{
-		return new Function<AST, Defn>(){
+		return new Function<AST, Defn>() {
 
 			@Override
-            public Defn eval(AST in)
-            {
-                return new Defn(in);
-            }
-        	
-        };
+			public Defn eval(AST in)
+			{
+				return new Defn(in);
+			}
+
+		};
 	}
 }

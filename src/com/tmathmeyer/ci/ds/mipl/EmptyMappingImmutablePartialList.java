@@ -7,39 +7,39 @@ public class EmptyMappingImmutablePartialList<E extends Partial<E>> implements M
 {
 
 	@Override
-    public MappingPartial<E> add(E elem)
-    {
-	    return new SortedMappingImmutablePartialList<E>(elem, this);
-    }
+	public MappingPartial<E> add(E elem)
+	{
+		return new SortedMappingImmutablePartialList<E>(elem, this);
+	}
 
 	@Override
-    public MappingPartial<E> remove(E elem)
-    {
-	    return this;
-    }
+	public MappingPartial<E> remove(E elem)
+	{
+		return this;
+	}
 
 	@Override
-    public boolean has(E elem)
-    {
-	    return false;
-    }
+	public boolean has(E elem)
+	{
+		return false;
+	}
 
 	@Override
-    public E findPartial(E elem)
-    {
-	    return null;
-    }
-	
+	public E findPartial(E elem)
+	{
+		return null;
+	}
+
 	public String toString()
 	{
 		return "[]";
 	}
 
 	@Override
-    public String asCSV()
-    {
-	    return "";
-    }
+	public String asCSV()
+	{
+		return "";
+	}
 
 	public boolean equals(Object other)
 	{

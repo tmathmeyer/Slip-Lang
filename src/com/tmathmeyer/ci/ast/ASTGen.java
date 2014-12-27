@@ -8,18 +8,18 @@ import java.io.FileReader;
 public class ASTGen
 {
 	public ASTGen(File file)
-    {
-	    inFile = file;
-    }
-	
+	{
+		inFile = file;
+	}
+
 	public ASTGen()
 	{
 		this(null);
 	}
-	
+
 	private final File inFile;
 
-	public AST generate(String ... string)
+	public AST generate(String... string)
 	{
 		if (string.length > 0)
 		{
@@ -28,17 +28,18 @@ public class ASTGen
 		if (inFile != null)
 		{
 			BufferedReader reader;
-            try
-            {
-	            reader = new BufferedReader(new FileReader(inFile));
+			try
+			{
+				reader = new BufferedReader(new FileReader(inFile));
 				return stringToAST(CharacterSequence.make(reader));
-            } catch (FileNotFoundException e) {
-	            e.printStackTrace();
-            }
+			} catch (FileNotFoundException e)
+			{
+				e.printStackTrace();
+			}
 		}
 		return new AST.ASTree();
 	}
-	
+
 	public AST stringToAST(CharacterSequence cs)
 	{
 		while (whitespace(cs))
@@ -47,7 +48,7 @@ public class ASTGen
 		}
 		if (cs.has())
 		{
-			switch(cs.get())
+			switch (cs.get())
 			{
 				case '(':
 					cs.pop();
@@ -58,12 +59,12 @@ public class ASTGen
 		}
 		return null;
 	}
-	
+
 	AST stringToASTree(CharacterSequence cs)
 	{
 		AST.ASTree tree = new AST.ASTree();
-		
-		while(cs.has() && cs.get() != ')')
+
+		while (cs.has() && cs.get() != ')')
 		{
 			tree.parts.add(stringToAST(cs));
 			while (whitespace(cs))
@@ -74,23 +75,23 @@ public class ASTGen
 		cs.pop();
 		return tree;
 	}
-	
+
 	AST stringToASTNode(CharacterSequence cs)
 	{
 		StringBuilder sb = new StringBuilder();
-		while(cs.has() && !whitespace(cs) && cs.get()!=')')
+		while (cs.has() && !whitespace(cs) && cs.get() != ')')
 		{
 			sb.append(cs.pop());
 		}
 		return new AST.ASNode(sb.toString());
 	}
-	
+
 	boolean whitespace(CharacterSequence cs)
 	{
 		if (cs.has())
 		{
 			char c = cs.get();
-			return c==' ' || c=='\n' || c=='\t';
+			return c == ' ' || c == '\n' || c == '\t';
 		}
 		return false;
 	}

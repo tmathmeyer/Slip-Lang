@@ -10,8 +10,8 @@ public class BinaryMathExpression
 	{
 		Expression l = list.first().asExpression();
 		Expression r = list.rest().first().asExpression();
-		
-		switch(type)
+
+		switch (type)
 		{
 			case "+":
 				return new Plus(l, r);
@@ -28,7 +28,7 @@ public class BinaryMathExpression
 			case "=":
 				return new Equals(l, r);
 		}
-		
+
 		return null;
 	}
 }

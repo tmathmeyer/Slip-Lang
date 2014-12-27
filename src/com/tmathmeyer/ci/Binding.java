@@ -8,23 +8,23 @@ import com.tmathmeyer.ci.types.Value;
  */
 public class Binding implements Partial<Binding>, Value
 {
-    public final Symbol name;
-    public final Value val;
+	public final Symbol name;
+	public final Value val;
 
-    public Binding(Symbol s, Value v)
-    {
-        val = v;
-        name = s;
-    }
+	public Binding(Symbol s, Value v)
+	{
+		val = v;
+		name = s;
+	}
 
-    @Override
-    public int compareTo(Binding binding)
-    {
-        return name.compareTo(binding.name);
-    }
-    
-    public String toString()
-    {
-    	return name+" <--> "+val;
-    }
+	@Override
+	public int compareTo(Binding binding)
+	{
+		return name.compareTo(binding.name);
+	}
+
+	public String toString()
+	{
+		return name + " <--> " + val;
+	}
 }
