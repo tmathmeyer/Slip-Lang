@@ -4,6 +4,7 @@ import static com.tmathmeyer.ci.values.ImmutableList.map;
 
 import com.tmathmeyer.ci.ast.AST;
 import com.tmathmeyer.ci.ast.AST.ASNode;
+import com.tmathmeyer.ci.ds.DefSansSet;
 import com.tmathmeyer.ci.ds.MappingPartial;
 import com.tmathmeyer.ci.types.Expression;
 import com.tmathmeyer.ci.types.Value;
@@ -33,8 +34,7 @@ public abstract class Def implements Expression
 			Lambda outer = new Lambda(inner, name);
 
 			Application yca = new Application(Y, outer);
-
-			return new DefSans(name, yca.desugar());
+			return new DefSansSet(new DefSans(name, yca.desugar()));
 		}
 
 		@Override
@@ -58,7 +58,7 @@ public abstract class Def implements Expression
 		@Override
 		public Expression desugar()
 		{
-			return new DefSans(name, expr.desugar());
+			return new DefSansSet(new DefSans(name, expr.desugar()));
 		}
 
 		@Override

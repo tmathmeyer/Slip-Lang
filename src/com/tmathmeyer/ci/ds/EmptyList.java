@@ -57,4 +57,10 @@ public class EmptyList<T> extends ImmutableList<T>
 	{
 		return other != null && other instanceof EmptyList;
 	}
+
+	@Override
+    public boolean contains(T name)
+    {
+	    return false;
+    }
 }

@@ -1,0 +1,7 @@
+(#sdef demo (first second third))
+
+(print (demo 5 4 6))
+
+(print (demo-first (demo "hello" "world" "!!")))
+
+(print (type (demo 1 2 3)))

@@ -1,5 +1,6 @@
-package com.tmathmeyer.ci;
+package com.tmathmeyer.ci.list;
 
+import com.tmathmeyer.ci.Binding;
 import com.tmathmeyer.ci.ast.AST;
 import com.tmathmeyer.ci.ds.MappingPartial;
 import com.tmathmeyer.ci.types.Expression;

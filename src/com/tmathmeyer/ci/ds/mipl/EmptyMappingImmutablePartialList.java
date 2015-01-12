@@ -1,5 +1,6 @@
 package com.tmathmeyer.ci.ds.mipl;
 
+import com.tmathmeyer.ci.Function;
 import com.tmathmeyer.ci.ds.MappingPartial;
 import com.tmathmeyer.ci.ds.Partial;
 
@@ -45,4 +46,10 @@ public class EmptyMappingImmutablePartialList<E extends Partial<E>> implements M
 	{
 		return other != null && other instanceof EmptyMappingImmutablePartialList;
 	}
+
+	@Override
+    public MappingImmutablePartialList<E> filter(Function<E, Boolean> fxn)
+    {
+	    return this;
+    }
 }

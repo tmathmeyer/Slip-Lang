@@ -27,6 +27,18 @@ public abstract class ImmutableList<T> implements Value
 	public abstract boolean isEmpty();
 
 	public abstract String asCSV();
+	
+	public abstract boolean contains(T name);
+	
+	public <O> ImmutableList<O> map(Function<T, O> fxn)
+	{
+		return map(fxn, this);
+	}
+	
+	public ImmutableList<T> filter(Function<T, Boolean> fxn)
+	{
+		return filter(fxn, this);
+	}
 
 	public static <T> ImmutableList<T> fromSTD(java.util.List<T> list)
 	{

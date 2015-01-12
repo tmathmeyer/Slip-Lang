@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.function.Consumer;
 
 import com.tmathmeyer.ci.Binding;
 import com.tmathmeyer.ci.DefSans;
@@ -11,6 +12,7 @@ import com.tmathmeyer.ci.Function;
 import com.tmathmeyer.ci.ast.AST;
 import com.tmathmeyer.ci.ast.ASTGen;
 import com.tmathmeyer.ci.ast.CharacterSequence;
+import com.tmathmeyer.ci.ds.DefSansSet;
 import com.tmathmeyer.ci.ds.EmptyList;
 import com.tmathmeyer.ci.ds.MappingPartial;
 import com.tmathmeyer.ci.ds.mipl.EmptyMappingImmutablePartialList;
@@ -22,7 +24,9 @@ public class Language
 	public static void main(String... args) throws FileNotFoundException
 	{
 		//String filepath = "example/global.ji"; // TODO make this read from args
-		String filepath = "example/fib.ji"; // TODO make this read from args
+		//String filepath = "example/fib.ji"; // TODO make this read from args
+		String filepath = "example/structs.ji"; // TODO make this read from args
+		
 
 		BufferedReader reader = new BufferedReader(new FileReader(new File(filepath)));
 		CharacterSequence charsec = CharacterSequence.make(reader);
@@ -43,38 +47,56 @@ public class Language
 			}
 		}, trees);
 
-		ImmutableList<Expression> defs = ImmutableList.filter(new Function<Expression, Boolean>() {
+		ImmutableList<DefSansSet> defs = ImmutableList.map(new Function<Expression, DefSansSet>(){
+
+			@Override
+            public DefSansSet eval(Expression in)
+            {
+	            return (DefSansSet)in;
+            }
+
+		}, ImmutableList.filter(new Function<Expression, Boolean>() {
 
 			@Override
 			public Boolean eval(Expression in)
 			{
-				return in instanceof DefSans;
+				return in instanceof DefSansSet;
 			}
 
-		}, los);
+		}, los));
 
 		ImmutableList<Expression> ndefs = ImmutableList.filter(new Function<Expression, Boolean>() {
 
 			@Override
 			public Boolean eval(Expression in)
 			{
-				return !(in instanceof DefSans);
+				return !(in instanceof DefSansSet);
 			}
 
 		}, los);
+		
+		ImmutableList<Binding>[] binds = new ImmutableList[1];
+		binds[0] = new EmptyList<>();
 
-		ImmutableList<Binding> binds = ImmutableList.map(new Function<Expression, Binding>() {
+		ImmutableList.filter(new Function<DefSansSet, Boolean>() {
 
 			@Override
-			public Binding eval(Expression in)
-			{
-				Binding bi = (Binding) in.interp(new EmptyMappingImmutablePartialList<>());
-				return bi;
-			}
+            public Boolean eval(DefSansSet in)
+            {
+	            in.doWithCopy(new Consumer<DefSans>(){
+
+					@Override
+                    public void accept(DefSans t)
+                    {
+	                    binds[0] = binds[0].add((Binding) t.interp(new EmptyMappingImmutablePartialList<>()));
+                    }
+	            });
+	            return true;
+            }
 
 		}, defs);
 
-		MappingPartial<Binding> bindings = MappingPartial.fromImmutableList(binds);
+		MappingPartial<Binding> bindings = MappingPartial.fromImmutableList(binds[0]);
 
 		while (!ndefs.isEmpty())
 		{

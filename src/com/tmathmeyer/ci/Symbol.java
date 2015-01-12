@@ -47,4 +47,14 @@ public class Symbol implements Comparable<Symbol>
 	{
 		return new Symbol("GENERATED_" + val++);
 	}
+
+	public Symbol append(String string)
+    {
+	    return new Symbol(value+string);
+    }
+
+	public Symbol append(Symbol in)
+    {
+	    return new Symbol(value+in.value);
+    }
 }

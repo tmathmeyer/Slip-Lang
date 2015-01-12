@@ -1,5 +1,6 @@
 package com.tmathmeyer.ci.ds.mipl;
 
+import com.tmathmeyer.ci.Function;
 import com.tmathmeyer.ci.ds.MappingPartial;
 import com.tmathmeyer.ci.ds.Partial;
 
@@ -132,4 +133,14 @@ public class SortedMappingImmutablePartialList<E extends Partial<E>> implements 
 			return false;
 		return true;
 	}
+
+	@Override
+    public MappingPartial<E> filter(Function<E, Boolean> fxn)
+    {
+	    if (fxn.eval(elem))
+	    {
+	    	return new SortedMappingImmutablePartialList<E>(elem, rest.filter(fxn));
+	    }
+	    return rest.filter(fxn);
+    }
 }

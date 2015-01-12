@@ -4,11 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.tmathmeyer.ci.Application;
-import com.tmathmeyer.ci.Cons;
 import com.tmathmeyer.ci.Def;
 import com.tmathmeyer.ci.Defn;
-import com.tmathmeyer.ci.Empty;
-import com.tmathmeyer.ci.First;
 import com.tmathmeyer.ci.Function;
 import com.tmathmeyer.ci.ID;
 import com.tmathmeyer.ci.If;
@@ -19,7 +16,11 @@ import com.tmathmeyer.ci.Rest;
 import com.tmathmeyer.ci.Symbol;
 import com.tmathmeyer.ci.Type;
 import com.tmathmeyer.ci.With;
+import com.tmathmeyer.ci.list.Cons;
+import com.tmathmeyer.ci.list.Empty;
+import com.tmathmeyer.ci.list.First;
 import com.tmathmeyer.ci.maths.BinaryMathExpression;
+import com.tmathmeyer.ci.struct.StructDefn;
 import com.tmathmeyer.ci.types.Expression;
 import com.tmathmeyer.ci.values.ImmutableList;
 import com.tmathmeyer.ci.values.Number;
@@ -120,6 +121,8 @@ public interface AST
 						return new Rest(list.rest());
 					case "#def":
 						return Def.getDefn(list.rest());
+					case "#sdef":
+						return new StructDefn(list.rest());
 					case "type":
 						return new Type(list.rest());
 					default:

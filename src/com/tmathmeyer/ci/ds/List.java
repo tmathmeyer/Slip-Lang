@@ -95,4 +95,10 @@ public class List<T> extends ImmutableList<T>
 			return false;
 		return true;
 	}
+
+	@Override
+    public boolean contains(T name)
+    {
+	    return name.equals(data) || rest.contains(name);
+    }
 }

@@ -1,5 +1,6 @@
 package com.tmathmeyer.ci.ds;
 
+import com.tmathmeyer.ci.Function;
 import com.tmathmeyer.ci.ds.mipl.EmptyMappingImmutablePartialList;
 import com.tmathmeyer.ci.values.ImmutableList;
 
@@ -14,6 +15,8 @@ public interface MappingPartial<E extends Partial<E>>
 	E findPartial(E elem);
 
 	String asCSV();
+	
+	MappingPartial<E> filter(Function<E, Boolean> fxn);
 
 	public static <E extends Partial<E>> MappingPartial<E> fromImmutableList(ImmutableList<E> list)
 	{
@@ -28,5 +31,4 @@ public interface MappingPartial<E extends Partial<E>>
 
 		return result;
 	}
-
 }
