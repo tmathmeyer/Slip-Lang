@@ -22,13 +22,13 @@ public abstract class ImmutableList<T> implements Value, Iterable<T>
 	public abstract boolean isEmpty();
 
 	public abstract String asCSV();
-	
+
 	public abstract boolean contains(T name);
-	
+
 	public abstract <R> ImmutableList<R> map(Function<? super T, ? extends R> arg0);
-	
+
 	public abstract ImmutableList<T> filter(Function<? super T, Boolean> arg0);
-	
+
 	public static <T> ImmutableList<T> fromSTD(java.util.List<T> list)
 	{
 		ImmutableList<T> result = new EmptyList<>();

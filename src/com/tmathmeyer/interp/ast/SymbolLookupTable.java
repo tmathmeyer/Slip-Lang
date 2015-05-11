@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class SymbolLookupTable
 {
 	private final static HashMap<String, Integer> table = new HashMap<>();
-	
+
 	public static int lookup(String symbol)
 	{
 		Integer val = table.get(symbol);
@@ -15,13 +15,13 @@ public class SymbolLookupTable
 		}
 		return val;
 	}
-	
+
 	public static void registerSymbol(String symbol, int loc)
 	{
 		table.put(symbol, loc);
 	}
-	
-	static 
+
+	static
 	{
 		registerSymbol("+", 0);
 		registerSymbol("-", 0);
@@ -32,7 +32,7 @@ public class SymbolLookupTable
 		registerSymbol("&", 0);
 		registerSymbol("=", 0);
 		registerSymbol("!", 0);
-		
+
 		registerSymbol("lambda", 1);
 		registerSymbol("let", 2);
 		registerSymbol("if", 3);

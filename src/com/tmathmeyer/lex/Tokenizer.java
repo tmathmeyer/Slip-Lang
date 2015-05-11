@@ -15,23 +15,23 @@ public class Tokenizer
 	{
 		BufferedReader reader = new BufferedReader(new FileReader(new File(filepath)));
 		CharacterSequence charsec = CharacterSequence.make(reader);
-		
+
 		return getTokens(charsec);
 	}
-	
+
 	public static List<Token> getTokens(CharacterSequence charsec)
 	{
 		List<Token> result = new ArrayList<>();
-		
+
 		int col = 0, row = 0;
 		Token temp = new Token("", -1, -1);
 		boolean instring = false;
-			
-		while(charsec.has())
+
+		while (charsec.has())
 		{
 			char c = charsec.pop();
-			
-			switch(c)
+
+			switch (c)
 			{
 				case '\\':
 					if (instring)
@@ -48,13 +48,14 @@ public class Tokenizer
 					instring = !instring;
 					temp = temp.append('"', row, col);
 					break;
-				case '(': case ')':
+				case '(':
+				case ')':
 					if (temp.notEmpty())
 					{
 						result.add(temp);
 						temp = new Token("", -1, -1);
 					}
-					result.add(new Token(""+c, row, col));
+					result.add(new Token("" + c, row, col));
 					break;
 				case ' ':
 				case '\t':

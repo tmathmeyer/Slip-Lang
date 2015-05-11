@@ -10,15 +10,15 @@ public class Math extends Operation
 	}
 
 	@Override
-    public void writeToBytes(byte[] bytes, short indx)
-    {
-	    // TODO Auto-generated method stub
-	    
-    }
+	public void writeToBytes(byte[] bytes, short indx)
+	{
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
-    public int getByteSize()
-    {
-	    return 5;
-    }
+	public int getByteSize()
+	{
+		return 5;
+	}
 }

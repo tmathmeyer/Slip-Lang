@@ -28,7 +28,7 @@ public abstract class Def implements Expression
 		{
 			ImmutableList<Expression> arglist = args.args;
 			arglist = arglist.add(args.func);
-			Lambda inner = new Lambda(body.desugar(), arglist.map(a -> ((ID)a).I));
+			Lambda inner = new Lambda(body.desugar(), arglist.map(a -> ((ID) a).I));
 			Lambda outer = new Lambda(inner, name);
 
 			Application yca = new Application(Y, outer);

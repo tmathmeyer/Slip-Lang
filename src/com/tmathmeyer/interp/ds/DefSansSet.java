@@ -13,46 +13,46 @@ import com.tmathmeyer.interp.values.ImmutableList;
 public class DefSansSet implements Expression
 {
 	private final Set<DefSans> backing = new HashSet<>();
-	
-	public DefSansSet(DefSans ... sans)
+
+	public DefSansSet(DefSans... sans)
 	{
-		for(DefSans ds : sans)
+		for (DefSans ds : sans)
 		{
 			backing.add(ds);
 		}
 	}
-	
+
 	public DefSansSet(ImmutableList<DefSans> sans)
-    {
-	    while(!sans.isEmpty())
-	    {
-	    	backing.add(sans.first());
-	    	sans = sans.rest();
-	    }
-    }
+	{
+		while (!sans.isEmpty())
+		{
+			backing.add(sans.first());
+			sans = sans.rest();
+		}
+	}
 
 	public void doWithCopy(Consumer<DefSans> consumer)
 	{
-		for(DefSans ds : backing)
+		for (DefSans ds : backing)
 		{
 			consumer.accept(ds);
 		}
 	}
 
 	@Override
-    public Expression desugar()
-    {
-	    throw new RuntimeException("can't desugar a DefSansSet");
-    }
+	public Expression desugar()
+	{
+		throw new RuntimeException("can't desugar a DefSansSet");
+	}
 
 	@Override
-    public Value interp(MappingPartial<Binding> env)
-    {
+	public Value interp(MappingPartial<Binding> env)
+	{
 		Value last = null;
-		for(DefSans ds : backing)
+		for (DefSans ds : backing)
 		{
 			last = ds.interp(env);
 		}
-	    return last;
-    }
+		return last;
+	}
 }

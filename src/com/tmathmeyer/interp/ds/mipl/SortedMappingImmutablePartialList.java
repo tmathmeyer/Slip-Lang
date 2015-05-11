@@ -135,12 +135,12 @@ public class SortedMappingImmutablePartialList<E extends Partial<E>> implements 
 	}
 
 	@Override
-    public MappingPartial<E> filter(Function<E, Boolean> fxn)
-    {
-	    if (fxn.eval(elem))
-	    {
-	    	return new SortedMappingImmutablePartialList<E>(elem, rest.filter(fxn));
-	    }
-	    return rest.filter(fxn);
-    }
+	public MappingPartial<E> filter(Function<E, Boolean> fxn)
+	{
+		if (fxn.eval(elem))
+		{
+			return new SortedMappingImmutablePartialList<E>(elem, rest.filter(fxn));
+		}
+		return rest.filter(fxn);
+	}
 }

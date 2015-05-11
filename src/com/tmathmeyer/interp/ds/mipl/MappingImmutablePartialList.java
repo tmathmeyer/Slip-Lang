@@ -5,5 +5,5 @@ import com.tmathmeyer.interp.ds.Partial;
 
 public interface MappingImmutablePartialList<E extends Partial<E>> extends MappingPartial<E>
 {
-	
+
 }

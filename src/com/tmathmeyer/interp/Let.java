@@ -30,15 +30,15 @@ public class Let implements Expression
 	}
 
 	public Let(Expression demacro, ImmutableList<Defn> bind2)
-    {
-	    body = demacro;
-	    bind = bind2;
-    }
+	{
+		body = demacro;
+		bind = bind2;
+	}
 
 	@Override
 	public Expression desugar()
 	{
-		return new Application(new Lambda(body.desugar(), bind.map(a -> (Symbol)a.S)), bind.map(a -> a.E.desugar()));
+		return new Application(new Lambda(body.desugar(), bind.map(a -> (Symbol) a.S)), bind.map(a -> a.E.desugar()));
 	}
 
 	@Override

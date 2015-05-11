@@ -48,8 +48,8 @@ public class EmptyMappingImmutablePartialList<E extends Partial<E>> implements M
 	}
 
 	@Override
-    public MappingImmutablePartialList<E> filter(Function<E, Boolean> fxn)
-    {
-	    return this;
-    }
+	public MappingImmutablePartialList<E> filter(Function<E, Boolean> fxn)
+	{
+		return this;
+	}
 }

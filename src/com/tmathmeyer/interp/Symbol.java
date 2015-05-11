@@ -49,12 +49,12 @@ public class Symbol implements Comparable<Symbol>
 	}
 
 	public Symbol append(String string)
-    {
-	    return new Symbol(value+string);
-    }
+	{
+		return new Symbol(value + string);
+	}
 
 	public Symbol append(Symbol in)
-    {
-	    return new Symbol(value+in.value);
-    }
+	{
+		return new Symbol(value + in.value);
+	}
 }

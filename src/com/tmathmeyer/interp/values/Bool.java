@@ -8,15 +8,15 @@ public enum Bool implements Value
 
 	public String toString()
 	{
-		return this==TRUE?"true":"false";
+		return this == TRUE ? "true" : "false";
 	}
 
 	public Value other()
-    {
-	    if (this == TRUE)
-	    {
-	    	return FALSE;
-	    }
-	    return TRUE;
-    }
+	{
+		if (this == TRUE)
+		{
+			return FALSE;
+		}
+		return TRUE;
+	}
 }

@@ -26,34 +26,33 @@ public class StructDefn implements Expression
 	}
 
 	public StructDefn(ImmutableList<AST> rest)
-    {
+	{
 		name = new Symbol(((ASNode) rest.first()).value);
-		
+
 		ImmutableList<Symbol> args = new EmptyList<>();
-		for(AST tree : rest.rest().first().getParts())
+		for (AST tree : rest.rest().first().getParts())
 		{
-			args = args.add( new Symbol(((ASNode)tree).value) );
+			args = args.add(new Symbol(((ASNode) tree).value));
 		}
-	    this.args = args.reverse();
-    }
+		this.args = args.reverse();
+	}
 
 	@Override
 	public Expression desugar()
 	{
-		ImmutableList<DefSans> sans = args.map(new Function<Symbol, DefSans>(){
+		ImmutableList<DefSans> sans = args.map(new Function<Symbol, DefSans>() {
 			@Override
-            public DefSans eval(Symbol in)
-            {
+			public DefSans eval(Symbol in)
+			{
 				Symbol fnname = name.append("-").append(in);
-	            return new DefSans(fnname, new Lambda(new StructInspector(in), new Symbol("struct")));
-            }
+				return new DefSans(fnname, new Lambda(new StructInspector(in), new Symbol("struct")));
+			}
 		});
-		
+
 		sans = sans.add(new DefSans(name, new Lambda(new StructFactory(this), args)));
-		
+
 		return new DefSansSet(sans);
-		
-		
+
 	}
 
 	@Override

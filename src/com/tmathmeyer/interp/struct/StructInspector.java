@@ -11,9 +11,9 @@ public class StructInspector implements Expression
 	public static Symbol name;
 
 	public StructInspector(Symbol in)
-    {
-	    name = in;
-    }
+	{
+		name = in;
+	}
 
 	@Override
 	public Expression desugar()
@@ -25,7 +25,7 @@ public class StructInspector implements Expression
 	public Value interp(MappingPartial<Binding> env)
 	{
 		Struct s = (Struct) env.findPartial(new Binding(new Symbol("struct"), null)).val;
-		
+
 		return s.values.findPartial(new Binding(name, null)).val;
 	}
 

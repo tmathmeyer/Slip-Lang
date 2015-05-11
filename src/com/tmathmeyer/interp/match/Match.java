@@ -11,31 +11,31 @@ public class Match implements Expression
 {
 	private final Expression matching;
 	private final ImmutableList<Expression> statements;
-	
+
 	public Match(AST first, ImmutableList<AST> rest)
-    {
-	    this(first.asExpression(), rest.map(a -> a.asExpression()));
-    }
+	{
+		this(first.asExpression(), rest.map(a -> a.asExpression()));
+	}
 
 	public Match(Expression asExpression, ImmutableList<Expression> map)
-    {
-	    matching = asExpression;
-	    statements = map;
-    }
+	{
+		matching = asExpression;
+		statements = map;
+	}
 
 	@Override
-    public Expression desugar()
-    {
-	    statements.reverse();
-	    
-	    return null;
-    }
+	public Expression desugar()
+	{
+		statements.reverse();
+
+		return null;
+	}
 
 	@Override
-    public Value interp(MappingPartial<Binding> env)
-    {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
+	public Value interp(MappingPartial<Binding> env)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

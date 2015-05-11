@@ -21,11 +21,11 @@ public class MacroTest
 	public void evals() throws FileNotFoundException
 	{
 		String input = "(+ 1 2)";
-		
+
 		ImmutableList<AST> astcollection = new Builder().fromTokens(Tokenizer.getTokens(CharacterSequence.make(input)));
 
 		Language l = new Language(astcollection);
-		
+
 		assertEquals(l.results.first(), new Number(3));
 	}
 

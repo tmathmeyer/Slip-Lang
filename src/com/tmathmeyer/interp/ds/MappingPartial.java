@@ -15,7 +15,7 @@ public interface MappingPartial<E extends Partial<E>>
 	E findPartial(E elem);
 
 	String asCSV();
-	
+
 	MappingPartial<E> filter(Function<E, Boolean> fxn);
 
 	public static <E extends Partial<E>> MappingPartial<E> fromImmutableList(ImmutableList<E> list)

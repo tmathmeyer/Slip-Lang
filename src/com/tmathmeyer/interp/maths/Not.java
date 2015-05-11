@@ -9,11 +9,11 @@ import com.tmathmeyer.interp.values.Bool;
 public class Not implements Expression
 {
 	private final Expression invert;
-	
+
 	public Not(Expression l)
-    {
-	    invert = l;
-    }
+	{
+		invert = l;
+	}
 
 	@Override
 	public Expression desugar()
@@ -25,7 +25,7 @@ public class Not implements Expression
 	public Value interp(MappingPartial<Binding> env)
 	{
 		Value res = invert.interp(env);
-		Bool val = (Bool)res;
+		Bool val = (Bool) res;
 		return val.other();
 	}
 

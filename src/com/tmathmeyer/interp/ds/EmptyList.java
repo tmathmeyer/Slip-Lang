@@ -62,55 +62,55 @@ public class EmptyList<T> extends ImmutableList<T>
 	}
 
 	@Override
-    public boolean contains(T name)
-    {
-	    return false;
-    }
+	public boolean contains(T name)
+	{
+		return false;
+	}
 
 	@Override
-    public <R> ImmutableList<R> map(Function<? super T, ? extends R> arg0)
-    {
-	    return new EmptyList<>();
-    }
+	public <R> ImmutableList<R> map(Function<? super T, ? extends R> arg0)
+	{
+		return new EmptyList<>();
+	}
 
 	@Override
-    public ImmutableList<T> filter(Function<? super T, Boolean> arg0)
-    {
-	    return this;
-    }
+	public ImmutableList<T> filter(Function<? super T, Boolean> arg0)
+	{
+		return this;
+	}
 
 	@Override
-    public void forEach(Consumer<? super T> fn)
-    { }
+	public void forEach(Consumer<? super T> fn)
+	{
+	}
 
 	@Override
-    public Iterator<T> iterator()
-    {
-	    return new Iterator<T>()
-	    {
+	public Iterator<T> iterator()
+	{
+		return new Iterator<T>() {
 			@Override
-            public boolean hasNext()
-            {
-	            return false;
-            }
+			public boolean hasNext()
+			{
+				return false;
+			}
 
 			@Override
-            public T next()
-            {
-	            return null;
-            }
-	    };
-    }
+			public T next()
+			{
+				return null;
+			}
+		};
+	}
 
 	@Override
-    public ImmutableList<T> append(ImmutableList<T> result)
-    {
+	public ImmutableList<T> append(ImmutableList<T> result)
+	{
 		return result;
-    }
+	}
 
 	@Override
-    public int size()
-    {
-	    return 0;
-    }
+	public int size()
+	{
+		return 0;
+	}
 }

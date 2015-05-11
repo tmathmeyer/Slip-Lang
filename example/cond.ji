@@ -1,0 +1,12 @@
+(#redef (bmatch (ftest fexp) (test exp) ...)
+        (if ftest fexp
+            (bmatch (test exp) ...)))
+
+(#redef (bmatch (ftest fexp))
+        (if ftest fexp #void))
+
+((lambda (x)
+  (bmatch ((= x 1) 234)
+          ((= x 2) 452)
+          ((= x 3) 345))) 4)
+

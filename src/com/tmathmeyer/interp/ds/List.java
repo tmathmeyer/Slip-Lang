@@ -103,68 +103,68 @@ public class List<T> extends ImmutableList<T>
 	}
 
 	@Override
-    public boolean contains(T name)
-    {
-	    return name.equals(data) || rest.contains(name);
-    }
+	public boolean contains(T name)
+	{
+		return name.equals(data) || rest.contains(name);
+	}
 
 	@Override
-    public <R> ImmutableList<R> map(Function<? super T, ? extends R> fn)
-    {
-	    return new List<R>(fn.eval(data), rest.map(fn));
-    }
+	public <R> ImmutableList<R> map(Function<? super T, ? extends R> fn)
+	{
+		return new List<R>(fn.eval(data), rest.map(fn));
+	}
 
 	@Override
-    public ImmutableList<T> filter(Function<? super T, Boolean> fn)
-    {
-	    if (fn.eval(data))
-	    {
-	    	return new List<T>(data, rest.filter(fn));
-	    }
-	    return rest.filter(fn);
-    }
+	public ImmutableList<T> filter(Function<? super T, Boolean> fn)
+	{
+		if (fn.eval(data))
+		{
+			return new List<T>(data, rest.filter(fn));
+		}
+		return rest.filter(fn);
+	}
 
 	@Override
-    public void forEach(Consumer<? super T> fn)
-    {
+	public void forEach(Consumer<? super T> fn)
+	{
 		fn.accept(data);
 		rest.forEach(fn);
-    }
+	}
 
 	@Override
-    public Iterator<T> iterator()
-    {
+	public Iterator<T> iterator()
+	{
 		ImmutableList<T> cont = this;
-	    return new Iterator<T>() {
-	    	
-	    	ImmutableList<T> container = cont;
-	    	
-			@Override
-            public boolean hasNext()
-            {
-	            return !container.isEmpty();
-            }
+		return new Iterator<T>() {
+
+			ImmutableList<T> container = cont;
 
 			@Override
-            public T next()
-            {
-	            T res = container.first();
-	            container = container.rest();
-	            
-	            return res;
-            }
-	    };
-    }
+			public boolean hasNext()
+			{
+				return !container.isEmpty();
+			}
+
+			@Override
+			public T next()
+			{
+				T res = container.first();
+				container = container.rest();
+
+				return res;
+			}
+		};
+	}
 
 	@Override
-    public ImmutableList<T> append(ImmutableList<T> result)
-    {
-	    return new List<T>(data, rest.append(result));
-    }
+	public ImmutableList<T> append(ImmutableList<T> result)
+	{
+		return new List<T>(data, rest.append(result));
+	}
 
 	@Override
-    public int size()
-    {
-	    return size;
-    }
+	public int size()
+	{
+		return size;
+	}
 }

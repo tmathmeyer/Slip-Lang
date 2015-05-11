@@ -38,8 +38,7 @@ public class ASNode implements AST
 		try
 		{
 			return new Number(Real.parseReal(value));
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			if (value.equals("empty"))
 			{
@@ -56,77 +55,96 @@ public class ASNode implements AST
 	}
 
 	@Override
-    public String name()
-    {
-        return toString();
-    }
+	public String name()
+	{
+		return toString();
+	}
 
 	@Override
-    public AST toRepeatingTree()
-    {
-	    return this;
-    }
+	public AST toRepeatingTree()
+	{
+		return this;
+	}
 
 	@Override
-    public ImmutableList<ASTBinding> structureCompare(AST t)
-    {
-	    return new EmptyList<>();
-    }
+	public ImmutableList<ASTBinding> structureCompare(AST t) throws MismatchedRepetitionSizeException
+	{
+		return t.structureCompare(this);
+	}
 
 	@Override
-    public ImmutableList<ASTBinding> structureCompare(ASTree t)
-    {
-	    return new EmptyList<>();
-    }
+	public ImmutableList<ASTBinding> structureCompare(ASTree t) throws MismatchedRepetitionSizeException
+	{
+		return new EmptyList<ASTBinding>().add(new ASNodeBinding(this, t));
+	}
 
 	@Override
-    public ImmutableList<ASTBinding> structureCompare(ASNode t)
-    {
-	    return new EmptyList<>();
-    }
+	public ImmutableList<ASTBinding> structureCompare(ASNode t) throws MismatchedRepetitionSizeException
+	{
+		return new EmptyList<ASTBinding>().add(new ASNodeBinding(this, t));
+	}
 
 	@Override
-    public ImmutableList<ASTBinding> structureCompare(RepeatingAST t)
-    {
-	    return new EmptyList<>();
-    }
+	public ImmutableList<ASTBinding> structureCompare(RepeatingAST t) throws MismatchedRepetitionSizeException
+	{
+		return new EmptyList<ASTBinding>().add(new ASNodeBinding(this, t));
+	}
 
 	@Override
-    public ASTBinding bindTo(AST bNext)
-    {
-	    return new ASNodeBinding(this, bNext);
-    }
+	public ASTBinding bindTo(AST bNext)
+	{
+		return new ASNodeBinding(this, bNext);
+	}
 
 	@Override
-    public List<AST> getParts()
-    {
-	    return new LinkedList<>();
-    }
+	public List<AST> getParts()
+	{
+		List<AST> res = new LinkedList<>();
+		res.add(this);
+		return res;
+	}
 
 	@Override
-    public AST applyBindings(ImmutableList<ASTBinding> comp)
-    {
-	    for(ASTBinding ab : comp)
-	    {
-	    	if (ab.getClass().equals(ASNodeBinding.class))
-	    	{
-	    		if(((ASNodeBinding)ab).getFrom().toString().equals(value))
-	    		{
-	    			return ((ASNodeBinding)ab).getTo();
-	    		}
-	    	}
-	    }
-	    return this;
-    }
+	public AST applyBindings(ImmutableList<ASTBinding> comp)
+	{
+		for (ASTBinding ab : comp)
+		{
+			if (ab.getClass().equals(ASNodeBinding.class))
+			{
+				if (((ASNodeBinding) ab).getFrom().toString().equals(value))
+				{
+					return ((ASNodeBinding) ab).getTo();
+				}
+				if (((ASNodeBinding) ab).getTo().toString().equals(value))
+				{
+					return ((ASNodeBinding) ab).getFrom();
+				}
+			} else
+			{
+				AST res = this.applyBindings(ab.asList());
+				if (!res.toString().equals(this.toString()))
+				{
+					return res;
+				}
+			}
+		}
+		return this;
+	}
 
 	@Override
-    public AST applyMacro(Macro macro)
-    {
-	    if (value.equals(macro.getName()))
-	    {
-	    	return macro.macrotize(this);
-	    }
-	    
-	    return this;
-    }
+	public AST applyMacro(Macro macro)
+	{
+		if (value.equals(macro.getName()))
+		{
+			return macro.macrotize(this);
+		}
+
+		return this;
+	}
+
+	@Override
+	public AST hasMacro(String name)
+	{
+		return null;
+	}
 }

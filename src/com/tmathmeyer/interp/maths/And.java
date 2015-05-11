@@ -16,7 +16,7 @@ public class And implements Expression
 	{
 		this(ast.map(a -> a.asExpression()), 0);
 	}
-	
+
 	private And(ImmutableList<Expression> parts, int i)
 	{
 		exprs = parts;
@@ -32,13 +32,15 @@ public class And implements Expression
 	public Value interp(MappingPartial<Binding> env)
 	{
 		ImmutableList<Expression> exprs = this.exprs;
-		while(!exprs.isEmpty())
+		while (!exprs.isEmpty())
 		{
 			Value v = exprs.first().interp(env);
-			if (v == Bool.FALSE) {
+			if (v == Bool.FALSE)
+			{
 				return Bool.FALSE;
 			}
-			if (v == Bool.TRUE) {
+			if (v == Bool.TRUE)
+			{
 				exprs = exprs.rest();
 				continue;
 			}
@@ -49,6 +51,6 @@ public class And implements Expression
 
 	public String toString()
 	{
-		return "and:"+exprs;
+		return "and:" + exprs;
 	}
 }

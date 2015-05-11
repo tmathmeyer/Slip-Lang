@@ -9,16 +9,16 @@ public class Struct implements Value
 {
 	public final MappingPartial<Binding> values;
 	public final Symbol name;
-	
+
 	public Struct(Symbol sname, MappingPartial<Binding> intersect)
-    {
-	    values = intersect;
-	    name = sname;
-    }
-	
+	{
+		values = intersect;
+		name = sname;
+	}
+
 	@Override
 	public String toString()
 	{
-		return "#"+name+":"+values;
+		return "#" + name + ":" + values;
 	}
 }

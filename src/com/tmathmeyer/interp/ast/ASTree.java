@@ -26,12 +26,12 @@ import com.tmathmeyer.interp.values.ImmutableList;
 public class ASTree implements AST
 {
 	private final List<AST> parts;
-	
+
 	ASTree(List<AST> newlist)
-    {
-	    parts = newlist;
-    }
-	
+	{
+		parts = newlist;
+	}
+
 	public ASTree()
 	{
 		this(new LinkedList<>());
@@ -50,14 +50,13 @@ public class ASTree implements AST
 		{
 			ASNode node = (ASNode) list.first();
 			int switchval = SymbolLookupTable.lookup(node.value);
-			
+
 			switch (switchval)
 			{
 				case 0:
 					return BinaryMathExpression.fromAST(list.rest(), node.value);
 				case 1:
-					return new Lambda(list.rest().rest().first().asExpression(),
-					        Lambda.getArgs(list.rest().first()));
+					return new Lambda(list.rest().rest().first().asExpression(), Lambda.getArgs(list.rest().first()));
 				case 2:
 					return new Let(list.rest());
 				case 3:
@@ -77,8 +76,7 @@ public class ASTree implements AST
 				case 10:
 					return new Type(list.rest());
 				case 11:
-					return new Macro(list.rest().first(),
-									 list.rest().rest().first());
+					return new Macro(list.rest().first(), list.rest().rest().first());
 				case 12:
 					return Cons.fromList(list.rest());
 				case 13:
@@ -95,120 +93,143 @@ public class ASTree implements AST
 	}
 
 	@Override
-    public String name()
-    {
-        if (parts.size() > 0)
-        {
-        	return parts.get(0).name();
-        }
-        return null;
-    }
+	public String name()
+	{
+		if (parts.size() > 0)
+		{
+			return parts.get(0).name();
+		}
+		return null;
+	}
 
 	@Override
-    public AST toRepeatingTree()
-    {
+	public AST toRepeatingTree()
+	{
 		List<AST> trees = new LinkedList<>();
-	    parts.stream().map(a -> a.toRepeatingTree()).forEach(a -> trees.add(a));
-	    if (trees.get(trees.size()-1).toString().equals("..."))
-	    {
-	    	trees.remove(trees.size()-1);
-	    	return new RepeatingAST(trees);
-	    }
-	    ASTree tree = new ASTree();
-	    tree.parts.addAll(trees);
-	    return tree;
-    }
+		parts.stream().map(a -> a.toRepeatingTree()).forEach(a -> trees.add(a));
+		if (trees.get(trees.size() - 1).toString().equals("..."))
+		{
+			trees.remove(trees.size() - 1);
+			return new RepeatingAST(trees);
+		}
+		ASTree tree = new ASTree();
+		tree.parts.addAll(trees);
+		return tree;
+	}
 
 	@Override
-    public ImmutableList<ASTBinding> structureCompare(AST t)
-    {
-	    return t.structureCompare(this);
-    }
-
-	@Override
-    public ImmutableList<ASTBinding> structureCompare(ASTree t)
-    {
-	    if (t.parts.size() != parts.size())
-	    {
-	    	return null;
-	    }
-	    Iterator<AST> a = parts.iterator();
-	    Iterator<AST> b = t.parts.iterator();
-	    while(a.hasNext())
-	    {
-	    	if (a.next().structureCompare(b.next()) == null)
-	    	{
-	    		return null;
-	    	}
-	    }
-	    return new EmptyList<>();
-    }
-
-	@Override
-    public ImmutableList<ASTBinding> structureCompare(ASNode t)
-    {
-	    return new EmptyList<>();
-    }
-
-	@Override
-    public ImmutableList<ASTBinding> structureCompare(RepeatingAST t)
-    {
+	public ImmutableList<ASTBinding> structureCompare(AST t) throws MismatchedRepetitionSizeException
+	{
 		return t.structureCompare(this);
-    }
+	}
 
 	@Override
-    public ASTBinding bindTo(AST bNext)
-    {
-	    List<AST> next = bNext.getParts();
-	    
-	    if (next.size() != parts.size())
-	    {
-	    	throw new RuntimeException("AST mismatch :: " + this + " :: " + bNext);
-	    }
-	    Iterator<AST> iNext = next.iterator();
-	    Iterator<AST> iPart = parts.iterator();
-	    
-	    ImmutableList<ASTBinding> ilast = new EmptyList<>();
-	    while(iNext.hasNext())
-	    {
-	    	ilast = ilast.add(iPart.next().bindTo(iNext.next()));
-	    }
-	    
-	    return new ASTreeBinding(ilast);
-    }
+	public ImmutableList<ASTBinding> structureCompare(ASTree t) throws MismatchedRepetitionSizeException
+	{
+		if (t.parts.size() != parts.size())
+		{
+			return null;
+		}
+		Iterator<AST> a = parts.iterator();
+		Iterator<AST> b = t.parts.iterator();
+
+		ImmutableList<ASTBinding> tmp = new EmptyList<>();
+		while (a.hasNext())
+		{
+			tmp = tmp.append(a.next().structureCompare(b.next()));
+		}
+		return tmp;
+	}
 
 	@Override
-    public List<AST> getParts()
-    {
-	    return parts;
-    }
+	public ImmutableList<ASTBinding> structureCompare(ASNode t) throws MismatchedRepetitionSizeException
+	{
+		return t.structureCompare(this);
+	}
 
 	@Override
-    public AST applyBindings(ImmutableList<ASTBinding> comp)
-    {
+	public ImmutableList<ASTBinding> structureCompare(RepeatingAST t) throws MismatchedRepetitionSizeException
+	{
+		return t.structureCompare(this);
+	}
+
+	@Override
+	public ASTBinding bindTo(AST bNext) throws MismatchedRepetitionSizeException
+	{
+		List<AST> next = bNext.getParts();
+
+		if (next.size() != parts.size())
+		{
+			throw new RuntimeException("AST mismatch :: " + this + " :: " + bNext);
+		}
+		Iterator<AST> iNext = next.iterator();
+		Iterator<AST> iPart = parts.iterator();
+
+		ImmutableList<ASTBinding> ilast = new EmptyList<>();
+		while (iNext.hasNext())
+		{
+			ilast = ilast.add(iPart.next().bindTo(iNext.next()));
+		}
+
+		return new ASTreeBinding(ilast);
+	}
+
+	@Override
+	public List<AST> getParts()
+	{
+		return parts;
+	}
+
+	@Override
+	public AST applyBindings(ImmutableList<ASTBinding> comp)
+	{
 		List<AST> newlist = new LinkedList<>();
-		for(AST t : parts)
+		for (AST t : parts)
 		{
 			newlist.add(t.applyBindings(comp));
 		}
-	    return new ASTree(newlist);
-    }
+		return new ASTree(newlist);
+	}
 
 	@Override
-    public AST applyMacro(Macro macro)
-    {
-	    if (parts.size() > 0)
-	    {
-	    	if (parts.get(0).toString().equals(macro.getName()))
-	    	{
-	    		return macro.macrotize(this);
-	    	}
-	    }
-	    List<AST> asts = new LinkedList<>();
-	    for(AST t : parts)
-	    {
-	    	asts.add(t.applyMacro(macro));
-	    }
-	    return new ASTree(asts);
-    }
+	public AST applyMacro(Macro macro)
+	{
+		if (parts.size() > 0)
+		{
+			if (parts.get(0).toString().equals(macro.getName()))
+			{
+				return macro.macrotize(this);
+			}
+		}
+		List<AST> asts = new LinkedList<>();
+		for (AST t : parts)
+		{
+			asts.add(t.applyMacro(macro));
+		}
+		return new ASTree(asts);
+	}
+
+	@Override
+	public AST hasMacro(String name)
+	{
+		if (parts.size() == 0)
+		{
+			return null;
+		}
+		if (parts.get(0).toString().equals(name))
+		{
+			return this;
+		}
+
+		for (AST t : parts)
+		{
+			t = t.hasMacro(name);
+			if (t != null)
+			{
+				return t;
+			}
+		}
+
+		return null;
+	}
 }
