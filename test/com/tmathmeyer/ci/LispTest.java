@@ -4,11 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.tmathmeyer.ci.ds.mipl.EmptyMappingImmutablePartialList;
-import com.tmathmeyer.ci.maths.Plus;
-import com.tmathmeyer.ci.types.Expression;
-import com.tmathmeyer.ci.types.Value;
-import com.tmathmeyer.ci.values.Number;
+import com.tmathmeyer.interp.Real;
+import com.tmathmeyer.interp.ds.mipl.EmptyMappingImmutablePartialList;
+import com.tmathmeyer.interp.maths.Plus;
+import com.tmathmeyer.interp.types.Expression;
+import com.tmathmeyer.interp.types.Value;
+import com.tmathmeyer.interp.values.Number;
 
 public class LispTest
 {

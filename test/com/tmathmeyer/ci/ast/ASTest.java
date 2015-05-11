@@ -2,39 +2,20 @@ package com.tmathmeyer.ci.ast;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-
 import org.junit.Test;
 
-import com.tmathmeyer.ci.Real;
-import com.tmathmeyer.ci.types.Expression;
-import com.tmathmeyer.ci.types.Value;
-import com.tmathmeyer.ci.values.Number;
+import com.tmathmeyer.interp.Real;
+import com.tmathmeyer.interp.ast.AST;
+import com.tmathmeyer.interp.ast.ASTGen;
+import com.tmathmeyer.interp.types.Expression;
+import com.tmathmeyer.interp.types.Value;
+import com.tmathmeyer.interp.values.Number;
 
 public class ASTest
 {
 	public static Value asValue(int i)
 	{
 		return new Number(new Real(i));
-	}
-
-	@Test
-	public void stringtest()
-	{
-		assertEquals(new ASTGen().generate("hello"), new AST.ASNode("hello"));
-	}
-
-	@Test
-	public void treetest()
-	{
-		assertEquals(new ASTGen().generate("(hello)"), new AST.ASTree(new AST.ASNode("hello")));
-	}
-
-	@Test
-	public void lambda()
-	{
-		assertEquals(new ASTGen().generate("(lambda x y)"), new AST.ASTree(new AST.ASNode("lambda"),
-		        new AST.ASNode("x"), new AST.ASNode("y")));
 	}
 
 	@Test
@@ -75,16 +56,6 @@ public class ASTest
 		Value v = Expression.run(tree);
 
 		assertEquals(v, new Number(new Real(3)));
-	}
-
-	@Test
-	public void fileRead()
-	{
-		AST tree = new ASTGen(new File("/home/ted/first.ji")).generate();
-
-		Value v = Expression.run(tree);
-
-		assertEquals(v, new Number(new Real(1)));
 	}
 
 	@Test

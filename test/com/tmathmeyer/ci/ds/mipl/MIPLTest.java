@@ -4,8 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.tmathmeyer.ci.ds.MappingPartial;
-import com.tmathmeyer.ci.ds.Partial;
+import com.tmathmeyer.interp.ds.MappingPartial;
+import com.tmathmeyer.interp.ds.Partial;
+import com.tmathmeyer.interp.ds.mipl.EmptyMappingImmutablePartialList;
 
 public class MIPLTest
 {

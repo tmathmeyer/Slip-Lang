@@ -1,0 +1,42 @@
+(#def map (func list)
+  (if (= (type list) "EmptyList")
+      empty
+      (cons (func (first list)) (map func (rest list)))))
+
+(#def empty? (list)
+  (= (type list) "EmptyList"))
+
+(#def list (cons 1 (cons 2 (cons 3 (cons 4 (cons 5 empty))))))
+(#def lisy (cons 6 (cons 7 (cons 8 (cons 9 (cons 0 empty))))))
+
+(print list)
+
+(print (map (lambda (x) (+ x x)) list))
+
+(#def double (x)
+  (+ x x))
+(#def x2 (lambda (x) (+ x x)))
+
+(print (map x2 list))
+(print (map double list))
+
+
+
+(print (= (type empty) "EmptyList"))
+(print (= (type (cons 4 empty)) "List"))
+
+(#sdef tup (a b))
+
+
+
+(#def zip (A B)
+  (if (& (empty? A) (empty? B))
+      empty
+      (if (empty? A)
+          b
+          (if (empty? B)
+              a
+              (cons (tup (first A) (first B)) (zip (rest A) (rest B)))))))
+
+
+(print (zip list lisy))

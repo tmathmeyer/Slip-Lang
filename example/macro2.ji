@@ -1,0 +1,6 @@
+(#redef (switch (num -> fn ...) ...)
+        (lambda (x) (cond ((eq x num) (fn ...)) ...)))
+
+(switch (1 -> (lambda (x) (print x)) 1)
+        (2 -> (lambda (x y) (* x y)) 7 2)
+        (3 -> (lambda (x y z) (+ x y z)) 3 49 1))

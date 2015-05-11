@@ -1,0 +1,9 @@
+(#redef (switch val (e -> v) ...)
+        (lambda (i)
+          (((lambda (x)
+              (cond ((= x e) v) ...)) i) val)))
+
+((switch 4
+         (1 -> (lambda (x) (+ x x)))
+         (2 -> (lambda (x) (* x x)))
+         (3 -> (lambda (x) (+ x 1243)))) 3)
