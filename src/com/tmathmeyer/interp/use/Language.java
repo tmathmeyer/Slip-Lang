@@ -1,10 +1,10 @@
 package com.tmathmeyer.interp.use;
 
 import java.io.FileNotFoundException;
-import java.util.function.Consumer;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.tmathmeyer.interp.Binding;
-import com.tmathmeyer.interp.DefSans;
 import com.tmathmeyer.interp.Symbol;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ds.DefSansSet;
@@ -12,6 +12,7 @@ import com.tmathmeyer.interp.ds.EmptyList;
 import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.ds.mipl.EmptyMappingImmutablePartialList;
 import com.tmathmeyer.interp.macro.Macro;
+import com.tmathmeyer.interp.runtime.RuntimeMacro;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
@@ -25,39 +26,66 @@ public class Language
 
 	public Language(ImmutableList<AST> input)
 	{
-		ImmutableList<Macro> macros = input.map(a -> a.asExpression()).filter(in -> in instanceof Macro)
-		        .map(in -> (Macro) in);
-
-		for (Macro macro : macros)
+		results = runLanguage(input);
+	}
+	
+	public static ImmutableList<AST> runMacros(ImmutableList<AST> trees)
+	{
+		ImmutableList<AST> code = new EmptyList<>();
+		List<Macro> macros = new LinkedList<>();
+		
+		for (AST t : trees)
 		{
-			input = macro.replace(input);
+			if (t.asExpression().getClass().equals(Macro.class))
+			{
+				macros.add((Macro) t.asExpression());
+			}
+			else
+			{
+				code = code.add(t);
+			}
 		}
 
-		ImmutableList<Expression> nonmacros = input.map(a -> a.asExpression()).filter(a -> !(a instanceof Macro));
+		ImmutableList<AST> codecmp = code;
 
-		ImmutableList<Expression> los = nonmacros.map(a -> a.desugar());
-
-		ImmutableList<DefSansSet> defs = los.filter(in -> in instanceof DefSansSet).map(in -> (DefSansSet) in);
-
-		ImmutableList<Expression> ndefs = los.filter(in -> !(in instanceof DefSansSet));
-
-		final ListHolder<Binding> binds = new ListHolder<>();
-		binds.add(new Binding(new Symbol("#void"), Maybe.NOTHING));
-
-		defs.forEach(new Consumer<DefSansSet>() {
-			@Override
-			public void accept(DefSansSet t)
+		do
+		{
+			code = codecmp;
+			for (Macro m : macros)
 			{
-				t.doWithCopy(new Consumer<DefSans>() {
-					@Override
-					public void accept(DefSans t)
-					{
-						binds.add((Binding) t.interp(new EmptyMappingImmutablePartialList<>()));
-					}
-				});
+				codecmp = m.replace(codecmp);
 			}
-		});
+		}
+		while (!code.toString().equals(codecmp.toString()) && !code.reverse().toString().equals(codecmp.toString()));
 
+		return code;
+	}
+	
+	public static ImmutableList<Value> runLanguage(ImmutableList<AST> src)
+	{
+		src = src.append(RuntimeMacro.getMacros());
+		src = runMacros(src);
+		
+		ListHolder<Binding> binds = new ListHolder<>();
+		ImmutableList<Value> results = new EmptyList<>();
+		ImmutableList<DefSansSet> defs = new EmptyList<>();
+		ImmutableList<Expression> ndefs = new EmptyList<>();
+		
+		for(Expression e : src.map(a -> a.asExpression().desugar()))
+		{
+			if (e instanceof DefSansSet)
+			{
+				defs = defs.add((DefSansSet) e);
+			}
+			else
+			{
+				ndefs = ndefs.add(e);
+			}
+		}
+		
+		
+		binds.add(new Binding(new Symbol("#void"), Maybe.NOTHING));
+		defs.forEach(a -> a.doWithCopy(b -> binds.add((Binding) b.interp(new EmptyMappingImmutablePartialList<>()))));
 		MappingPartial<Binding> bindings = MappingPartial.fromImmutableList(binds.get());
 
 		while (!ndefs.isEmpty())
@@ -65,13 +93,14 @@ public class Language
 			results = results.add(ndefs.first().interp(bindings));
 			ndefs = ndefs.rest();
 		}
+		
+		return results;
 	}
+	
 
 	public static void main(String... args) throws FileNotFoundException
 	{
 		String filepath = args[0];
-
-		// String filepath = "/home/ted/pattern.lisp";
 
 		ImmutableList<AST> astcollection = new Builder().fromTokens(Tokenizer.getTokens(filepath));
 

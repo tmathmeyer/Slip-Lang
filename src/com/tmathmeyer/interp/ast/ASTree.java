@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.tmathmeyer.interp.Application;
-import com.tmathmeyer.interp.Cond;
 import com.tmathmeyer.interp.Def;
 import com.tmathmeyer.interp.If;
 import com.tmathmeyer.interp.Lambda;
@@ -17,7 +16,6 @@ import com.tmathmeyer.interp.ds.EmptyList;
 import com.tmathmeyer.interp.list.Cons;
 import com.tmathmeyer.interp.list.First;
 import com.tmathmeyer.interp.macro.Macro;
-import com.tmathmeyer.interp.match.Match;
 import com.tmathmeyer.interp.maths.BinaryMathExpression;
 import com.tmathmeyer.interp.struct.StructDefn;
 import com.tmathmeyer.interp.types.Expression;
@@ -79,10 +77,6 @@ public class ASTree implements AST
 					return new Macro(list.rest().first(), list.rest().rest().first());
 				case 12:
 					return Cons.fromList(list.rest());
-				case 13:
-					return new Match(list.rest().first(), list.rest().rest());
-				case 14:
-					return new Cond(list.rest());
 				default:
 					return new Application(list);
 

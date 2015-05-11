@@ -19,6 +19,6 @@ public class Struct implements Value
 	@Override
 	public String toString()
 	{
-		return "#" + name + ":" + values;
+		return name + "" + values;
 	}
 }

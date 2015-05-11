@@ -81,7 +81,7 @@ public class SortedMappingImmutablePartialList<E extends Partial<E>> implements 
 
 	public String toString()
 	{
-		return "[" + elem + rest.asCSV() + "]";
+		return "(" + elem + rest.asCSV() + ")";
 	}
 
 	private int unit(int i)

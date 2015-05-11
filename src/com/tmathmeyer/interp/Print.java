@@ -30,13 +30,10 @@ public class Print implements Expression
 	@Override
 	public Value interp(MappingPartial<Binding> env)
 	{
-		ImmutableList<Expression> copy = toPrint;
-		int count = 0;
-		while (!copy.isEmpty())
+		for(Expression e : toPrint)
 		{
-			count++;
-			copy = copy.rest();
+			System.out.println(e.interp(env));
 		}
-		return new Number(new Real(count));
+		return new Number(new Real(toPrint.size()));
 	}
 }

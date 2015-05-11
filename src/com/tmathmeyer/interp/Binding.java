@@ -29,6 +29,6 @@ public class Binding implements Partial<Binding>, Value
 
 	public String toString()
 	{
-		return name + " : " + val;
+		return name + ":" + val;
 	}
 }

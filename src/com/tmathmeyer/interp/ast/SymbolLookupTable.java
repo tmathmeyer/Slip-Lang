@@ -45,7 +45,5 @@ public class SymbolLookupTable
 		registerSymbol("type", 10);
 		registerSymbol("#redef", 11);
 		registerSymbol("list", 12);
-		registerSymbol("match", 13);
-		registerSymbol("cond", 14);
 	}
 }

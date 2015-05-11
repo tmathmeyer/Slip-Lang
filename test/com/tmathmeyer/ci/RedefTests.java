@@ -1,7 +1,5 @@
 package com.tmathmeyer.ci;
 
-import static org.junit.Assert.*;
-
 import java.io.FileNotFoundException;
 import java.util.List;
 
@@ -25,19 +23,8 @@ public class RedefTests
 	@Test
 	public void test() throws FileNotFoundException
 	{
-		ImmutableList<AST> asts = fromFile("example/let_macro.jl");
-		Language l = new Language(asts);
-
-		System.out.println(l.results);
-	}
-
-	@Test
-	public void test2() throws FileNotFoundException
-	{
-		ImmutableList<AST> asts = fromFile("example/cond.ji");
-		Language l = new Language(asts);
-
-		System.out.println(l.results);
+		ImmutableList<AST> asts = fromFile("example/lists.ji");
+		new Language(asts);
 	}
 
 }

@@ -1,15 +1,12 @@
 package com.tmathmeyer.lex;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.tmathmeyer.interp.Function.Pair;
 import com.tmathmeyer.interp.ast.ASNode;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ast.ASTree;
-import com.tmathmeyer.interp.ds.EmptyList;
-import com.tmathmeyer.interp.macro.Macro;
 import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Builder
@@ -46,36 +43,6 @@ public class Builder
 		return new Pair<AST, ImmutableList<Token>>(null, tokens.rest());
 	}
 
-	public ImmutableList<AST> runMacros(List<AST> trees)
-	{
-		ImmutableList<AST> code = new EmptyList<>();
-
-		List<Macro> macros = new LinkedList<>();
-		for (AST t : trees)
-		{
-			if (t.asExpression().getClass().equals(Macro.class))
-			{
-				macros.add((Macro) t.asExpression());
-			} else
-			{
-				code = code.add(t);
-			}
-		}
-
-		ImmutableList<AST> codecmp = code;
-
-		do
-		{
-			code = codecmp;
-			for (Macro m : macros)
-			{
-				codecmp = m.replace(codecmp);
-			}
-		} while (!code.toString().equals(codecmp.toString()));
-
-		return code;
-	}
-
 	public ImmutableList<AST> fromTokens(List<Token> tokens)
 	{
 		List<AST> result = new ArrayList<AST>();
@@ -94,6 +61,6 @@ public class Builder
 
 		}
 
-		return runMacros(result);
+		return ImmutableList.fromSTD(result);
 	}
 }
