@@ -11,7 +11,19 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Builder
 {
-	public Pair<AST, ImmutableList<Token>> fromTokens(ImmutableList<Token> tokens)
+	private final ImmutableList<AST> tree; 
+	
+	public Builder(ImmutableList<Token> tokens)
+    {
+	    tree = fromTokens(tokens);
+    }
+	
+	public ImmutableList<AST> syntaxTrees()
+	{
+		return tree;
+	}
+
+	private Pair<AST, ImmutableList<Token>> singleFromTokens(ImmutableList<Token> tokens)
 	{
 		switch (tokens.first().piece.charAt(0))
 		{
@@ -22,7 +34,7 @@ public class Builder
 				while ((!tokens.isEmpty()) && !tokens.first().piece.equals(")"))
 				{
 					last = tokens.first();
-					Pair<AST, ImmutableList<Token>> res = fromTokens(tokens);
+					Pair<AST, ImmutableList<Token>> res = singleFromTokens(tokens);
 					tree.getParts().add(res.a);
 					tokens = res.b;
 				}
@@ -43,17 +55,16 @@ public class Builder
 		return new Pair<AST, ImmutableList<Token>>(null, tokens.rest());
 	}
 
-	public ImmutableList<AST> fromTokens(List<Token> tokens)
+	private ImmutableList<AST> fromTokens(ImmutableList<Token> tokens)
 	{
 		List<AST> result = new ArrayList<AST>();
-		ImmutableList<Token> inp = ImmutableList.fromSTD(tokens);
-		while (!inp.isEmpty())
+		while (!tokens.isEmpty())
 		{
-			Pair<AST, ImmutableList<Token>> res = fromTokens(inp);
+			Pair<AST, ImmutableList<Token>> res = singleFromTokens(tokens);
 			if (res.a != null)
 			{
 				result.add(res.a);
-				inp = res.b;
+				tokens = res.b;
 			} else
 			{
 				throw new RuntimeException("error: malformed tree");

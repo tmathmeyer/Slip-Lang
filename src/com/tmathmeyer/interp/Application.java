@@ -1,5 +1,6 @@
 package com.tmathmeyer.interp;
 
+import com.tmathmeyer.interp.ID.IDLookUpException;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ds.EmptyList;
 import com.tmathmeyer.interp.ds.MappingPartial;
@@ -43,38 +44,88 @@ public class Application implements Expression
 	}
 
 	@Override
-	public Value interp(MappingPartial<Binding> env)
+	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
-		Closure cloj = (Closure) func.interp(env);
-
-		ImmutableList<Expression> expTemp = args;
-		ImmutableList<Symbol> symTemp = cloj.args;
-
-		MappingPartial<Binding> passOn = env;
-
-		while (!expTemp.isEmpty())
+		try
 		{
-			try
+			Closure cloj = (Closure) func.interp(env);
+			ImmutableList<Expression> expTemp = args;
+			ImmutableList<Symbol> symTemp = cloj.args;
+
+			MappingPartial<Binding> passOn = env;
+
+			while (!expTemp.isEmpty())
 			{
-				passOn = passOn.add(new Binding(symTemp.first(), expTemp.first().interp(env)));
-			} catch (RuntimeException re)
-			{
-				throw new RuntimeException("failed to add binding in context: [" + this + "] " + cloj.args, re);
+				try
+				{
+					passOn = passOn.add(new Binding(symTemp.first(), expTemp.first().interp(env)));
+				} catch (RuntimeException re)
+				{
+					throw new RuntimeException("failed to add binding in context: [" + this + "] " + cloj.args, re);
+				}
+				expTemp = expTemp.rest();
+				symTemp = symTemp.rest();
 			}
-			expTemp = expTemp.rest();
-			symTemp = symTemp.rest();
-		}
 
-		if (!symTemp.isEmpty())
+			if (!symTemp.isEmpty())
+			{
+				throw new RuntimeException("mismatched arg length - " + this);
+			}
+
+			return cloj.body.interp(passOn);
+		}
+		catch(InterpException ide)
 		{
-			throw new RuntimeException("mismatched arg length - " + this);
+			throw new ApplicationEvaluationException(ide, this);
 		}
-
-		return cloj.body.interp(passOn);
+		catch(ClassCastException cce)
+		{
+			throw new ApplicationEvaluationException(new InvalidFunctionException(func, func.interp(env)), this);
+		}
 	}
 
 	public String toString()
 	{
-		return "<>";
+		String result = "("+func.toString();
+		for(Expression e : args)
+		{
+			result+=(" " + e);
+		}
+		return result+")";
+	}
+	
+	public static class ApplicationEvaluationException extends InterpException
+	{
+		private final InterpException ide;
+		private final Application app;
+
+		public ApplicationEvaluationException(InterpException ide, Application app)
+        {
+	        this.ide = ide;
+	        this.app = app;
+        }
+
+		public void printStackTrace()
+		{
+			ide.printStackTrace();
+			System.out.println("in "+app);
+		}
+	}
+	
+	public static class InvalidFunctionException extends InterpException
+	{
+		private final Value val;
+		private final Expression exp;
+
+		public InvalidFunctionException(Expression exp, Value val)
+        {
+	        this.val = val;
+	        this.exp = exp;
+        }
+
+		public void printStackTrace()
+		{
+			System.out.println(exp+" is of type "+val.getTypeName()+" and cannot be evaluated");
+		}
 	}
 }

@@ -43,7 +43,7 @@ public class SymbolLookupTable
 		registerSymbol("#def", 8);
 		registerSymbol("#sdef", 9);
 		registerSymbol("type", 10);
-		registerSymbol("#redef", 11);
+		registerSymbol("#", 11);
 		registerSymbol("list", 12);
 	}
 }

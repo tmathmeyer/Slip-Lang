@@ -31,4 +31,10 @@ public class Binding implements Partial<Binding>, Value
 	{
 		return name + ":" + val;
 	}
+
+	@Override
+    public String getTypeName()
+    {
+	    return "binding";
+    }
 }

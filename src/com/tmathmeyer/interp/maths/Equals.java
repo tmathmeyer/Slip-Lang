@@ -1,10 +1,11 @@
 package com.tmathmeyer.interp.maths;
 
 import com.tmathmeyer.interp.Binding;
-import com.tmathmeyer.interp.ds.MappingPartial;
+import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.Bool;
+import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Equals implements Expression
 {
@@ -23,7 +24,7 @@ public class Equals implements Expression
 	}
 
 	@Override
-	public Value interp(MappingPartial<Binding> env)
+	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
 		return L.interp(env).equals(R.interp(env)) ? Bool.TRUE : Bool.FALSE;
 	}

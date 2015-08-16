@@ -1,10 +1,9 @@
-package com.tmathmeyer.interp.ds;
+package com.tmathmeyer.interp.values;
 
 import java.util.Iterator;
 import java.util.function.Consumer;
 
 import com.tmathmeyer.interp.Function;
-import com.tmathmeyer.interp.values.ImmutableList;
 
 public class List<T> extends ImmutableList<T>
 {
@@ -167,4 +166,10 @@ public class List<T> extends ImmutableList<T>
 	{
 		return size;
 	}
+
+	@Override
+    public String getTypeName()
+    {
+	    return "list";
+    }
 }

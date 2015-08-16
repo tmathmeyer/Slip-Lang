@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tmathmeyer.interp.ast.CharacterSequence;
+import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Tokenizer
 {
-	public static List<Token> getTokens(String filepath) throws FileNotFoundException
+	public static ImmutableList<Token> getTokens(String filepath) throws FileNotFoundException
 	{
 		BufferedReader reader = new BufferedReader(new FileReader(new File(filepath)));
 		CharacterSequence charsec = CharacterSequence.make(reader);
@@ -19,7 +20,7 @@ public class Tokenizer
 		return getTokens(charsec);
 	}
 
-	public static List<Token> getTokens(CharacterSequence charsec)
+	public static ImmutableList<Token> getTokens(CharacterSequence charsec)
 	{
 		List<Token> result = new ArrayList<>();
 
@@ -75,6 +76,6 @@ public class Tokenizer
 			}
 			col++;
 		}
-		return result;
+		return ImmutableList.fromSTD(result);
 	}
 }

@@ -4,6 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
+import com.tmathmeyer.interp.values.ImmutableList;
+import com.tmathmeyer.lex.Token;
+import com.tmathmeyer.lex.Tokenizer;
+
 public interface CharacterSequence
 {
 	static class BasicCharacterSequence implements CharacterSequence
@@ -140,5 +144,10 @@ public interface CharacterSequence
 	public static CharacterSequence make(BufferedReader reader)
 	{
 		return new FileCharacterSequence(reader);
+	}
+
+	public default ImmutableList<Token> asTokens()
+	{
+		return Tokenizer.getTokens(this);
 	}
 }

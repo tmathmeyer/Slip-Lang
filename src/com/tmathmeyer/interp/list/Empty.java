@@ -1,10 +1,11 @@
 package com.tmathmeyer.interp.list;
 
 import com.tmathmeyer.interp.Binding;
+import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.ds.EmptyList;
-import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
+import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Empty implements Expression
 {
@@ -15,7 +16,7 @@ public class Empty implements Expression
 	}
 
 	@Override
-	public Value interp(MappingPartial<Binding> env)
+	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
 		return new EmptyList<>();
 	}

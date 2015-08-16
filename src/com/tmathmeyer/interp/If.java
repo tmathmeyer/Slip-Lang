@@ -1,7 +1,6 @@
 package com.tmathmeyer.interp;
 
 import com.tmathmeyer.interp.ast.AST;
-import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.Bool;
@@ -32,7 +31,7 @@ public class If implements Expression
 	}
 
 	@Override
-	public Value interp(MappingPartial<Binding> env)
+	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
 		if (conditional.interp(env) == Bool.TRUE)
 		{

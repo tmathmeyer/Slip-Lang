@@ -1,7 +1,7 @@
 package com.tmathmeyer.interp.values;
 
 import com.tmathmeyer.interp.Binding;
-import com.tmathmeyer.interp.ds.MappingPartial;
+import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 
@@ -49,7 +49,7 @@ public class Str implements Expression, Value
 	}
 
 	@Override
-	public Value interp(MappingPartial<Binding> env)
+	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
 		return new Str(value);
 	}
@@ -58,4 +58,10 @@ public class Str implements Expression, Value
 	{
 		return value;
 	}
+
+	@Override
+    public String getTypeName()
+    {
+	    return "string";
+    }
 }

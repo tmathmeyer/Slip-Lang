@@ -1,11 +1,12 @@
 package com.tmathmeyer.interp.macro;
 
 import com.tmathmeyer.interp.Binding;
+import com.tmathmeyer.interp.Function.Pair;
+import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ast.AST.ASTBinding;
 import com.tmathmeyer.interp.ast.MismatchedRepetitionSizeException;
 import com.tmathmeyer.interp.ds.EmptyList;
-import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
@@ -36,33 +37,34 @@ public class Macro implements Expression
 	}
 
 	@Override
-	public Value interp(MappingPartial<Binding> env)
+	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
 		throw new RuntimeException("MACROS CANNOT BE INTERPRETED");
 	}
 
-	public ImmutableList<AST> replace(ImmutableList<AST> input)
+	public Pair<Boolean, ImmutableList<AST>> replace(ImmutableList<AST> input)
 	{
 		ImmutableList<AST> result = new EmptyList<>();
+		boolean changed = false;
 
 		for (AST asts : input)
 		{
-			while (asts.hasMacro(name) != null)
+			try
 			{
-				try
+				while (pattern.structureCompare(asts.hasMacro(name)) != null)
 				{
-					AST t = asts.hasMacro(name);
-					pattern.structureCompare(t);
 					asts = asts.applyMacro(this);
-				} catch (MismatchedRepetitionSizeException mrse)
-				{
-					break;
+					changed = true;
 				}
+			}
+			catch (MismatchedRepetitionSizeException mrse)
+			{
+				
 			}
 			result = result.add(asts);
 		}
 
-		return result;
+		return new Pair<>(changed, result);
 	}
 
 	public AST macrotize(AST meBaby)

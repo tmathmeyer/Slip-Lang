@@ -114,7 +114,7 @@ public class ASTree implements AST
 	@Override
 	public ImmutableList<ASTBinding> structureCompare(AST t) throws MismatchedRepetitionSizeException
 	{
-		return t.structureCompare(this);
+		return t==null? null : t.structureCompare(this);
 	}
 
 	@Override
@@ -214,6 +214,10 @@ public class ASTree implements AST
 		{
 			return this;
 		}
+		if (parts.get(0).toString().equals("#"))
+		{
+			return null;
+		}
 
 		for (AST t : parts)
 		{
@@ -226,4 +230,10 @@ public class ASTree implements AST
 
 		return null;
 	}
+
+	@Override
+    public boolean isMacro()
+    {
+	    return parts.size() > 0 && parts.get(0).isMacro();
+    }
 }

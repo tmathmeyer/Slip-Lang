@@ -1,11 +1,13 @@
 package com.tmathmeyer.interp.runtime;
 
+import com.tmathmeyer.interp.values.ImmutableList;
+
 public class EmptyHuh extends RuntimeMacro
 {
 	@Override
-    public String getSrc()
+    public ImmutableList<String> getSrc()
     {
-		return "(#redef (empty? x)"
-			  +"   (= (type x) \"EmptyList\"))";
+		return asList("(# (empty? x)"
+					 +"   (= (type x) \"EmptyList\"))");
     }
 }

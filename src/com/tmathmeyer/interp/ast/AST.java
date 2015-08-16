@@ -135,4 +135,6 @@ public interface AST
 	AST applyMacro(Macro macro);
 
 	AST hasMacro(String name);
+
+	boolean isMacro();
 }

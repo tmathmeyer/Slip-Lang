@@ -1,7 +1,6 @@
 package com.tmathmeyer.interp;
 
 import com.tmathmeyer.interp.ast.AST;
-import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
@@ -28,7 +27,7 @@ public class Rest implements Expression
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Value interp(MappingPartial<Binding> env)
+	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
 		return ((ImmutableList<Value>) list.interp(env)).rest();
 	}

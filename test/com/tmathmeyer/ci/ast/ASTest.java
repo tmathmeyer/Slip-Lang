@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.Real;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ast.ASTGen;
@@ -19,7 +20,7 @@ public class ASTest
 	}
 
 	@Test
-	public void reallisp()
+	public void reallisp() throws InterpException
 	{
 		AST tree = new ASTGen().generate("(+ 99 (+ 1 (+ 2 (+ 3 (+ 4 (+ 5 6))))))");
 
@@ -29,7 +30,7 @@ public class ASTest
 	}
 
 	@Test
-	public void letTest()
+	public void letTest() throws InterpException
 	{
 		AST tree = new ASTGen().generate("(let ((x 5) (y 6)) (+ x y))");
 
@@ -39,7 +40,7 @@ public class ASTest
 	}
 
 	@Test
-	public void spaces()
+	public void spaces() throws InterpException
 	{
 		AST tree = new ASTGen().generate("    1      ");
 
@@ -49,7 +50,7 @@ public class ASTest
 	}
 
 	@Test
-	public void morespaces()
+	public void morespaces() throws InterpException
 	{
 		AST tree = new ASTGen().generate("    (  +      1  2   )   ");
 
@@ -59,7 +60,7 @@ public class ASTest
 	}
 
 	@Test
-	public void listTests()
+	public void listTests() throws InterpException
 	{
 		AST tree = new ASTGen().generate("(let ((X (lambda (y) empty))) (print (X 5)))");
 
@@ -69,7 +70,7 @@ public class ASTest
 	}
 
 	@Test
-	public void morelistTests()
+	public void morelistTests() throws InterpException
 	{
 		AST tree = new ASTGen().generate("(cons 5 empty)");
 
@@ -79,7 +80,7 @@ public class ASTest
 	}
 
 	@Test
-	public void evenMorelistTests()
+	public void evenMorelistTests() throws InterpException
 	{
 		AST tree = new ASTGen().generate("(first (rest (cons 1 (cons 4 (cons 99 (cons 5 empty))))))");
 
@@ -89,7 +90,7 @@ public class ASTest
 	}
 
 	@Test
-	public void evenMorelistTestsLast()
+	public void evenMorelistTestsLast() throws InterpException
 	{
 		AST tree = new ASTGen().generate("(rest (cons 1 (cons 4 (cons 99 (cons 5 empty)))))");
 

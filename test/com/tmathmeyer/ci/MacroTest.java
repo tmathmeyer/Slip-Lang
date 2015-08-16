@@ -6,13 +6,8 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
-import com.tmathmeyer.interp.ast.AST;
-import com.tmathmeyer.interp.ast.CharacterSequence;
-import com.tmathmeyer.interp.use.Language;
-import com.tmathmeyer.interp.values.ImmutableList;
+import com.tmathmeyer.interp.runtime.SlipRuntime;
 import com.tmathmeyer.interp.values.Number;
-import com.tmathmeyer.lex.Builder;
-import com.tmathmeyer.lex.Tokenizer;
 
 public class MacroTest
 {
@@ -22,11 +17,24 @@ public class MacroTest
 	{
 		String input = "(+ 1 2)";
 
-		ImmutableList<AST> astcollection = new Builder().fromTokens(Tokenizer.getTokens(CharacterSequence.make(input)));
-
-		Language l = new Language(astcollection);
-
-		assertEquals(l.results.first(), new Number(3));
+		assertEquals(new SlipRuntime(input).evaluate().first(), new Number(3));
+	}
+	
+	@Test
+	public void macrodef() throws FileNotFoundException
+	{
+		String input =
+				"(# (conc a b) (cons a (cons b empty)))" + 
+				"(print (conc 2 3))";
+		new SlipRuntime(input).evaluate();
+	}
+	
+	@Test
+	public void testBmatch() throws FileNotFoundException
+	{
+		String input =
+				"((lambda (x) (bmatch ((= x 1) 2) ((= x 3) 4) ((= x 5) 6))) 1)";
+		System.out.println(new SlipRuntime(input).evaluate());
 	}
 
 }

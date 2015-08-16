@@ -49,7 +49,7 @@ public class RepeatingAST implements AST
 	@Override
 	public ImmutableList<ASTBinding> structureCompare(AST t) throws MismatchedRepetitionSizeException
 	{
-		return t.structureCompare(this);
+		return t==null? null : t.structureCompare(this);
 	}
 
 	@Override
@@ -176,4 +176,10 @@ public class RepeatingAST implements AST
 
 		return null;
 	}
+
+	@Override
+    public boolean isMacro()
+    {
+	    return false;
+    }
 }

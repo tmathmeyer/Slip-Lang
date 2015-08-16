@@ -1,8 +1,8 @@
 package com.tmathmeyer.interp.values;
 
 import com.tmathmeyer.interp.Binding;
+import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.Real;
-import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 
@@ -55,7 +55,7 @@ public class Number implements Expression, Value
 	}
 
 	@Override
-	public Value interp(MappingPartial<Binding> env)
+	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
 		return new Number(value);
 	}
@@ -64,4 +64,10 @@ public class Number implements Expression, Value
 	{
 		return value.toString();
 	}
+
+	@Override
+    public String getTypeName()
+    {
+	    return "number";
+    }
 }

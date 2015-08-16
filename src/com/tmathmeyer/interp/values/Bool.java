@@ -19,4 +19,10 @@ public enum Bool implements Value
 		}
 		return TRUE;
 	}
+
+	@Override
+    public String getTypeName()
+    {
+	    return "bool";
+    }
 }

@@ -43,4 +43,12 @@ public abstract class ImmutableList<T> implements Value, Iterable<T>
 
 	public abstract int size();
 
+	public static <T> ImmutableList<T> collapse(ImmutableList<ImmutableList<T>> map)
+    {
+	    if (map.isEmpty()) {
+	    	return new EmptyList<>();
+	    }
+	    return map.first().append(collapse(map.rest()));
+    }
+
 }

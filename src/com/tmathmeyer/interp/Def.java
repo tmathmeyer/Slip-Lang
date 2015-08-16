@@ -2,11 +2,10 @@ package com.tmathmeyer.interp;
 
 import com.tmathmeyer.interp.ast.ASNode;
 import com.tmathmeyer.interp.ast.AST;
-import com.tmathmeyer.interp.ds.DefSansSet;
-import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
+import com.tmathmeyer.interp.FunctionMapping;
 
 public abstract class Def implements Expression
 {
@@ -32,11 +31,11 @@ public abstract class Def implements Expression
 			Lambda outer = new Lambda(inner, name);
 
 			Application yca = new Application(Y, outer);
-			return new DefSansSet(new DefSans(name, yca.desugar()));
+			return new FunctionMapping(name, yca.desugar());
 		}
 
 		@Override
-		public Value interp(MappingPartial<Binding> env)
+		public Value interp(ImmutableList<Binding> env) throws InterpException
 		{
 			throw new RuntimeException("attempting to interp a #def, please desugar first");
 		}
@@ -56,11 +55,11 @@ public abstract class Def implements Expression
 		@Override
 		public Expression desugar()
 		{
-			return new DefSansSet(new DefSans(name, expr.desugar()));
+			return new FunctionMapping(name, expr.desugar());
 		}
 
 		@Override
-		public Value interp(MappingPartial<Binding> env)
+		public Value interp(ImmutableList<Binding> env) throws InterpException
 		{
 			throw new RuntimeException("attempting to interp a #def, please desugar first");
 		}

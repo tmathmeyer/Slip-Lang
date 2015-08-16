@@ -1,9 +1,10 @@
 package com.tmathmeyer.interp.maths;
 
 import com.tmathmeyer.interp.Binding;
-import com.tmathmeyer.interp.ds.MappingPartial;
+import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
+import com.tmathmeyer.interp.values.ImmutableList;
 import com.tmathmeyer.interp.values.Number;
 
 public class Divide implements Expression
@@ -23,7 +24,7 @@ public class Divide implements Expression
 	}
 
 	@Override
-	public Value interp(MappingPartial<Binding> env)
+	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
 		Number l = (Number) L.interp(env);
 		Number r = (Number) R.interp(env);

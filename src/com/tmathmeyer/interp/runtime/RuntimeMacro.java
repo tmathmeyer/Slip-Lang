@@ -9,16 +9,25 @@ public abstract class RuntimeMacro
 {
 	private static ImmutableList<RuntimeMacro> macros = new EmptyList<>();
 	
-	public abstract String getSrc();
+	public abstract ImmutableList<String> getSrc();
 	
 	static
 	{
-		macros = macros.add(new Cond());
+		macros = macros.add(new BMatch());
 		macros = macros.add(new EmptyHuh());
+	}
+	
+	protected static ImmutableList<String> asList(String... str)
+	{
+		ImmutableList<String> result = new EmptyList<>();
+		for(String s : str) {
+			result = result.add(s);
+		}
+		return result;
 	}
 	
 	public static ImmutableList<AST> getMacros()
 	{
-		return macros.map(a -> a.getSrc()).map(a -> new ASTGen().generate(a));
+		return ImmutableList.collapse(macros.map(M -> M.getSrc().map(S -> new ASTGen().generate(S))));
 	}
 }

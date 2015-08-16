@@ -2,7 +2,6 @@ package com.tmathmeyer.interp;
 
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ds.EmptyList;
-import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
@@ -42,7 +41,7 @@ public class Let implements Expression
 	}
 
 	@Override
-	public Value interp(MappingPartial<Binding> env)
+	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
 		throw new RuntimeException("you can't interp a let...");
 	}

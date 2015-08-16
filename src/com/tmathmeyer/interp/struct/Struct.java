@@ -21,4 +21,10 @@ public class Struct implements Value
 	{
 		return name + "" + values;
 	}
+
+	@Override
+    public String getTypeName()
+    {
+	    return "@"+name;
+    }
 }

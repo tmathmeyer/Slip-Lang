@@ -65,4 +65,10 @@ public class Closure implements Value
 	{
 		return "#Closure";
 	}
+
+	@Override
+    public String getTypeName()
+    {
+	    return "closure";
+    }
 }

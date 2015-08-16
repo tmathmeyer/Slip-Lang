@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import com.tmathmeyer.interp.Function;
 import com.tmathmeyer.interp.values.ImmutableList;
+import com.tmathmeyer.interp.values.List;
 
 public class EmptyList<T> extends ImmutableList<T>
 {
@@ -113,4 +114,10 @@ public class EmptyList<T> extends ImmutableList<T>
 	{
 		return 0;
 	}
+
+	@Override
+    public String getTypeName()
+    {
+	    return "list";
+    }
 }

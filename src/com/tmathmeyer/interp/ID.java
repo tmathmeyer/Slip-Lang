@@ -1,8 +1,8 @@
 package com.tmathmeyer.interp;
 
-import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
+import com.tmathmeyer.interp.values.ImmutableList;
 
 public class ID implements Expression
 {
@@ -20,14 +20,14 @@ public class ID implements Expression
 	}
 
 	@Override
-	public Value interp(MappingPartial<Binding> env)
+	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
+		env.filter(B -> B.name.equals(I)).first();
 		Binding b = env.findPartial(new Binding(I, null));
 		if (b == null)
 		{
 			env.findPartial(new Binding(I, null));
-			System.out.println(env);
-			throw new RuntimeException("failed to lookup: " + I);
+			throw new IDLookUpException(I);
 		}
 		return b.val;
 	}
@@ -35,5 +35,19 @@ public class ID implements Expression
 	public String toString()
 	{
 		return I.toString();
+	}
+	
+	public static class IDLookUpException extends InterpException
+	{
+		private final Symbol s;
+		public void printStackTrace()
+		{
+			System.out.println("Cannot find Symbol: "+s);
+		}
+		
+		public IDLookUpException(Symbol i)
+		{
+			s = i;
+		}
 	}
 }

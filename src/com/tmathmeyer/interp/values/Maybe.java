@@ -18,4 +18,10 @@ public class Maybe implements Value
 		return v + "";
 	}
 
+	@Override
+    public String getTypeName()
+    {
+	    return "maybe";
+    }
+
 }

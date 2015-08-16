@@ -3,6 +3,7 @@ package com.tmathmeyer.interp.repl;
 import java.util.Scanner;
 
 import com.tmathmeyer.interp.Binding;
+import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ast.ASTGen;
 import com.tmathmeyer.interp.ds.MappingPartial;
@@ -27,18 +28,28 @@ public class Repl
 		{
 			System.out.print("\n> ");
 
-			AST tree = new ASTGen().generate(s.nextLine());
-
-			Expression plain = tree.asExpression();
-			Expression sansGlucose = plain.desugar();
-			Value v = sansGlucose.interp(saved);
-
-			System.out.println(v);
-
-			if (v instanceof Binding)
+			try 
 			{
-				saved = saved.add((Binding) v);
+				AST tree = new ASTGen().generate(s.nextLine());
+				if (tree != null)
+				{
+					Expression plain = tree.asExpression();
+					Expression sansGlucose = plain.desugar();
+					Value v = sansGlucose.interp(saved);
+	
+					System.out.println(v);
+	
+					if (v instanceof Binding)
+					{
+						saved = saved.add((Binding) v);
+					}
+				}
 			}
+			catch(InterpException e)
+			{
+				e.printStackTrace();
+			}
+			
 		}
 	}
 }

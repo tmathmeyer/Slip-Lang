@@ -1,10 +1,11 @@
 package com.tmathmeyer.interp.struct;
 
 import com.tmathmeyer.interp.Binding;
+import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.Symbol;
-import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
+import com.tmathmeyer.interp.values.ImmutableList;
 
 public class StructInspector implements Expression
 {
@@ -22,7 +23,7 @@ public class StructInspector implements Expression
 	}
 
 	@Override
-	public Value interp(MappingPartial<Binding> env)
+	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
 		Struct s = (Struct) env.findPartial(new Binding(new Symbol("struct"), null)).val;
 

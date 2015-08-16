@@ -147,4 +147,10 @@ public class ASNode implements AST
 	{
 		return null;
 	}
+
+	@Override
+    public boolean isMacro()
+    {
+	    return value.equals("#");
+    }
 }

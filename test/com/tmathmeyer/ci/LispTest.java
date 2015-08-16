@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.Real;
 import com.tmathmeyer.interp.ds.mipl.EmptyMappingImmutablePartialList;
 import com.tmathmeyer.interp.maths.Plus;
@@ -15,7 +16,7 @@ public class LispTest
 {
 
 	@Test
-	public void additiontest()
+	public void additiontest() throws InterpException
 	{
 		Real five = new Real(5);
 		Real four = new Real(4);
