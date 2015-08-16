@@ -9,49 +9,51 @@ import com.tmathmeyer.interp.values.Number;
 
 public class Plus implements Expression
 {
-	public final Expression L, R;
-
-	public Plus(Expression left, Expression right)
+	public final ImmutableList<Expression> exprs;
+	
+	public Plus(ImmutableList<Expression> exprs)
 	{
-		L = left;
-		R = right;
+		this.exprs = exprs;
+		if (exprs.size() == 0)
+		{
+			throw new RuntimeException("no arguments to +");
+		}
 	}
 
 	@Override
 	public Expression desugar()
 	{
-		return new Plus(L.desugar(), R.desugar());
+		return new Plus(exprs.map(E -> E.desugar()));
 	}
 
 	@Override
 	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
-		Number l;
-		Number r;
+		Number result = new Number(0);
 		
-		try
+		for(Expression e : exprs)
 		{
-			l = (Number) L.interp(env);
-		}
-		catch (ClassCastException cce)
-		{
-			throw new NANException(L, this);
+			try
+			{
+				Number n = (Number) e.interp(env);
+				result = new Number(result.value.add(n.value));
+			}
+			catch (ClassCastException cce)
+			{
+				throw new InvalidTypeException(e, this);
+			}
 		}
 		
-		try
-		{
-			r = (Number) R.interp(env);
-		}
-		catch (ClassCastException cce)
-		{
-			throw new NANException(L, this);
-		}
-
-		return new Number(l.value.add(r.value));
+		return result;
 	}
 
 	public String toString()
 	{
-		return "(" + L + " + " + R + ")";
+		String result = "(+";
+		for(Expression e : exprs)
+		{
+			result += (" "+e);
+		}
+		return result + ")";
 	}
 }

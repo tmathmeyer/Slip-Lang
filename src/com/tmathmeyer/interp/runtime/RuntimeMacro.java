@@ -15,6 +15,9 @@ public abstract class RuntimeMacro
 	{
 		macros = macros.add(new BMatch());
 		macros = macros.add(new EmptyHuh());
+		macros = macros.add(new Define());
+		macros = macros.add(new Let());
+		macros = macros.add(new List());
 	}
 	
 	protected static ImmutableList<String> asList(String... str)

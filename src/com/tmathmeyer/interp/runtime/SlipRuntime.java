@@ -24,7 +24,7 @@ import com.tmathmeyer.lex.Builder;
 public class SlipRuntime
 {
 	private final ImmutableList<AST> program;
-	private final ImmutableList<Binding> runtime;
+	private ImmutableList<Binding> runtime;
 	
 	public SlipRuntime(File file) throws FileNotFoundException
 	{
@@ -43,7 +43,7 @@ public class SlipRuntime
 	
 	public SlipRuntime(String source, ImmutableList<Binding> runtime)
 	{
-		this(CharacterSequence.make(source), new EmptyList<>());
+		this(CharacterSequence.make(source), runtime);
 	}
 	
 	public SlipRuntime(BufferedReader file)
@@ -62,7 +62,7 @@ public class SlipRuntime
 		program = new Builder(raw.asTokens()).syntaxTrees().append(RuntimeMacro.getMacros());
 	}
 	
-	private ImmutableList<AST> runMacros()
+	public ImmutableList<AST> runMacros()
 	{
 		ImmutableList<Macro> macros = program.filter(A -> A.isMacro())
 											 .map(A -> (Macro)A.asExpression());
@@ -119,7 +119,13 @@ public class SlipRuntime
 			}
 		}
 		
+		runtime = bindings;
 		return results;
+	}
+	
+	public ImmutableList<Binding> getBindings()
+	{
+		return runtime;
 	}
 	
 	public static void main(String... args) throws FileNotFoundException, InterpException

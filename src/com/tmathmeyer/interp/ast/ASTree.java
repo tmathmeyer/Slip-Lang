@@ -7,9 +7,9 @@ import java.util.List;
 import com.tmathmeyer.interp.ds.EmptyList;
 import com.tmathmeyer.interp.expr.Application;
 import com.tmathmeyer.interp.expr.Def;
+import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.expr.If;
 import com.tmathmeyer.interp.expr.Lambda;
-import com.tmathmeyer.interp.expr.Let;
 import com.tmathmeyer.interp.expr.Loader;
 import com.tmathmeyer.interp.expr.Print;
 import com.tmathmeyer.interp.expr.Rest;
@@ -56,8 +56,6 @@ public class ASTree implements AST
 					return BinaryMathExpression.fromAST(list.rest(), node.value);
 				case 1:
 					return new Lambda(list.rest().rest().first().asExpression(), Lambda.getArgs(list.rest().first()));
-				case 2:
-					return new Let(list.rest());
 				case 3:
 					return new If(list.rest());
 				case 4:
@@ -76,8 +74,6 @@ public class ASTree implements AST
 					return new Type(list.rest());
 				case 11:
 					return new Macro(list.rest().first(), list.rest().rest().first());
-				case 12:
-					return Cons.fromList(list.rest());
 				case 13:
 					return new Loader(list.rest().first());
 				default:
@@ -141,6 +137,10 @@ public class ASTree implements AST
 	@Override
 	public ImmutableList<ASTBinding> structureCompare(ASNode t) throws MismatchedRepetitionSizeException
 	{
+		if (parts.get(0).equals(t))
+		{
+			throw new MismatchedRepetitionSizeException();
+		}
 		return t.structureCompare(this);
 	}
 
@@ -189,21 +189,28 @@ public class ASTree implements AST
 	}
 
 	@Override
-	public AST applyMacro(Macro macro)
+	public Pair<AST, Boolean> applyMacro(Macro macro)
 	{
-		if (parts.size() > 0)
-		{
-			if (parts.get(0).toString().equals(macro.getName()))
-			{
-				return macro.macrotize(this);
-			}
-		}
 		List<AST> asts = new LinkedList<>();
+		boolean changed = false;
 		for (AST t : parts)
 		{
-			asts.add(t.applyMacro(macro));
+			Pair<AST, Boolean> tt = t.applyMacro(macro);
+			asts.add(tt.a);
+			changed |= tt.b;
 		}
-		return new ASTree(asts);
+		AST tree = new ASTree(asts);
+		
+		if (asts.size() > 0)
+		{
+			if (asts.get(0).toString().equals(macro.getName()))
+			{
+				tree = macro.macrotize(tree);
+				changed = true;
+			}
+		}
+		
+		return new Pair<>(tree, changed);
 	}
 
 	@Override

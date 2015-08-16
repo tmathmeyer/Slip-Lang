@@ -1,12 +1,10 @@
 package com.tmathmeyer.interp.expr;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 
 import com.tmathmeyer.interp.ast.AST;
-import com.tmathmeyer.interp.maths.NANException;
+import com.tmathmeyer.interp.maths.InvalidTypeException;
 import com.tmathmeyer.interp.runtime.SlipRuntime;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
@@ -52,7 +50,7 @@ public class Loader implements Expression
 	    }
 	    else
 	    {
-	    	throw new NANException(filename, this);
+	    	throw new InvalidTypeException(filename, this);
 	    }
     }
 	

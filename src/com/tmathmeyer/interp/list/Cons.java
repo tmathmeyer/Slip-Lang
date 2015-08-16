@@ -41,13 +41,4 @@ public class Cons implements Expression
 	{
 		return "(cons " + app + " " + list + ")";
 	}
-
-	public static Expression fromList(ImmutableList<AST> list)
-	{
-		if (list.isEmpty())
-		{
-			return new Empty();
-		}
-		return new Cons(list.first().asExpression(), Cons.fromList(list.rest()));
-	}
 }

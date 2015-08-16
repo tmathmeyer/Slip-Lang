@@ -1,7 +1,6 @@
 package com.tmathmeyer.interp.types;
 
 import com.tmathmeyer.interp.ast.AST;
-import com.tmathmeyer.interp.ast.ASTGen;
 import com.tmathmeyer.interp.ds.EmptyList;
 import com.tmathmeyer.interp.expr.Binding;
 import com.tmathmeyer.interp.expr.InterpException;
@@ -28,7 +27,4 @@ public interface Expression
 		Expression e = syntax.asExpression();
 		return e;
 	}
-
-	public static String Y_source = "(lambda (le) ((lambda (f) (f f)) (lambda (f) (le (lambda (x) ((f f) x))))))";
-	public static Expression Y = Expression.fromAST(new ASTGen().generate(Y_source));
 }

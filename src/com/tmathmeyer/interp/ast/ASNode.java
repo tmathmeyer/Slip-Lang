@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.tmathmeyer.interp.ds.EmptyList;
+import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.expr.ID;
 import com.tmathmeyer.interp.expr.Real;
 import com.tmathmeyer.interp.expr.Symbol;
@@ -132,14 +133,14 @@ public class ASNode implements AST
 	}
 
 	@Override
-	public AST applyMacro(Macro macro)
+	public Pair<AST, Boolean> applyMacro(Macro macro)
 	{
 		if (value.equals(macro.getName()))
 		{
-			return macro.macrotize(this);
+			return new Pair<>(macro.macrotize(this), true);
 		}
 
-		return this;
+		return new Pair<>(this, false);
 	}
 
 	@Override
@@ -152,5 +153,33 @@ public class ASNode implements AST
     public boolean isMacro()
     {
 	    return value.equals("#");
+    }
+
+	@Override
+    public int hashCode()
+    {
+	    final int prime = 31;
+	    int result = 1;
+	    result = prime * result + ((value == null) ? 0 : value.hashCode());
+	    return result;
+    }
+
+	@Override
+    public boolean equals(Object obj)
+    {
+	    if (this == obj)
+		    return true;
+	    if (obj == null)
+		    return false;
+	    if (getClass() != obj.getClass())
+		    return false;
+	    ASNode other = (ASNode) obj;
+	    if (value == null)
+	    {
+		    if (other.value != null)
+			    return false;
+	    } else if (!value.equals(other.value))
+		    return false;
+	    return true;
     }
 }

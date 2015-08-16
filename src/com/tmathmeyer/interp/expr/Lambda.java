@@ -54,6 +54,11 @@ public class Lambda implements Expression
 
 	public String toString()
 	{
-		return "<>";
+		String result = "(lambda (";
+		for(Symbol s : args)
+		{
+			result += (" "+s);
+		}
+		return result + ") " + body + ")";
 	}
 }

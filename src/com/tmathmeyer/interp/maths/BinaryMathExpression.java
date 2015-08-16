@@ -14,7 +14,7 @@ public class BinaryMathExpression
 		switch (type.charAt(0))
 		{
 			case '+':
-				return new Plus(l, r);
+				return new Plus(list.map(A -> A.asExpression()));
 			case '-':
 				return new Minus(l, r);
 			case '*':

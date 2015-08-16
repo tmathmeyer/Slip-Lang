@@ -76,6 +76,10 @@ public class Tokenizer
 			}
 			col++;
 		}
+		if (temp.notEmpty())
+		{
+			result.add(temp);
+		}
 		return ImmutableList.fromSTD(result);
 	}
 }

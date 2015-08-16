@@ -34,7 +34,6 @@ public class SymbolLookupTable
 		registerSymbol("!", 0);
 
 		registerSymbol("lambda", 1);
-		registerSymbol("let", 2);
 		registerSymbol("if", 3);
 		registerSymbol("print", 4);
 		registerSymbol("cons", 5);
@@ -44,7 +43,6 @@ public class SymbolLookupTable
 		registerSymbol("#sdef", 9);
 		registerSymbol("type", 10);
 		registerSymbol("#", 11);
-		registerSymbol("list", 12);
 		registerSymbol("load", 13);
 	}
 }

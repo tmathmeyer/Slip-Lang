@@ -53,8 +53,9 @@ public class Macro implements Expression
 			{
 				while (pattern.structureCompare(asts.hasMacro(name)) != null)
 				{
-					asts = asts.applyMacro(this);
-					changed = true;
+					Pair<AST, Boolean> pair = asts.applyMacro(this);
+					asts = pair.a;
+					changed = pair.b;
 				}
 			}
 			catch (MismatchedRepetitionSizeException mrse)
@@ -73,9 +74,10 @@ public class Macro implements Expression
 		try
 		{
 			comp = meBaby.structureCompare(pattern);
-		} catch (MismatchedRepetitionSizeException mrse)
+		}
+		catch (MismatchedRepetitionSizeException mrse)
 		{
-			comp = new EmptyList<>();
+			return meBaby;
 		}
 		return replace.applyBindings(comp);
 	}

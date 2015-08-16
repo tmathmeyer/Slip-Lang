@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.tmathmeyer.interp.ds.EmptyList;
+import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.macro.Macro;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.values.ImmutableList;
@@ -89,7 +90,7 @@ public class RepeatingAST implements AST
 	@Override
 	public ImmutableList<ASTBinding> structureCompare(ASNode t) throws MismatchedRepetitionSizeException
 	{
-		return null;
+		throw new MismatchedRepetitionSizeException();
 	}
 
 	@Override
@@ -136,21 +137,28 @@ public class RepeatingAST implements AST
 	}
 
 	@Override
-	public AST applyMacro(Macro macro)
+	public Pair<AST, Boolean> applyMacro(Macro macro)
 	{
-		if (tree.size() > 0)
-		{
-			if (tree.get(0).toString().equals(macro.getName()))
-			{
-				return macro.macrotize(this);
-			}
-		}
 		List<AST> asts = new LinkedList<>();
+		boolean changed = false;
 		for (AST t : tree)
 		{
-			asts.add(t.applyMacro(macro));
+			Pair<AST, Boolean> tt = t.applyMacro(macro);
+			asts.add(tt.a);
+			changed |= tt.b;
 		}
-		return new ASTree(asts);
+		AST tree = new ASTree(asts);
+		
+		if (asts.size() > 0)
+		{
+			if (asts.get(0).toString().equals(macro.getName()))
+			{
+				tree = macro.macrotize(tree);
+				changed = true;
+			}
+		}
+		
+		return new Pair<>(tree, changed);
 	}
 
 	@Override
