@@ -5,15 +5,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-import com.tmathmeyer.interp.Binding;
-import com.tmathmeyer.interp.Function.Pair;
-import com.tmathmeyer.interp.FunctionMapping;
-import com.tmathmeyer.interp.InterpException;
-import com.tmathmeyer.interp.Symbol;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ast.CharacterSequence;
 import com.tmathmeyer.interp.ds.FunctionMappingCollection;
 import com.tmathmeyer.interp.ds.EmptyList;
+import com.tmathmeyer.interp.expr.Binding;
+import com.tmathmeyer.interp.expr.FunctionMapping;
+import com.tmathmeyer.interp.expr.InterpException;
+import com.tmathmeyer.interp.expr.Symbol;
+import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.macro.Macro;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
@@ -24,19 +24,41 @@ import com.tmathmeyer.lex.Builder;
 public class SlipRuntime
 {
 	private final ImmutableList<AST> program;
+	private final ImmutableList<Binding> runtime;
+	
+	public SlipRuntime(File file) throws FileNotFoundException
+	{
+		this(file, new EmptyList<>());
+	}
+	
+	public SlipRuntime(File file, ImmutableList<Binding> runtime) throws FileNotFoundException
+	{
+		this(new BufferedReader(new FileReader(file)), runtime);
+	}
 	
 	public SlipRuntime(String source)
 	{
-		this(CharacterSequence.make(source));
+		this(source, new EmptyList<>());
+	}
+	
+	public SlipRuntime(String source, ImmutableList<Binding> runtime)
+	{
+		this(CharacterSequence.make(source), new EmptyList<>());
 	}
 	
 	public SlipRuntime(BufferedReader file)
 	{
-		this(CharacterSequence.make(file));
+		this(file, new EmptyList<>());
 	}
 	
-	private SlipRuntime(CharacterSequence raw)
+	public SlipRuntime(BufferedReader file, ImmutableList<Binding> runtime)
 	{
+		this(CharacterSequence.make(file), runtime);
+	}
+	
+	private SlipRuntime(CharacterSequence raw, ImmutableList<Binding> runtime)
+	{
+		this.runtime = runtime;
 		program = new Builder(raw.asTokens()).syntaxTrees().append(RuntimeMacro.getMacros());
 	}
 	
@@ -62,11 +84,11 @@ public class SlipRuntime
 	
 	public ImmutableList<Value> evaluate()
 	{
-		ImmutableList<Binding> bindings = new EmptyList<>();
+		ImmutableList<Binding> bindings = runtime;
 		ImmutableList<Expression> ndefs = new EmptyList<>();
 		
 		ImmutableList<Expression> exprs = runMacros().map(a -> a.asExpression().desugar());
-		bindings.add(new Binding(new Symbol("#void"), Maybe.NOTHING));
+		bindings = bindings.add(new Binding(new Symbol("#void"), Maybe.NOTHING));
 		
 		for(Expression e : exprs)
 		{

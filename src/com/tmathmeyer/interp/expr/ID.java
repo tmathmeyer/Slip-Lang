@@ -1,4 +1,4 @@
-package com.tmathmeyer.interp;
+package com.tmathmeyer.interp.expr;
 
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;

@@ -1,11 +1,11 @@
-package com.tmathmeyer.interp;
+package com.tmathmeyer.interp.expr;
 
 import com.tmathmeyer.interp.ast.ASNode;
 import com.tmathmeyer.interp.ast.AST;
+import com.tmathmeyer.interp.expr.FunctionMapping;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
-import com.tmathmeyer.interp.FunctionMapping;
 
 public abstract class Def implements Expression
 {

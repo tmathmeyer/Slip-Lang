@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.tmathmeyer.interp.InterpException;
-import com.tmathmeyer.interp.Real;
 import com.tmathmeyer.interp.ds.EmptyList;
+import com.tmathmeyer.interp.expr.InterpException;
+import com.tmathmeyer.interp.expr.Real;
 import com.tmathmeyer.interp.maths.Plus;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;

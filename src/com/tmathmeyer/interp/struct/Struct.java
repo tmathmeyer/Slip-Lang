@@ -1,7 +1,7 @@
 package com.tmathmeyer.interp.struct;
 
-import com.tmathmeyer.interp.Binding;
-import com.tmathmeyer.interp.Symbol;
+import com.tmathmeyer.interp.expr.Binding;
+import com.tmathmeyer.interp.expr.Symbol;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
 

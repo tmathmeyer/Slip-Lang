@@ -1,6 +1,6 @@
 package com.tmathmeyer.interp.maths;
 
-import com.tmathmeyer.interp.InterpException;
+import com.tmathmeyer.interp.expr.InterpException;
 import com.tmathmeyer.interp.types.Expression;
 
 public class NANException extends InterpException

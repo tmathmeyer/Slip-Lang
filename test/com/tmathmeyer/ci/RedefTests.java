@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
-import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.ast.AST;
+import com.tmathmeyer.interp.expr.InterpException;
 import com.tmathmeyer.interp.runtime.SlipRuntime;
 import com.tmathmeyer.interp.values.ImmutableList;
 import com.tmathmeyer.lex.Builder;

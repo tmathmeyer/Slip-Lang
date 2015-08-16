@@ -1,4 +1,4 @@
-package com.tmathmeyer.interp;
+package com.tmathmeyer.interp.expr;
 
 /**
  * Created by ted on 12/19/14.

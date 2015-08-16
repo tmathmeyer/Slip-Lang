@@ -3,10 +3,10 @@ package com.tmathmeyer.interp.ast;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.tmathmeyer.interp.ID;
-import com.tmathmeyer.interp.Real;
-import com.tmathmeyer.interp.Symbol;
 import com.tmathmeyer.interp.ds.EmptyList;
+import com.tmathmeyer.interp.expr.ID;
+import com.tmathmeyer.interp.expr.Real;
+import com.tmathmeyer.interp.expr.Symbol;
 import com.tmathmeyer.interp.list.Empty;
 import com.tmathmeyer.interp.macro.Macro;
 import com.tmathmeyer.interp.types.Expression;

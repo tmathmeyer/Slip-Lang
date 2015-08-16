@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.tmathmeyer.interp.InterpException;
-import com.tmathmeyer.interp.Real;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ast.ASTGen;
+import com.tmathmeyer.interp.expr.InterpException;
+import com.tmathmeyer.interp.expr.Real;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.Number;

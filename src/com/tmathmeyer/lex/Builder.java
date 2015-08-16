@@ -3,10 +3,10 @@ package com.tmathmeyer.lex;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tmathmeyer.interp.Function.Pair;
 import com.tmathmeyer.interp.ast.ASNode;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ast.ASTree;
+import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Builder

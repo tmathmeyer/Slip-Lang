@@ -1,12 +1,12 @@
 package com.tmathmeyer.interp.macro;
 
-import com.tmathmeyer.interp.Binding;
-import com.tmathmeyer.interp.Function.Pair;
-import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ast.AST.ASTBinding;
 import com.tmathmeyer.interp.ast.MismatchedRepetitionSizeException;
 import com.tmathmeyer.interp.ds.EmptyList;
+import com.tmathmeyer.interp.expr.Binding;
+import com.tmathmeyer.interp.expr.InterpException;
+import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;

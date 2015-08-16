@@ -1,8 +1,8 @@
 package com.tmathmeyer.interp.list;
 
-import com.tmathmeyer.interp.Binding;
-import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.ast.AST;
+import com.tmathmeyer.interp.expr.Binding;
+import com.tmathmeyer.interp.expr.InterpException;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;

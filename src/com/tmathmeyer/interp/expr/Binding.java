@@ -1,4 +1,4 @@
-package com.tmathmeyer.interp;
+package com.tmathmeyer.interp.expr;
 
 import com.tmathmeyer.interp.ds.Partial;
 import com.tmathmeyer.interp.types.Value;

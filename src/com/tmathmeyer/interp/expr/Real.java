@@ -1,4 +1,4 @@
-package com.tmathmeyer.interp;
+package com.tmathmeyer.interp.expr;
 
 import com.tmathmeyer.interp.values.Bool;
 

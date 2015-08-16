@@ -4,15 +4,16 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.tmathmeyer.interp.Application;
-import com.tmathmeyer.interp.Def;
-import com.tmathmeyer.interp.If;
-import com.tmathmeyer.interp.Lambda;
-import com.tmathmeyer.interp.Let;
-import com.tmathmeyer.interp.Print;
-import com.tmathmeyer.interp.Rest;
-import com.tmathmeyer.interp.Type;
 import com.tmathmeyer.interp.ds.EmptyList;
+import com.tmathmeyer.interp.expr.Application;
+import com.tmathmeyer.interp.expr.Def;
+import com.tmathmeyer.interp.expr.If;
+import com.tmathmeyer.interp.expr.Lambda;
+import com.tmathmeyer.interp.expr.Let;
+import com.tmathmeyer.interp.expr.Loader;
+import com.tmathmeyer.interp.expr.Print;
+import com.tmathmeyer.interp.expr.Rest;
+import com.tmathmeyer.interp.expr.Type;
 import com.tmathmeyer.interp.list.Cons;
 import com.tmathmeyer.interp.list.First;
 import com.tmathmeyer.interp.macro.Macro;
@@ -77,6 +78,8 @@ public class ASTree implements AST
 					return new Macro(list.rest().first(), list.rest().rest().first());
 				case 12:
 					return Cons.fromList(list.rest());
+				case 13:
+					return new Loader(list.rest().first());
 				default:
 					return new Application(list);
 

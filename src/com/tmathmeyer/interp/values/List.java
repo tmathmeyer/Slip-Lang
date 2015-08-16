@@ -3,7 +3,7 @@ package com.tmathmeyer.interp.values;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
-import com.tmathmeyer.interp.Function;
+import com.tmathmeyer.interp.expr.Function;
 
 public class List<T> extends ImmutableList<T>
 {

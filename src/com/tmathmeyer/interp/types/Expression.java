@@ -1,10 +1,10 @@
 package com.tmathmeyer.interp.types;
 
-import com.tmathmeyer.interp.Binding;
-import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ast.ASTGen;
 import com.tmathmeyer.interp.ds.EmptyList;
+import com.tmathmeyer.interp.expr.Binding;
+import com.tmathmeyer.interp.expr.InterpException;
 import com.tmathmeyer.interp.values.ImmutableList;
 
 /**
