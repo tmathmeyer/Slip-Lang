@@ -1,12 +1,7 @@
-An interpreter (and compiler later) for a language with no name.
-
+A compiler and interpreter for the Slip Language.
 
 TODO:
- - give it a name
- - make it compile to x86
- - make macros better
- - make documentation
- - clean things?
- - better "libraries" / "runtime"
- - convert some of the operations to macros
- - stop sucking at spelling
+ - finish targeting x86
+ - improve (create) documentation
+ - a better runtime
+ - reduce interpreter code to macros
