@@ -1,12 +1,11 @@
 package com.tmathmeyer.interp.expr;
 
-import com.tmathmeyer.interp.ds.Partial;
 import com.tmathmeyer.interp.types.Value;
 
 /**
  * Created by ted on 12/20/14.
  */
-public class Binding implements Partial<Binding>, Value
+public class Binding implements Comparable<Binding>, Value
 {
 	public final Symbol name;
 	public final Value val;

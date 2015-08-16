@@ -2,7 +2,7 @@ package com.tmathmeyer.interp.runtime;
 
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ast.ASTGen;
-import com.tmathmeyer.interp.ds.EmptyList;
+import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 
 public abstract class RuntimeMacro

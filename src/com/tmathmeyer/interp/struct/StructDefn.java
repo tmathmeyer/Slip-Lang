@@ -2,16 +2,16 @@ package com.tmathmeyer.interp.struct;
 
 import com.tmathmeyer.interp.ast.ASNode;
 import com.tmathmeyer.interp.ast.AST;
-import com.tmathmeyer.interp.ds.FunctionMappingCollection;
-import com.tmathmeyer.interp.ds.EmptyList;
 import com.tmathmeyer.interp.expr.Binding;
 import com.tmathmeyer.interp.expr.Function;
 import com.tmathmeyer.interp.expr.FunctionMapping;
+import com.tmathmeyer.interp.expr.FunctionMappingCollection;
 import com.tmathmeyer.interp.expr.InterpException;
 import com.tmathmeyer.interp.expr.Lambda;
 import com.tmathmeyer.interp.expr.Symbol;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
+import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 
 public class StructDefn implements Expression

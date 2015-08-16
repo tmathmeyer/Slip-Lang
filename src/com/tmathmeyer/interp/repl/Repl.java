@@ -2,10 +2,10 @@ package com.tmathmeyer.interp.repl;
 
 import java.util.Scanner;
 
-import com.tmathmeyer.interp.ds.EmptyList;
 import com.tmathmeyer.interp.expr.Binding;
 import com.tmathmeyer.interp.runtime.SlipRuntime;
 import com.tmathmeyer.interp.types.Value;
+import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Repl

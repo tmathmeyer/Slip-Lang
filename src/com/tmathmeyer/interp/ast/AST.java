@@ -2,10 +2,10 @@ package com.tmathmeyer.interp.ast;
 
 import java.util.List;
 
-import com.tmathmeyer.interp.ds.EmptyList;
 import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.macro.Macro;
 import com.tmathmeyer.interp.types.Expression;
+import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 
 public interface AST

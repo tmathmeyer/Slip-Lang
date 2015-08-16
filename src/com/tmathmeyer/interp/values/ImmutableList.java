@@ -1,6 +1,5 @@
 package com.tmathmeyer.interp.values;
 
-import com.tmathmeyer.interp.ds.EmptyList;
 import com.tmathmeyer.interp.expr.Function;
 import com.tmathmeyer.interp.types.Value;
 

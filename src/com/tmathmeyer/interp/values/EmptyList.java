@@ -1,11 +1,9 @@
-package com.tmathmeyer.interp.ds;
+package com.tmathmeyer.interp.values;
 
 import java.util.Iterator;
 import java.util.function.Consumer;
 
 import com.tmathmeyer.interp.expr.Function;
-import com.tmathmeyer.interp.values.ImmutableList;
-import com.tmathmeyer.interp.values.List;
 
 public class EmptyList<T> extends ImmutableList<T>
 {
