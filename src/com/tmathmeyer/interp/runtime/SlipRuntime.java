@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Scanner;
 
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ast.CharacterSequence;
@@ -130,6 +131,29 @@ public class SlipRuntime
 	
 	public static void main(String... args) throws FileNotFoundException, InterpException
 	{
+		if (args.length == 0)
+		{
+			ImmutableList<Binding> saved = new EmptyList<>();
+
+			@SuppressWarnings("resource")
+			Scanner s = new Scanner(System.in);
+			while (true)
+			{
+				System.out.print("\n> ");
+
+				SlipRuntime slip = new SlipRuntime(s.nextLine(), saved);
+				Value v = slip.evaluate().first();
+				System.out.println(v);
+				saved = slip.getBindings();
+				if (v.toString().equals("exit"))
+				{
+					break;
+				}
+			}
+			
+			return;
+		}
+		
 		String filepath = args[0];
 
 		ImmutableList<Value> values = new SlipRuntime(new BufferedReader(new FileReader(new File(filepath)))).evaluate();
