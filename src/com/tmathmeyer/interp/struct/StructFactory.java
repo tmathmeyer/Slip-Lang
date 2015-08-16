@@ -9,24 +9,24 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class StructFactory implements Expression
 {
-	public final ImmutableList<Symbol> symbols;
-	public final Symbol name;
+    public final ImmutableList<Symbol> symbols;
+    public final Symbol name;
 
-	public StructFactory(StructDefn structDefn)
-	{
-		symbols = structDefn.args;
-		name = structDefn.name;
-	}
+    public StructFactory(StructDefn structDefn)
+    {
+        symbols = structDefn.args;
+        name = structDefn.name;
+    }
 
-	@Override
-	public Expression desugar()
-	{
-		throw new RuntimeException("can't desugar a struct creating function");
-	}
+    @Override
+    public Expression desugar()
+    {
+        throw new RuntimeException("can't desugar a struct creating function");
+    }
 
-	@Override
-	public Value interp(ImmutableList<Binding> env) throws InterpException
-	{
-		return new Struct(name, env.filter(B -> symbols.contains(B.name)));
-	}
+    @Override
+    public Value interp(ImmutableList<Binding> env) throws InterpException
+    {
+        return new Struct(name, env.filter(B -> symbols.contains(B.name)));
+    }
 }

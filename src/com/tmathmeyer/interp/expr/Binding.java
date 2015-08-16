@@ -7,33 +7,33 @@ import com.tmathmeyer.interp.types.Value;
  */
 public class Binding implements Comparable<Binding>, Value
 {
-	public final Symbol name;
-	public final Value val;
+    public final Symbol name;
+    public final Value val;
 
-	public Binding(Symbol s, Value v)
-	{
-		val = v;
-		name = s;
-	}
+    public Binding(Symbol s, Value v)
+    {
+        val = v;
+        name = s;
+    }
 
-	@Override
-	public int compareTo(Binding binding)
-	{
-		if (name == null)
-		{
-			throw new RuntimeException("binding with no name: value of -> " + val);
-		}
-		return name.compareTo(binding.name);
-	}
+    @Override
+    public int compareTo(Binding binding)
+    {
+        if (name == null)
+        {
+            throw new RuntimeException("binding with no name: value of -> " + val);
+        }
+        return name.compareTo(binding.name);
+    }
 
-	public String toString()
-	{
-		return name + ":" + val;
-	}
+    public String toString()
+    {
+        return name + ":" + val;
+    }
 
-	@Override
+    @Override
     public String getTypeName()
     {
-	    return "binding";
+        return "binding";
     }
 }

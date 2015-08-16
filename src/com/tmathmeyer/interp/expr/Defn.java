@@ -7,26 +7,26 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Defn
 {
-	public final Expression E;
-	public final Symbol S;
+    public final Expression E;
+    public final Symbol S;
 
-	public Defn(Expression exp, Symbol sym)
-	{
-		S = sym;
-		E = exp;
-	}
+    public Defn(Expression exp, Symbol sym)
+    {
+        S = sym;
+        E = exp;
+    }
 
-	public Defn(AST in)
-	{
-		ImmutableList<AST> parts = ImmutableList.fromSTD(in.getParts());
-		ASNode node = (ASNode) parts.first();
+    public Defn(AST in)
+    {
+        ImmutableList<AST> parts = ImmutableList.fromSTD(in.getParts());
+        ASNode node = (ASNode) parts.first();
 
-		S = new Symbol(node.value);
-		E = parts.rest().first().asExpression();
-	}
+        S = new Symbol(node.value);
+        E = parts.rest().first().asExpression();
+    }
 
-	public String toString()
-	{
-		return "<" + S + "::" + E + ">";
-	}
+    public String toString()
+    {
+        return "<" + S + "::" + E + ">";
+    }
 }

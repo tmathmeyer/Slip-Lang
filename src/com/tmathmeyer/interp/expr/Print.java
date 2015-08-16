@@ -8,31 +8,31 @@ import com.tmathmeyer.interp.values.Number;
 
 public class Print implements Expression
 {
-	private final ImmutableList<Expression> toPrint;
+    private final ImmutableList<Expression> toPrint;
 
-	public Print(ImmutableList<Expression> out, int dummy)
-	{
-		toPrint = out;
-	}
+    public Print(ImmutableList<Expression> out, int dummy)
+    {
+        toPrint = out;
+    }
 
-	public Print(ImmutableList<AST> rest)
-	{
-		this(rest.map(a -> a.asExpression()), 0);
-	}
+    public Print(ImmutableList<AST> rest)
+    {
+        this(rest.map(a -> a.asExpression()), 0);
+    }
 
-	@Override
-	public Expression desugar()
-	{
-		return new Print(toPrint.map(a -> a.desugar()), 0);
-	}
+    @Override
+    public Expression desugar()
+    {
+        return new Print(toPrint.map(a -> a.desugar()), 0);
+    }
 
-	@Override
-	public Value interp(ImmutableList<Binding> env) throws InterpException
-	{
-		for(Expression e : toPrint)
-		{
-			System.out.println(e.interp(env));
-		}
-		return new Number(new Real(toPrint.size()));
-	}
+    @Override
+    public Value interp(ImmutableList<Binding> env) throws InterpException
+    {
+        for (Expression e : toPrint)
+        {
+            System.out.println(e.interp(env));
+        }
+        return new Number(new Real(toPrint.size()));
+    }
 }

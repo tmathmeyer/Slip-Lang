@@ -13,59 +13,59 @@ import com.tmathmeyer.interp.values.Str;
 
 public class Loader implements Expression
 {
-	private final Expression filename;
+    private final Expression filename;
 
-	public Loader(AST first)
+    public Loader(AST first)
     {
-	    this(first.asExpression());
+        this(first.asExpression());
     }
-	
-	private Loader(Expression expr)
-	{
-		filename = expr;
-	}
 
-	@Override
+    private Loader(Expression expr)
+    {
+        filename = expr;
+    }
+
+    @Override
     public Expression desugar()
     {
-	    return new Loader(filename.desugar());
+        return new Loader(filename.desugar());
     }
 
-	@Override
+    @Override
     public Value interp(ImmutableList<Binding> env) throws InterpException
     {
-	    Value val = filename.interp(env);
-	    
-	    if (val instanceof Str)
-	    {
-	    	String v = ((Str)val).value;
-	    	try
+        Value val = filename.interp(env);
+
+        if (val instanceof Str)
+        {
+            String v = ((Str) val).value;
+            try
             {
-	            return new SlipRuntime(new File(v), env).evaluate().first();
+                return new SlipRuntime(new File(v), env).evaluate().first();
             }
-	    	catch (FileNotFoundException e)
+            catch (FileNotFoundException e)
             {
-	    		throw new LoaderException(v);
+                throw new LoaderException(v);
             }
-	    }
-	    else
-	    {
-	    	throw new InvalidTypeException(filename, this);
-	    }
+        } else
+        {
+            throw new InvalidTypeException(filename, this);
+        }
     }
-	
-	public static class LoaderException extends InterpException
-	{
-		private final String s;
-		public void printStackTrace()
-		{
-			System.out.println("Cannot load file: "+s);
-		}
-		
-		public LoaderException(String file)
-		{
-			s = file;
-		}
-	}
+
+    public static class LoaderException extends InterpException
+    {
+        private final String s;
+
+        public void printStackTrace()
+        {
+            System.out.println("Cannot load file: " + s);
+        }
+
+        public LoaderException(String file)
+        {
+            s = file;
+        }
+    }
 
 }

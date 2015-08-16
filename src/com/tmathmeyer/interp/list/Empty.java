@@ -9,20 +9,20 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Empty implements Expression
 {
-	@Override
-	public Expression desugar()
-	{
-		return this;
-	}
+    @Override
+    public Expression desugar()
+    {
+        return this;
+    }
 
-	@Override
-	public Value interp(ImmutableList<Binding> env) throws InterpException
-	{
-		return new EmptyList<>();
-	}
+    @Override
+    public Value interp(ImmutableList<Binding> env) throws InterpException
+    {
+        return new EmptyList<>();
+    }
 
-	public String toString()
-	{
-		return "empty";
-	}
+    public String toString()
+    {
+        return "empty";
+    }
 }

@@ -9,30 +9,30 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class StructInspector implements Expression
 {
-	public static Symbol name;
-	public static final Symbol STRUCT_SYM = new Symbol("struct");
-	
-	public StructInspector(Symbol in)
-	{
-		name = in;
-	}
+    public static Symbol name;
+    public static final Symbol STRUCT_SYM = new Symbol("struct");
 
-	@Override
-	public Expression desugar()
-	{
-		throw new RuntimeException("cant desugar the struct inspector");
-	}
+    public StructInspector(Symbol in)
+    {
+        name = in;
+    }
 
-	@Override
-	public Value interp(ImmutableList<Binding> env) throws InterpException
-	{
-		Binding b = env.filter(B -> B.name.equals(STRUCT_SYM)).first();
-		if (b != null)
-		{
-			return ((Struct)b.val).values.filter(B -> B.name.equals(name)).first();
-		}
-		throw new NullPointerException();
-		
-	}
+    @Override
+    public Expression desugar()
+    {
+        throw new RuntimeException("cant desugar the struct inspector");
+    }
+
+    @Override
+    public Value interp(ImmutableList<Binding> env) throws InterpException
+    {
+        Binding b = env.filter(B -> B.name.equals(STRUCT_SYM)).first();
+        if (b != null)
+        {
+            return ((Struct) b.val).values.filter(B -> B.name.equals(name)).first();
+        }
+        throw new NullPointerException();
+
+    }
 
 }

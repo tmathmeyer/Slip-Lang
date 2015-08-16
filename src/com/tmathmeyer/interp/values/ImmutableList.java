@@ -8,46 +8,47 @@ import com.tmathmeyer.interp.types.Value;
  */
 public abstract class ImmutableList<T> implements Value, Iterable<T>
 {
-	public abstract T first();
+    public abstract T first();
 
-	public abstract ImmutableList<T> rest();
+    public abstract ImmutableList<T> rest();
 
-	public abstract ImmutableList<T> add(T t);
+    public abstract ImmutableList<T> add(T t);
 
-	public abstract ImmutableList<T> reverse();
+    public abstract ImmutableList<T> reverse();
 
-	public abstract ImmutableList<T> addEnd(T t);
+    public abstract ImmutableList<T> addEnd(T t);
 
-	public abstract boolean isEmpty();
+    public abstract boolean isEmpty();
 
-	public abstract String asCSV();
+    public abstract String asCSV();
 
-	public abstract boolean contains(T name);
+    public abstract boolean contains(T name);
 
-	public abstract <R> ImmutableList<R> map(Function<? super T, ? extends R> arg0);
+    public abstract <R> ImmutableList<R> map(Function<? super T, ? extends R> arg0);
 
-	public abstract ImmutableList<T> filter(Function<? super T, Boolean> arg0);
+    public abstract ImmutableList<T> filter(Function<? super T, Boolean> arg0);
 
-	public static <T> ImmutableList<T> fromSTD(java.util.List<T> list)
-	{
-		ImmutableList<T> result = new EmptyList<>();
-		for (int i = list.size(); i > 0; i--)
-		{
-			result = result.add(list.get(i - 1));
-		}
-		return result;
-	}
-
-	public abstract ImmutableList<T> append(ImmutableList<T> result);
-
-	public abstract int size();
-
-	public static <T> ImmutableList<T> collapse(ImmutableList<ImmutableList<T>> map)
+    public static <T> ImmutableList<T> fromSTD(java.util.List<T> list)
     {
-	    if (map.isEmpty()) {
-	    	return new EmptyList<>();
-	    }
-	    return map.first().append(collapse(map.rest()));
+        ImmutableList<T> result = new EmptyList<>();
+        for (int i = list.size(); i > 0; i--)
+        {
+            result = result.add(list.get(i - 1));
+        }
+        return result;
+    }
+
+    public abstract ImmutableList<T> append(ImmutableList<T> result);
+
+    public abstract int size();
+
+    public static <T> ImmutableList<T> collapse(ImmutableList<ImmutableList<T>> map)
+    {
+        if (map.isEmpty())
+        {
+            return new EmptyList<>();
+        }
+        return map.first().append(collapse(map.rest()));
     }
 
 }

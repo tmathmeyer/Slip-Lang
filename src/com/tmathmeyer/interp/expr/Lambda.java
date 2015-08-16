@@ -10,55 +10,55 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Lambda implements Expression
 {
-	public final Expression body;
-	public final ImmutableList<Symbol> args;
+    public final Expression body;
+    public final ImmutableList<Symbol> args;
 
-	public Lambda(Expression bod, Symbol... arguments)
-	{
-		body = bod;
-		ImmutableList<Symbol> temp = new EmptyList<Symbol>();
-		for (Symbol e : arguments)
-		{
-			temp = temp.add(e);
-		}
-		args = temp;
-	}
+    public Lambda(Expression bod, Symbol... arguments)
+    {
+        body = bod;
+        ImmutableList<Symbol> temp = new EmptyList<Symbol>();
+        for (Symbol e : arguments)
+        {
+            temp = temp.add(e);
+        }
+        args = temp;
+    }
 
-	public Lambda(Expression function, ImmutableList<Symbol> arguments)
-	{
-		body = function;
-		args = arguments;
-	}
+    public Lambda(Expression function, ImmutableList<Symbol> arguments)
+    {
+        body = function;
+        args = arguments;
+    }
 
-	@Override
-	public Expression desugar()
-	{
-		return new Lambda(body.desugar(), args);
-	}
+    @Override
+    public Expression desugar()
+    {
+        return new Lambda(body.desugar(), args);
+    }
 
-	@Override
-	public Value interp(ImmutableList<Binding> env) throws InterpException
-	{
-		return new Closure(env, body, args);
-	}
+    @Override
+    public Value interp(ImmutableList<Binding> env) throws InterpException
+    {
+        return new Closure(env, body, args);
+    }
 
-	public static ImmutableList<Symbol> getArgs(AST first)
-	{
-		if (first instanceof ASNode)
-		{
-			throw new RuntimeException("these arent args!!");
-		}
+    public static ImmutableList<Symbol> getArgs(AST first)
+    {
+        if (first instanceof ASNode)
+        {
+            throw new RuntimeException("these arent args!!");
+        }
 
-		return ImmutableList.fromSTD(first.getParts()).map(in -> new Symbol(((ASNode) in).value));
-	}
+        return ImmutableList.fromSTD(first.getParts()).map(in -> new Symbol(((ASNode) in).value));
+    }
 
-	public String toString()
-	{
-		String result = "(lambda (";
-		for(Symbol s : args)
-		{
-			result += (" "+s);
-		}
-		return result + ") " + body + ")";
-	}
+    public String toString()
+    {
+        String result = "(lambda (";
+        for (Symbol s : args)
+        {
+            result += (" " + s);
+        }
+        return result + ") " + body + ")";
+    }
 }

@@ -9,28 +9,28 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class First implements Expression
 {
-	final Expression list;
+    final Expression list;
 
-	public First(Expression l)
-	{
-		list = l;
-	}
+    public First(Expression l)
+    {
+        list = l;
+    }
 
-	public First(ImmutableList<AST> rest)
-	{
-		list = rest.first().asExpression();
-	}
+    public First(ImmutableList<AST> rest)
+    {
+        list = rest.first().asExpression();
+    }
 
-	@Override
-	public Expression desugar()
-	{
-		return new First(list.desugar());
-	}
+    @Override
+    public Expression desugar()
+    {
+        return new First(list.desugar());
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Value interp(ImmutableList<Binding> env) throws InterpException
-	{
-		return ((ImmutableList<Value>) list.interp(env)).first();
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public Value interp(ImmutableList<Binding> env) throws InterpException
+    {
+        return ((ImmutableList<Value>) list.interp(env)).first();
+    }
 }

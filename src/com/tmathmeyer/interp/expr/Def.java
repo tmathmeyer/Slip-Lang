@@ -9,34 +9,34 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public abstract class Def implements Expression
 {
-	public static class ValueDefinition extends Def
-	{
-		public final Symbol name;
-		public final Expression expr;
+    public static class ValueDefinition extends Def
+    {
+        public final Symbol name;
+        public final Expression expr;
 
-		public ValueDefinition(Symbol name, Expression asExpression)
-		{
-			this.name = name;
-			this.expr = asExpression;
-		}
+        public ValueDefinition(Symbol name, Expression asExpression)
+        {
+            this.name = name;
+            this.expr = asExpression;
+        }
 
-		@Override
-		public Expression desugar()
-		{
-			return new FunctionMapping(name, expr.desugar());
-		}
+        @Override
+        public Expression desugar()
+        {
+            return new FunctionMapping(name, expr.desugar());
+        }
 
-		@Override
-		public Value interp(ImmutableList<Binding> env) throws InterpException
-		{
-			throw new RuntimeException("attempting to interp a #def, please desugar first");
-		}
-	}
+        @Override
+        public Value interp(ImmutableList<Binding> env) throws InterpException
+        {
+            throw new RuntimeException("attempting to interp a #def, please desugar first");
+        }
+    }
 
-	public static Def getDefn(ImmutableList<AST> rest)
-	{
-		Symbol name = new Symbol(((ASNode) rest.first()).value);
-		return new ValueDefinition(name, rest.rest().first().asExpression());
-	}
+    public static Def getDefn(ImmutableList<AST> rest)
+    {
+        Symbol name = new Symbol(((ASNode) rest.first()).value);
+        return new ValueDefinition(name, rest.rest().first().asExpression());
+    }
 
 }

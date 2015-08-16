@@ -7,24 +7,24 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Struct implements Value
 {
-	public final ImmutableList<Binding> values;
-	public final Symbol name;
+    public final ImmutableList<Binding> values;
+    public final Symbol name;
 
-	public Struct(Symbol sname, ImmutableList<Binding> intersect)
-	{
-		values = intersect;
-		name = sname;
-	}
+    public Struct(Symbol sname, ImmutableList<Binding> intersect)
+    {
+        values = intersect;
+        name = sname;
+    }
 
-	@Override
-	public String toString()
-	{
-		return name + "" + values;
-	}
+    @Override
+    public String toString()
+    {
+        return name + "" + values;
+    }
 
-	@Override
+    @Override
     public String getTypeName()
     {
-	    return "@"+name;
+        return "@" + name;
     }
 }

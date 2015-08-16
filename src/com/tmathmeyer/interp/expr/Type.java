@@ -8,27 +8,27 @@ import com.tmathmeyer.interp.values.Str;
 
 public class Type implements Expression
 {
-	final Expression of;
+    final Expression of;
 
-	public Type(Expression l)
-	{
-		of = l;
-	}
+    public Type(Expression l)
+    {
+        of = l;
+    }
 
-	public Type(ImmutableList<AST> rest)
-	{
-		of = rest.first().asExpression();
-	}
+    public Type(ImmutableList<AST> rest)
+    {
+        of = rest.first().asExpression();
+    }
 
-	@Override
-	public Expression desugar()
-	{
-		return new Type(of.desugar());
-	}
+    @Override
+    public Expression desugar()
+    {
+        return new Type(of.desugar());
+    }
 
-	@Override
-	public Value interp(ImmutableList<Binding> env) throws InterpException
-	{
-		return new Str(of.interp(env).getClass().getSimpleName());
-	}
+    @Override
+    public Value interp(ImmutableList<Binding> env) throws InterpException
+    {
+        return new Str(of.interp(env).getClass().getSimpleName());
+    }
 }

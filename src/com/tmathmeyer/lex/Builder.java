@@ -11,67 +11,67 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Builder
 {
-	private final ImmutableList<AST> tree; 
-	
-	public Builder(ImmutableList<Token> tokens)
+    private final ImmutableList<AST> tree;
+
+    public Builder(ImmutableList<Token> tokens)
     {
-	    tree = fromTokens(tokens);
+        tree = fromTokens(tokens);
     }
-	
-	public ImmutableList<AST> syntaxTrees()
-	{
-		return tree;
-	}
 
-	private Pair<AST, ImmutableList<Token>> singleFromTokens(ImmutableList<Token> tokens)
-	{
-		switch (tokens.first().piece.charAt(0))
-		{
-			case '(':
-				Token last = tokens.first();
-				tokens = tokens.rest();
-				ASTree tree = new ASTree();
-				while ((!tokens.isEmpty()) && !tokens.first().piece.equals(")"))
-				{
-					last = tokens.first();
-					Pair<AST, ImmutableList<Token>> res = singleFromTokens(tokens);
-					tree.getParts().add(res.a);
-					tokens = res.b;
-				}
-				if (tokens.isEmpty())
-				{
-					throw new RuntimeException("expected a ) at col:" + last.col_nom + ", row:" + last.line_num
-					        + " but found nothing");
-				}
-				return new Pair<AST, ImmutableList<Token>>(tree, tokens.rest());
-			case ')':
-				System.out.println("error, encountered an unexpected \")\" at col:" + tokens.first().col_nom + ", row:"
-				        + tokens.first().line_num);
-				break;
-			default:
-				return new Pair<AST, ImmutableList<Token>>(new ASNode(tokens.first().piece), tokens.rest());
-		}
+    public ImmutableList<AST> syntaxTrees()
+    {
+        return tree;
+    }
 
-		return new Pair<AST, ImmutableList<Token>>(null, tokens.rest());
-	}
+    private Pair<AST, ImmutableList<Token>> singleFromTokens(ImmutableList<Token> tokens)
+    {
+        switch (tokens.first().piece.charAt(0))
+        {
+            case '(':
+                Token last = tokens.first();
+                tokens = tokens.rest();
+                ASTree tree = new ASTree();
+                while ((!tokens.isEmpty()) && !tokens.first().piece.equals(")"))
+                {
+                    last = tokens.first();
+                    Pair<AST, ImmutableList<Token>> res = singleFromTokens(tokens);
+                    tree.getParts().add(res.a);
+                    tokens = res.b;
+                }
+                if (tokens.isEmpty())
+                {
+                    throw new RuntimeException("expected a ) at col:" + last.col_nom + ", row:" + last.line_num
+                            + " but found nothing");
+                }
+                return new Pair<AST, ImmutableList<Token>>(tree, tokens.rest());
+            case ')':
+                System.out.println("error, encountered an unexpected \")\" at col:" + tokens.first().col_nom + ", row:"
+                        + tokens.first().line_num);
+                break;
+            default:
+                return new Pair<AST, ImmutableList<Token>>(new ASNode(tokens.first().piece), tokens.rest());
+        }
 
-	private ImmutableList<AST> fromTokens(ImmutableList<Token> tokens)
-	{
-		List<AST> result = new ArrayList<AST>();
-		while (!tokens.isEmpty())
-		{
-			Pair<AST, ImmutableList<Token>> res = singleFromTokens(tokens);
-			if (res.a != null)
-			{
-				result.add(res.a);
-				tokens = res.b;
-			} else
-			{
-				throw new RuntimeException("error: malformed tree");
-			}
+        return new Pair<AST, ImmutableList<Token>>(null, tokens.rest());
+    }
 
-		}
+    private ImmutableList<AST> fromTokens(ImmutableList<Token> tokens)
+    {
+        List<AST> result = new ArrayList<AST>();
+        while (!tokens.isEmpty())
+        {
+            Pair<AST, ImmutableList<Token>> res = singleFromTokens(tokens);
+            if (res.a != null)
+            {
+                result.add(res.a);
+                tokens = res.b;
+            } else
+            {
+                throw new RuntimeException("error: malformed tree");
+            }
 
-		return ImmutableList.fromSTD(result);
-	}
+        }
+
+        return ImmutableList.fromSTD(result);
+    }
 }

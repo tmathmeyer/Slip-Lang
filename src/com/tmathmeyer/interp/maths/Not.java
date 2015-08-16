@@ -9,25 +9,25 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Not implements Expression
 {
-	private final Expression invert;
+    private final Expression invert;
 
-	public Not(Expression l)
-	{
-		invert = l;
-	}
+    public Not(Expression l)
+    {
+        invert = l;
+    }
 
-	@Override
-	public Expression desugar()
-	{
-		return new Not(invert.desugar());
-	}
+    @Override
+    public Expression desugar()
+    {
+        return new Not(invert.desugar());
+    }
 
-	@Override
-	public Value interp(ImmutableList<Binding> env) throws InterpException
-	{
-		Value res = invert.interp(env);
-		Bool val = (Bool) res;
-		return val.other();
-	}
+    @Override
+    public Value interp(ImmutableList<Binding> env) throws InterpException
+    {
+        Value res = invert.interp(env);
+        Bool val = (Bool) res;
+        return val.other();
+    }
 
 }

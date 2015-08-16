@@ -4,14 +4,11 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class BMatch extends RuntimeMacro
 {
-	@Override
+    @Override
     public ImmutableList<String> getSrc()
     {
-		return asList(
-				"(# (bmatch (ftest fexp) (test exp) ...)"
-				+"        (if ftest fexp"
-				+"            (bmatch (test exp) ...)))",
-				"(# (bmatch (ftest fexp))"
-				+"        (if ftest fexp #void))");
+        return asList("(# (bmatch (ftest fexp) (test exp) ...)" + "        (if ftest fexp"
+                + "            (bmatch (test exp) ...)))", "(# (bmatch (ftest fexp))"
+                + "        (if ftest fexp #void))");
     }
 }

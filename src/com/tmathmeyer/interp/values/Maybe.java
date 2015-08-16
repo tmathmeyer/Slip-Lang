@@ -4,24 +4,24 @@ import com.tmathmeyer.interp.types.Value;
 
 public class Maybe implements Value
 {
-	private final Value v;
+    private final Value v;
 
-	public Maybe(Value v)
-	{
-		this.v = v;
-	}
+    public Maybe(Value v)
+    {
+        this.v = v;
+    }
 
-	public static final Maybe NOTHING = new Maybe(null);
+    public static final Maybe NOTHING = new Maybe(null);
 
-	public String toString()
-	{
-		return v + "";
-	}
+    public String toString()
+    {
+        return v + "";
+    }
 
-	@Override
+    @Override
     public String getTypeName()
     {
-	    return "maybe";
+        return "maybe";
     }
 
 }

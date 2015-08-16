@@ -7,28 +7,28 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Rest implements Expression
 {
-	final Expression list;
+    final Expression list;
 
-	public Rest(Expression l)
-	{
-		list = l;
-	}
+    public Rest(Expression l)
+    {
+        list = l;
+    }
 
-	public Rest(ImmutableList<AST> rest)
-	{
-		list = rest.first().asExpression();
-	}
+    public Rest(ImmutableList<AST> rest)
+    {
+        list = rest.first().asExpression();
+    }
 
-	@Override
-	public Expression desugar()
-	{
-		return new Rest(list.desugar());
-	}
+    @Override
+    public Expression desugar()
+    {
+        return new Rest(list.desugar());
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Value interp(ImmutableList<Binding> env) throws InterpException
-	{
-		return ((ImmutableList<Value>) list.interp(env)).rest();
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public Value interp(ImmutableList<Binding> env) throws InterpException
+    {
+        return ((ImmutableList<Value>) list.interp(env)).rest();
+    }
 }

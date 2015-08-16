@@ -9,36 +9,36 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Cons implements Expression
 {
-	final Expression app;
-	final Expression list;
+    final Expression app;
+    final Expression list;
 
-	public Cons(Expression a, Expression l)
-	{
-		app = a;
-		list = l;
-	}
+    public Cons(Expression a, Expression l)
+    {
+        app = a;
+        list = l;
+    }
 
-	public Cons(ImmutableList<AST> rest)
-	{
-		app = rest.first().asExpression();
-		list = rest.rest().first().asExpression();
-	}
+    public Cons(ImmutableList<AST> rest)
+    {
+        app = rest.first().asExpression();
+        list = rest.rest().first().asExpression();
+    }
 
-	@Override
-	public Expression desugar()
-	{
-		return new Cons(app.desugar(), list.desugar());
-	}
+    @Override
+    public Expression desugar()
+    {
+        return new Cons(app.desugar(), list.desugar());
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Value interp(ImmutableList<Binding> env) throws InterpException
-	{
-		return ((ImmutableList<Value>) list.interp(env)).add(app.interp(env));
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public Value interp(ImmutableList<Binding> env) throws InterpException
+    {
+        return ((ImmutableList<Value>) list.interp(env)).add(app.interp(env));
+    }
 
-	public String toString()
-	{
-		return "(cons " + app + " " + list + ")";
-	}
+    public String toString()
+    {
+        return "(cons " + app + " " + list + ")";
+    }
 }

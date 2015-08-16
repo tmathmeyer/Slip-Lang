@@ -10,46 +10,46 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class FunctionMappingCollection implements Expression
 {
-	private final Set<FunctionMapping> backing = new HashSet<>();
-	private final ImmutableList<FunctionMapping> functions;
+    private final Set<FunctionMapping> backing = new HashSet<>();
+    private final ImmutableList<FunctionMapping> functions;
 
-	public FunctionMappingCollection(ImmutableList<FunctionMapping> sans)
-	{
-		functions = sans;
-		while (!sans.isEmpty())
-		{
-			backing.add(sans.first());
-			sans = sans.rest();
-		}
-	}
+    public FunctionMappingCollection(ImmutableList<FunctionMapping> sans)
+    {
+        functions = sans;
+        while (!sans.isEmpty())
+        {
+            backing.add(sans.first());
+            sans = sans.rest();
+        }
+    }
 
-	public ImmutableList<FunctionMapping> getFunctions()
-	{
-		return functions;
-	}
-	
-	public void doWithCopy(Consumer<FunctionMapping> consumer)
-	{
-		for (FunctionMapping ds : backing)
-		{
-			consumer.accept(ds);
-		}
-	}
+    public ImmutableList<FunctionMapping> getFunctions()
+    {
+        return functions;
+    }
 
-	@Override
-	public Expression desugar()
-	{
-		throw new RuntimeException("can't desugar a DefSansSet");
-	}
+    public void doWithCopy(Consumer<FunctionMapping> consumer)
+    {
+        for (FunctionMapping ds : backing)
+        {
+            consumer.accept(ds);
+        }
+    }
 
-	@Override
-	public Value interp(ImmutableList<Binding> env) throws InterpException
-	{
-		Value last = null;
-		for (FunctionMapping ds : backing)
-		{
-			last = ds.interp(env);
-		}
-		return last;
-	}
+    @Override
+    public Expression desugar()
+    {
+        throw new RuntimeException("can't desugar a DefSansSet");
+    }
+
+    @Override
+    public Value interp(ImmutableList<Binding> env) throws InterpException
+    {
+        Value last = null;
+        for (FunctionMapping ds : backing)
+        {
+            last = ds.interp(env);
+        }
+        return last;
+    }
 }

@@ -5,17 +5,17 @@ package com.tmathmeyer.interp.expr;
  */
 public interface Function<I, O>
 {
-	public O eval(I in);
+    public O eval(I in);
 
-	public class Pair<A, B>
-	{
-		public final A a;
-		public final B b;
+    public class Pair<A, B>
+    {
+        public final A a;
+        public final B b;
 
-		public Pair(A aa, B bb)
-		{
-			a = aa;
-			b = bb;
-		}
-	}
+        public Pair(A aa, B bb)
+        {
+            a = aa;
+            b = bb;
+        }
+    }
 }

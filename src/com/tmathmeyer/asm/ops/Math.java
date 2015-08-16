@@ -4,21 +4,21 @@ import com.tmathmeyer.asm.Operation;
 
 public class Math extends Operation
 {
-	public static enum MathOP
-	{
-		ADD, SUBTRACT, MULTIPLE, DIVIDE;
-	}
+    public static enum MathOP
+    {
+        ADD, SUBTRACT, MULTIPLE, DIVIDE;
+    }
 
-	@Override
-	public void writeToBytes(byte[] bytes, short indx)
-	{
-		// TODO Auto-generated method stub
+    @Override
+    public void writeToBytes(byte[] bytes, short indx)
+    {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public int getByteSize()
-	{
-		return 5;
-	}
+    @Override
+    public int getByteSize()
+    {
+        return 5;
+    }
 }

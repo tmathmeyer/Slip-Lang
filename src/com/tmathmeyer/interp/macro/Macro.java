@@ -13,87 +13,87 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Macro implements Expression
 {
-	private final String name;
-	private final AST pattern;
-	private final AST replace;
+    private final String name;
+    private final AST pattern;
+    private final AST replace;
 
-	public Macro(AST pattern, AST replace)
-	{
-		this.name = pattern.name();
-		this.pattern = pattern.toRepeatingTree();
-		this.replace = replace.toRepeatingTree();
-	}
+    public Macro(AST pattern, AST replace)
+    {
+        this.name = pattern.name();
+        this.pattern = pattern.toRepeatingTree();
+        this.replace = replace.toRepeatingTree();
+    }
 
-	@Override
-	public Expression desugar()
-	{
-		throw new RuntimeException("MACROS CANNOT BE DESUGARED");
-	}
+    @Override
+    public Expression desugar()
+    {
+        throw new RuntimeException("MACROS CANNOT BE DESUGARED");
+    }
 
-	@Override
-	public String toString()
-	{
-		return name + " :: {{" + pattern + "}} to {{" + replace + "}}";
-	}
+    @Override
+    public String toString()
+    {
+        return name + " :: {{" + pattern + "}} to {{" + replace + "}}";
+    }
 
-	@Override
-	public Value interp(ImmutableList<Binding> env) throws InterpException
-	{
-		throw new RuntimeException("MACROS CANNOT BE INTERPRETED");
-	}
+    @Override
+    public Value interp(ImmutableList<Binding> env) throws InterpException
+    {
+        throw new RuntimeException("MACROS CANNOT BE INTERPRETED");
+    }
 
-	public Pair<Boolean, ImmutableList<AST>> replace(ImmutableList<AST> input)
-	{
-		ImmutableList<AST> result = new EmptyList<>();
-		boolean changed = false;
+    public Pair<Boolean, ImmutableList<AST>> replace(ImmutableList<AST> input)
+    {
+        ImmutableList<AST> result = new EmptyList<>();
+        boolean changed = false;
 
-		for (AST asts : input)
-		{
-			try
-			{
-				while (pattern.structureCompare(asts.hasMacro(name)) != null)
-				{
-					Pair<AST, Boolean> pair = asts.applyMacro(this);
-					asts = pair.a;
-					changed = pair.b;
-				}
-			}
-			catch (MismatchedRepetitionSizeException mrse)
-			{
-				
-			}
-			result = result.add(asts);
-		}
+        for (AST asts : input)
+        {
+            try
+            {
+                while (pattern.structureCompare(asts.hasMacro(name)) != null)
+                {
+                    Pair<AST, Boolean> pair = asts.applyMacro(this);
+                    asts = pair.a;
+                    changed = pair.b;
+                }
+            }
+            catch (MismatchedRepetitionSizeException mrse)
+            {
 
-		return new Pair<>(changed, result);
-	}
+            }
+            result = result.add(asts);
+        }
 
-	public AST macrotize(AST meBaby)
-	{
-		ImmutableList<ASTBinding> comp;
-		try
-		{
-			comp = meBaby.structureCompare(pattern);
-		}
-		catch (MismatchedRepetitionSizeException mrse)
-		{
-			return meBaby;
-		}
-		return replace.applyBindings(comp);
-	}
+        return new Pair<>(changed, result);
+    }
 
-	public AST getPattern()
-	{
-		return pattern;
-	}
+    public AST macrotize(AST meBaby)
+    {
+        ImmutableList<ASTBinding> comp;
+        try
+        {
+            comp = meBaby.structureCompare(pattern);
+        }
+        catch (MismatchedRepetitionSizeException mrse)
+        {
+            return meBaby;
+        }
+        return replace.applyBindings(comp);
+    }
 
-	public AST getReplacement()
-	{
-		return replace;
-	}
+    public AST getPattern()
+    {
+        return pattern;
+    }
 
-	public String getName()
-	{
-		return name;
-	}
+    public AST getReplacement()
+    {
+        return replace;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
 }

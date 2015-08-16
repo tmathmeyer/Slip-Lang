@@ -4,25 +4,25 @@ import com.tmathmeyer.interp.types.Value;
 
 public enum Bool implements Value
 {
-	TRUE(), FALSE();
+    TRUE(), FALSE();
 
-	public String toString()
-	{
-		return this == TRUE ? "true" : "false";
-	}
+    public String toString()
+    {
+        return this == TRUE ? "true" : "false";
+    }
 
-	public Value other()
-	{
-		if (this == TRUE)
-		{
-			return FALSE;
-		}
-		return TRUE;
-	}
+    public Value other()
+    {
+        if (this == TRUE)
+        {
+            return FALSE;
+        }
+        return TRUE;
+    }
 
-	@Override
+    @Override
     public String getTypeName()
     {
-	    return "bool";
+        return "bool";
     }
 }
