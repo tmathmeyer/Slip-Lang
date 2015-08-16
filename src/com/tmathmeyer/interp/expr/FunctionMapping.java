@@ -2,7 +2,6 @@ package com.tmathmeyer.interp.expr;
 
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
-import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 
 public class FunctionMapping implements Expression
@@ -28,11 +27,11 @@ public class FunctionMapping implements Expression
 		return new Binding(name, body.interp(env));
 	}
 
-	public Binding interp()
+	public Binding catchInterp(ImmutableList<Binding> env)
     {
 	    try
         {
-	        return (Binding) interp(new EmptyList<>());
+	        return (Binding) interp(env);
         }
 	    catch (InterpException e)
         {

@@ -95,11 +95,12 @@ public class SlipRuntime
 		{
 			if (e instanceof FunctionMappingCollection)
 			{
-				bindings = bindings.append(((FunctionMappingCollection)e).getFunctions().map(F -> F.interp()));
+				final ImmutableList<Binding> binds = bindings;
+				bindings = bindings.append(((FunctionMappingCollection)e).getFunctions().map(F -> F.catchInterp(binds)));
 			}
 			else if (e instanceof FunctionMapping)
 			{
-				bindings = bindings.add(((FunctionMapping)e).interp());
+				bindings = bindings.add(((FunctionMapping)e).catchInterp(bindings));
 			}
 			else
 			{
@@ -145,7 +146,7 @@ public class SlipRuntime
 				Value v = slip.evaluate().first();
 				System.out.println(v);
 				saved = slip.getBindings();
-				if (v.toString().equals("exit"))
+				if (v != null && v.toString().equals("exit"))
 				{
 					break;
 				}

@@ -50,7 +50,7 @@ public class Application implements Expression
 			ImmutableList<Expression> expTemp = args;
 			ImmutableList<Symbol> symTemp = cloj.args;
 
-			ImmutableList<Binding> passOn = env;
+			ImmutableList<Binding> passOn = env.append(cloj.environment);
 
 			while (!expTemp.isEmpty())
 			{
