@@ -1,6 +1,6 @@
 package com.tmathmeyer.interp;
 
-import com.tmathmeyer.interp.ds.mipl.EmptyMappingImmutablePartialList;
+import com.tmathmeyer.interp.ds.EmptyList;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
@@ -32,7 +32,7 @@ public class FunctionMapping implements Expression
     {
 	    try
         {
-	        return (Binding) interp(new EmptyMappingImmutablePartialList<>());
+	        return (Binding) interp(new EmptyList<>());
         }
 	    catch (InterpException e)
         {

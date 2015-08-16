@@ -14,7 +14,6 @@ import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ast.CharacterSequence;
 import com.tmathmeyer.interp.ds.FunctionMappingCollection;
 import com.tmathmeyer.interp.ds.EmptyList;
-import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.macro.Macro;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
@@ -63,21 +62,21 @@ public class SlipRuntime
 	
 	public ImmutableList<Value> evaluate()
 	{
-		ImmutableList<Binding> binds = new EmptyList<>();
+		ImmutableList<Binding> bindings = new EmptyList<>();
 		ImmutableList<Expression> ndefs = new EmptyList<>();
 		
 		ImmutableList<Expression> exprs = runMacros().map(a -> a.asExpression().desugar());
-		binds.add(new Binding(new Symbol("#void"), Maybe.NOTHING));
+		bindings.add(new Binding(new Symbol("#void"), Maybe.NOTHING));
 		
 		for(Expression e : exprs)
 		{
 			if (e instanceof FunctionMappingCollection)
 			{
-				binds = binds.append(((FunctionMappingCollection)e).getFunctions().map(F -> F.interp()));
+				bindings = bindings.append(((FunctionMappingCollection)e).getFunctions().map(F -> F.interp()));
 			}
 			else if (e instanceof FunctionMapping)
 			{
-				binds = binds.add(((FunctionMapping)e).interp());
+				bindings = bindings.add(((FunctionMapping)e).interp());
 			}
 			else
 			{
@@ -85,7 +84,6 @@ public class SlipRuntime
 			}
 		}
 		
-		MappingPartial<Binding> bindings = MappingPartial.fromImmutableList(binds);
 		ImmutableList<Value> results = new EmptyList<>();
 		for(Expression N : ndefs)
 		{

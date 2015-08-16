@@ -10,7 +10,8 @@ import com.tmathmeyer.interp.values.ImmutableList;
 public class StructInspector implements Expression
 {
 	public static Symbol name;
-
+	public static final Symbol STRUCT_SYM = new Symbol("struct");
+	
 	public StructInspector(Symbol in)
 	{
 		name = in;
@@ -25,9 +26,13 @@ public class StructInspector implements Expression
 	@Override
 	public Value interp(ImmutableList<Binding> env) throws InterpException
 	{
-		Struct s = (Struct) env.findPartial(new Binding(new Symbol("struct"), null)).val;
-
-		return s.values.findPartial(new Binding(name, null)).val;
+		Binding b = env.filter(B -> B.name.equals(STRUCT_SYM)).first();
+		if (b != null)
+		{
+			return ((Struct)b.val).values.filter(B -> B.name.equals(name)).first();
+		}
+		throw new NullPointerException();
+		
 	}
 
 }

@@ -1,9 +1,7 @@
 package com.tmathmeyer.interp;
 
-import com.tmathmeyer.interp.ID.IDLookUpException;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.ds.EmptyList;
-import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.Closure;
@@ -52,7 +50,7 @@ public class Application implements Expression
 			ImmutableList<Expression> expTemp = args;
 			ImmutableList<Symbol> symTemp = cloj.args;
 
-			MappingPartial<Binding> passOn = env;
+			ImmutableList<Binding> passOn = env;
 
 			while (!expTemp.isEmpty())
 			{

@@ -2,17 +2,16 @@ package com.tmathmeyer.interp.values;
 
 import com.tmathmeyer.interp.Binding;
 import com.tmathmeyer.interp.Symbol;
-import com.tmathmeyer.interp.ds.MappingPartial;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 
 public class Closure implements Value
 {
-	public final MappingPartial<Binding> environment;
+	public final ImmutableList<Binding> environment;
 	public final Expression body;
 	public final ImmutableList<Symbol> args;
 
-	public Closure(MappingPartial<Binding> env, Expression bod, ImmutableList<Symbol> arg)
+	public Closure(ImmutableList<Binding> env, Expression bod, ImmutableList<Symbol> arg)
 	{
 		environment = env;
 		body = bod;

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.tmathmeyer.interp.InterpException;
 import com.tmathmeyer.interp.Real;
-import com.tmathmeyer.interp.ds.mipl.EmptyMappingImmutablePartialList;
+import com.tmathmeyer.interp.ds.EmptyList;
 import com.tmathmeyer.interp.maths.Plus;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
@@ -23,7 +23,7 @@ public class LispTest
 
 		Expression basicAddition = new Plus(new Number(five), new Number(four));
 
-		Value v = basicAddition.desugar().interp(new EmptyMappingImmutablePartialList<>());
+		Value v = basicAddition.desugar().interp(new EmptyList<>());
 
 		assertEquals(v.getClass(), Number.class);
 
