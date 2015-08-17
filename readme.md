@@ -36,7 +36,7 @@ Slip is a pretty generic breed of lisp. It currently supports basic math express
              (5 -> "five")) 6)   -> null
 ````
 ###Defining symbols
-Definitions are done through the use of the `(#def name val)` command. When executing Slip on a file, definitions will be processed before other commands. Mutial Recursion still needs to be worked out a bit better. There is also syntactic suger provided with sandard builtin macros that allows functions to be defined such as:
+Definitions are done through the use of the `(#def name val)` function. When executing Slip on a file, definitions will be processed before other commands. Mutial Recursion still needs to be worked out a bit better. There is also syntactic suger provided with sandard builtin macros that allows functions to be defined such as:
 ````
 (#def double (x) (+ x x))
 (#def begin (x y) y)
