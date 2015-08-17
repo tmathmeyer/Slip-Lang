@@ -9,9 +9,9 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class First implements Expression
 {
-    final Expression list;
+    private final Expression list;
 
-    public First(Expression l)
+    private First(Expression l)
     {
         list = l;
     }

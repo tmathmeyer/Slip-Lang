@@ -19,12 +19,6 @@ public class StructDefn implements Expression
     final Symbol name;
     final ImmutableList<Symbol> args;
 
-    public StructDefn(Symbol name2, ImmutableList<Symbol> args2)
-    {
-        name = name2;
-        args = args2;
-    }
-
     public StructDefn(ImmutableList<AST> rest)
     {
         name = new Symbol(((ASNode) rest.first()).value);

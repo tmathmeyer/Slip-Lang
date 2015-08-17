@@ -1,16 +1,12 @@
 package com.tmathmeyer.interp.maths;
 
 import com.tmathmeyer.interp.types.Expression;
+import com.tmathmeyer.interp.values.ImmutableList;
 
-public class LessThan extends GreaterThan
+class LessThan extends GreaterThan
 {
-    public LessThan(Expression left, Expression right)
+    LessThan(ImmutableList<Expression> exprs)
     {
-        super(right, left);
-    }
-
-    public String toString()
-    {
-        return "(" + L + " < " + R + ")";
+        super(exprs.reverse());
     }
 }

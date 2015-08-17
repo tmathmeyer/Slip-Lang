@@ -4,26 +4,14 @@ import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.Closure;
-import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Application implements Expression
 {
-    public final Expression func;
-    public final ImmutableList<Expression> args;
+    private final Expression func;
+    private final ImmutableList<Expression> args;
 
-    public Application(Expression function, Expression... arguments)
-    {
-        func = function;
-        ImmutableList<Expression> temp = new EmptyList<Expression>();
-        for (Expression e : arguments)
-        {
-            temp = temp.add(e);
-        }
-        args = temp;
-    }
-
-    public Application(Expression function, ImmutableList<Expression> arguments)
+    private Application(Expression function, ImmutableList<Expression> arguments)
     {
         func = function;
         args = arguments;
@@ -93,12 +81,12 @@ public class Application implements Expression
         return result + ")";
     }
 
-    public static class ApplicationEvaluationException extends InterpException
+    private static class ApplicationEvaluationException extends InterpException
     {
         private final InterpException ide;
         private final Application app;
 
-        public ApplicationEvaluationException(InterpException ide, Application app)
+        private ApplicationEvaluationException(InterpException ide, Application app)
         {
             this.ide = ide;
             this.app = app;
@@ -111,12 +99,12 @@ public class Application implements Expression
         }
     }
 
-    public static class InvalidFunctionException extends InterpException
+    private static class InvalidFunctionException extends InterpException
     {
         private final Value val;
         private final Expression exp;
 
-        public InvalidFunctionException(Expression exp, Value val)
+        private InvalidFunctionException(Expression exp, Value val)
         {
             this.val = val;
             this.exp = exp;

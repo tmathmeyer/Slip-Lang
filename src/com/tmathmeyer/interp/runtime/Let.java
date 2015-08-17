@@ -2,7 +2,7 @@ package com.tmathmeyer.interp.runtime;
 
 import com.tmathmeyer.interp.values.ImmutableList;
 
-public class Let extends RuntimeMacro
+class Let extends RuntimeMacro
 {
     @Override
     public ImmutableList<String> getSrc()

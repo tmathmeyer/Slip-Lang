@@ -4,13 +4,13 @@ import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
-import com.tmathmeyer.interp.values.Number;
+import com.tmathmeyer.interp.values.Maybe;
 
 public class Print implements Expression
 {
     private final ImmutableList<Expression> toPrint;
 
-    public Print(ImmutableList<Expression> out, int dummy)
+    private Print(ImmutableList<Expression> out, int dummy)
     {
         toPrint = out;
     }
@@ -33,6 +33,6 @@ public class Print implements Expression
         {
             System.out.println(e.interp(env));
         }
-        return new Number(new Real(toPrint.size()));
+        return Maybe.NOTHING;
     }
 }

@@ -7,7 +7,7 @@ import java.io.FileReader;
 
 public class ASTGen
 {
-    public ASTGen(File file)
+    private ASTGen(File file)
     {
         inFile = file;
     }
@@ -41,7 +41,7 @@ public class ASTGen
         return new ASTree();
     }
 
-    public AST stringToAST(CharacterSequence cs)
+    private AST stringToAST(CharacterSequence cs)
     {
         while (whitespace(cs))
         {
@@ -61,7 +61,7 @@ public class ASTGen
         return null;
     }
 
-    AST stringToASTree(CharacterSequence cs)
+    private AST stringToASTree(CharacterSequence cs)
     {
         ASTree tree = new ASTree();
 
@@ -77,7 +77,7 @@ public class ASTGen
         return tree;
     }
 
-    AST stringToASTNode(CharacterSequence cs)
+    private AST stringToASTNode(CharacterSequence cs)
     {
         StringBuilder sb = new StringBuilder();
         while (cs.has() && !whitespace(cs) && cs.get() != ')')
@@ -87,7 +87,7 @@ public class ASTGen
         return new ASNode(sb.toString());
     }
 
-    boolean whitespace(CharacterSequence cs)
+    private boolean whitespace(CharacterSequence cs)
     {
         if (cs.has())
         {

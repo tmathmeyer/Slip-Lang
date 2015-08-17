@@ -50,5 +50,4 @@ public abstract class ImmutableList<T> implements Value, Iterable<T>
         }
         return map.first().append(collapse(map.rest()));
     }
-
 }

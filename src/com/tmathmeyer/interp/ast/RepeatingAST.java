@@ -10,11 +10,11 @@ import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 
-public class RepeatingAST implements AST
+class RepeatingAST implements AST
 {
     private final List<AST> tree;
 
-    public RepeatingAST(List<AST> tree)
+    RepeatingAST(List<AST> tree)
     {
         this.tree = tree;
     }

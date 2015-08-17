@@ -46,19 +46,9 @@ public class Real
         return new Real(numerator * r.numerator, denominator * r.denominator);
     }
 
-    public static int GCD(int i, int j)
+    private static int GCD(int i, int j)
     {
         return (j == 0) ? i : GCD(j, i % j);
-    }
-
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + denominator;
-        result = prime * result + numerator;
-        return result;
     }
 
     @Override
@@ -100,8 +90,6 @@ public class Real
         }
         return numerator + "/" + denominator;
     }
-
-    public static Real ZERO = new Real(0, 1);
 
     public static Real parseReal(String value)
     {

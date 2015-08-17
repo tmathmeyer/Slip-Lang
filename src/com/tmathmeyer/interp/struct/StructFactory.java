@@ -7,12 +7,12 @@ import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
 
-public class StructFactory implements Expression
+class StructFactory implements Expression
 {
-    public final ImmutableList<Symbol> symbols;
-    public final Symbol name;
+    private final ImmutableList<Symbol> symbols;
+    private final Symbol name;
 
-    public StructFactory(StructDefn structDefn)
+    StructFactory(StructDefn structDefn)
     {
         symbols = structDefn.args;
         name = structDefn.name;

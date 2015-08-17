@@ -82,16 +82,6 @@ public class Macro implements Expression
         return replace.applyBindings(comp);
     }
 
-    public AST getPattern()
-    {
-        return pattern;
-    }
-
-    public AST getReplacement()
-    {
-        return replace;
-    }
-
     public String getName()
     {
         return name;

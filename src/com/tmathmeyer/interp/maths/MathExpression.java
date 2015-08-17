@@ -4,33 +4,32 @@ import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.values.ImmutableList;
 
-public class BinaryMathExpression
+public class MathExpression
 {
     public static Expression fromAST(ImmutableList<AST> list, String type)
     {
-        Expression l = list.first().asExpression();
-        Expression r = list.rest().first().asExpression();
-
+        ImmutableList<Expression> exprs = list.map(A -> A.asExpression());
+        
         switch (type.charAt(0))
         {
             case '+':
-                return new Plus(list.map(A -> A.asExpression()));
+                return new Plus(exprs);
             case '-':
-                return new Minus(l, r);
+                return new Minus(exprs);
             case '*':
-                return new Mult(l, r);
+                return new Mult(exprs);
             case '/':
-                return new Divide(l, r);
+                return new Divide(exprs);
             case '>':
-                return new GreaterThan(l, r);
+                return new GreaterThan(exprs);
             case '<':
-                return new LessThan(l, r);
+                return new LessThan(exprs);
             case '=':
-                return new Equals(l, r);
+                return new Equals(exprs);
             case '&':
-                return new And(list);
+                return new And(exprs);
             case '!':
-                return new Not(l);
+                return new Not(exprs.first());
         }
 
         return null;

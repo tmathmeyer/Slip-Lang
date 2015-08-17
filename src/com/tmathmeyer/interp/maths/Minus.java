@@ -7,33 +7,39 @@ import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
 import com.tmathmeyer.interp.values.Number;
 
-public class Minus implements Expression
+class Minus implements Expression
 {
-    public final Expression L, R;
+    private final Expression from;
+    private final Expression by;
 
-    public Minus(Expression left, Expression right)
+    Minus(ImmutableList<Expression> exprs)
     {
-        L = left;
-        R = right;
+        this(exprs.first(), new Plus(exprs.rest()));
+    }
+    
+    private Minus(Expression from, Expression by)
+    {
+        this.from = from;
+        this.by = by;
     }
 
     @Override
     public Expression desugar()
     {
-        return new Minus(L.desugar(), R.desugar());
+        return new Minus(from.desugar(), by.desugar());
     }
 
     @Override
     public Value interp(ImmutableList<Binding> env) throws InterpException
     {
-        Number l = (Number) L.interp(env);
-        Number r = (Number) R.interp(env);
+        Number l = (Number) from.interp(env);
+        Number r = (Number) by.interp(env);
 
         return new Number(l.value.subtract(r.value));
     }
 
     public String toString()
     {
-        return "(" + L + " - " + R + ")";
+        return "(" + from + " - " + by + ")";
     }
 }

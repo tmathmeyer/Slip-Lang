@@ -5,7 +5,7 @@ import com.tmathmeyer.interp.types.Value;
 /**
  * Created by ted on 12/20/14.
  */
-public class Binding implements Comparable<Binding>, Value
+public class Binding implements Value
 {
     public final Symbol name;
     public final Value val;
@@ -14,16 +14,6 @@ public class Binding implements Comparable<Binding>, Value
     {
         val = v;
         name = s;
-    }
-
-    @Override
-    public int compareTo(Binding binding)
-    {
-        if (name == null)
-        {
-            throw new RuntimeException("binding with no name: value of -> " + val);
-        }
-        return name.compareTo(binding.name);
     }
 
     public String toString()

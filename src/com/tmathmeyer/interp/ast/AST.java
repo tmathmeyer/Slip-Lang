@@ -33,18 +33,18 @@ public interface AST
         ImmutableList<ASTBinding> asList();
     }
 
-    public class ASTreeBinding implements ASTBinding
+    class ASTreeBinding implements ASTBinding
     {
         private final ImmutableList<ASTBinding> list;
         private final boolean repeating;
 
-        public ASTreeBinding(ImmutableList<ASTBinding> ilast, boolean rep)
+        private ASTreeBinding(ImmutableList<ASTBinding> ilast, boolean rep)
         {
             list = ilast;
             repeating = rep;
         }
 
-        public ASTreeBinding(ImmutableList<ASTBinding> ilast)
+        ASTreeBinding(ImmutableList<ASTBinding> ilast)
         {
             this(ilast, false);
         }
@@ -74,20 +74,20 @@ public interface AST
         }
     }
 
-    public class ASNodeBinding implements ASTBinding
+    class ASNodeBinding implements ASTBinding
     {
         private final ASNode from;
         private final AST to;
         private final boolean repeating;
 
-        public ASNodeBinding(ASNode node, AST t, boolean rep)
+        private ASNodeBinding(ASNode node, AST t, boolean rep)
         {
             from = node;
             to = t;
             repeating = rep;
         }
 
-        public ASNodeBinding(ASNode node, AST t)
+        ASNodeBinding(ASNode node, AST t)
         {
             this(node, t, false);
         }

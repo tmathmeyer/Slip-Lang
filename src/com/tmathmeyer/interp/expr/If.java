@@ -8,9 +8,11 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class If implements Expression
 {
-    public final Expression conditional, left, right;
+    private final Expression conditional;
+    private final Expression left;
+    private final Expression right;
 
-    public If(Expression c, Expression l, Expression r)
+    private If(Expression c, Expression l, Expression r)
     {
         conditional = c;
         left = l;

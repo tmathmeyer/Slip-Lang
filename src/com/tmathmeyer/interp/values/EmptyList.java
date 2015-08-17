@@ -55,11 +55,6 @@ public class EmptyList<T> extends ImmutableList<T>
         return "";
     }
 
-    public boolean equals(Object other)
-    {
-        return other != null && other instanceof EmptyList;
-    }
-
     @Override
     public boolean contains(T name)
     {
@@ -80,8 +75,7 @@ public class EmptyList<T> extends ImmutableList<T>
 
     @Override
     public void forEach(Consumer<? super T> fn)
-    {
-    }
+    { }
 
     @Override
     public Iterator<T> iterator()
@@ -116,6 +110,6 @@ public class EmptyList<T> extends ImmutableList<T>
     @Override
     public String getTypeName()
     {
-        return "list";
+        return "empty";
     }
 }

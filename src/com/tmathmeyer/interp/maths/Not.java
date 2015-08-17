@@ -7,11 +7,11 @@ import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.Bool;
 import com.tmathmeyer.interp.values.ImmutableList;
 
-public class Not implements Expression
+class Not implements Expression
 {
     private final Expression invert;
 
-    public Not(Expression l)
+    Not(Expression l)
     {
         invert = l;
     }

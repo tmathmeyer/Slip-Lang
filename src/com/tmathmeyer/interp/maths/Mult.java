@@ -7,33 +7,53 @@ import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
 import com.tmathmeyer.interp.values.Number;
 
-public class Mult implements Expression
+class Mult implements Expression
 {
-    public final Expression L, R;
+    private final ImmutableList<Expression> exprs;
 
-    public Mult(Expression left, Expression right)
+    Mult(ImmutableList<Expression> exprs)
     {
-        L = left;
-        R = right;
+        this.exprs = exprs;
+        if (exprs.size() == 0)
+        {
+            throw new RuntimeException("no arguments to +");
+        }
     }
 
     @Override
     public Expression desugar()
     {
-        return new Mult(L.desugar(), R.desugar());
+        return new Mult(exprs.map(E -> E.desugar()));
     }
 
     @Override
     public Value interp(ImmutableList<Binding> env) throws InterpException
     {
-        Number l = (Number) L.interp(env);
-        Number r = (Number) R.interp(env);
+        Number result = new Number(0);
 
-        return new Number(l.value.multiply(r.value));
+        for (Expression e : exprs)
+        {
+            try
+            {
+                Number n = (Number) e.interp(env);
+                result = new Number(result.value.multiply(n.value));
+            }
+            catch (ClassCastException cce)
+            {
+                throw new InvalidTypeException(e, this);
+            }
+        }
+
+        return result;
     }
 
     public String toString()
     {
-        return "(" + L + " * " + R + ")";
+        String result = "(*";
+        for (Expression e : exprs)
+        {
+            result += (" " + e);
+        }
+        return result + ")";
     }
 }

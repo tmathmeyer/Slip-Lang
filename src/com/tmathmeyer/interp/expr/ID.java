@@ -6,7 +6,7 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class ID implements Expression
 {
-    public final Symbol I;
+    private final Symbol I;
 
     public ID(Symbol s)
     {
@@ -35,7 +35,7 @@ public class ID implements Expression
         return I.toString();
     }
 
-    public static class IDLookUpException extends InterpException
+    private static class IDLookUpException extends InterpException
     {
         private final Symbol s;
 
@@ -44,7 +44,7 @@ public class ID implements Expression
             System.out.println("Cannot find Symbol: " + s);
         }
 
-        public IDLookUpException(Symbol i)
+        private IDLookUpException(Symbol i)
         {
             s = i;
         }

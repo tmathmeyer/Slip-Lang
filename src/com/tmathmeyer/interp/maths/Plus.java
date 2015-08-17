@@ -7,11 +7,11 @@ import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
 import com.tmathmeyer.interp.values.Number;
 
-public class Plus implements Expression
+class Plus implements Expression
 {
-    public final ImmutableList<Expression> exprs;
+    private final ImmutableList<Expression> exprs;
 
-    public Plus(ImmutableList<Expression> exprs)
+    Plus(ImmutableList<Expression> exprs)
     {
         this.exprs = exprs;
         if (exprs.size() == 0)

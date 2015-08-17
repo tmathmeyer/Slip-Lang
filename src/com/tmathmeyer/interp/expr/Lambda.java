@@ -10,18 +10,12 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Lambda implements Expression
 {
-    public final Expression body;
-    public final ImmutableList<Symbol> args;
+    private final Expression body;
+    private final ImmutableList<Symbol> args;
 
-    public Lambda(Expression bod, Symbol... arguments)
+    public Lambda(Expression bod, Symbol arguments)
     {
-        body = bod;
-        ImmutableList<Symbol> temp = new EmptyList<Symbol>();
-        for (Symbol e : arguments)
-        {
-            temp = temp.add(e);
-        }
-        args = temp;
+        this(bod, new EmptyList<Symbol>().add(arguments));
     }
 
     public Lambda(Expression function, ImmutableList<Symbol> arguments)

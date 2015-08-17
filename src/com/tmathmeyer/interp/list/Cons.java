@@ -9,10 +9,10 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Cons implements Expression
 {
-    final Expression app;
-    final Expression list;
+    private final Expression app;
+    private final Expression list;
 
-    public Cons(Expression a, Expression l)
+    private Cons(Expression a, Expression l)
     {
         app = a;
         list = l;
@@ -37,6 +37,7 @@ public class Cons implements Expression
         return ((ImmutableList<Value>) list.interp(env)).add(app.interp(env));
     }
 
+    @Override
     public String toString()
     {
         return "(cons " + app + " " + list + ")";

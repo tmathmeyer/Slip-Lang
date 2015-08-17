@@ -1,6 +1,5 @@
 package com.tmathmeyer.interp.maths;
 
-import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.expr.Binding;
 import com.tmathmeyer.interp.expr.InterpException;
 import com.tmathmeyer.interp.types.Expression;
@@ -8,16 +7,11 @@ import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.Bool;
 import com.tmathmeyer.interp.values.ImmutableList;
 
-public class And implements Expression
+class And implements Expression
 {
-    public final ImmutableList<Expression> exprs;
+    private final ImmutableList<Expression> exprs;
 
-    public And(ImmutableList<AST> ast)
-    {
-        this(ast.map(a -> a.asExpression()), 0);
-    }
-
-    private And(ImmutableList<Expression> parts, int i)
+    And(ImmutableList<Expression> parts)
     {
         exprs = parts;
     }
@@ -25,26 +19,23 @@ public class And implements Expression
     @Override
     public Expression desugar()
     {
-        return new And(exprs.map(a -> a.desugar()), 0);
+        return new And(exprs.map(a -> a.desugar()));
     }
 
     @Override
     public Value interp(ImmutableList<Binding> env) throws InterpException
     {
-        ImmutableList<Expression> exprs = this.exprs;
-        while (!exprs.isEmpty())
+        for(Expression e : exprs)
         {
-            Value v = exprs.first().interp(env);
+            Value v = e.interp(env);
             if (v == Bool.FALSE)
             {
-                return Bool.FALSE;
+                return Bool.TRUE;
             }
-            if (v == Bool.TRUE)
+            if (! (v instanceof Bool))
             {
-                exprs = exprs.rest();
-                continue;
+                throw new RuntimeException("cannot do boolean arithmetic on " + v.toString());
             }
-            throw new RuntimeException("cannot do boolean arithmetic on " + v.toString());
         }
         return Bool.TRUE;
     }

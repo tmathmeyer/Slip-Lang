@@ -4,36 +4,47 @@ import com.tmathmeyer.interp.expr.Binding;
 import com.tmathmeyer.interp.expr.InterpException;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
+import com.tmathmeyer.interp.values.Bool;
 import com.tmathmeyer.interp.values.ImmutableList;
 import com.tmathmeyer.interp.values.Number;
 
-public class GreaterThan implements Expression
+class GreaterThan implements Expression
 {
-    public final Expression L, R;
+    private final ImmutableList<Expression> exprs;
 
-    public GreaterThan(Expression left, Expression right)
+    GreaterThan(ImmutableList<Expression> exprs)
     {
-        L = left;
-        R = right;
+        this.exprs = exprs;
     }
 
     @Override
     public Expression desugar()
     {
-        return new GreaterThan(L.desugar(), R.desugar());
+        return new GreaterThan(exprs.map(E -> E.desugar()));
     }
 
     @Override
     public Value interp(ImmutableList<Binding> env) throws InterpException
     {
-        Number l = (Number) L.interp(env);
-        Number r = (Number) R.interp(env);
-
-        return l.value.greaterThan(r.value);
-    }
-
-    public String toString()
-    {
-        return "(" + L + " > " + R + ")";
+        try
+        {
+            Number n = (Number) exprs.first().interp(env);
+            
+            for(Expression e : exprs.rest())
+            {
+                Number v = (Number) e.interp(env);
+                if (n.value.greaterThan(v.value) != Bool.TRUE)
+                {
+                    return Bool.FALSE;
+                }
+                n = v;
+            }
+            
+            return Bool.TRUE;
+        }
+        catch (ClassCastException cce)
+        {
+            throw cce;
+        }
     }
 }

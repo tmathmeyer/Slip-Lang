@@ -19,17 +19,6 @@ public class Closure implements Value
     }
 
     @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((args == null) ? 0 : args.hashCode());
-        result = prime * result + ((body == null) ? 0 : body.hashCode());
-        result = prime * result + ((environment == null) ? 0 : environment.hashCode());
-        return result;
-    }
-
-    @Override
     public boolean equals(Object obj)
     {
         if (this == obj)

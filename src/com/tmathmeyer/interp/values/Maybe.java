@@ -6,7 +6,7 @@ public class Maybe implements Value
 {
     private final Value v;
 
-    public Maybe(Value v)
+    private Maybe(Value v)
     {
         this.v = v;
     }
@@ -15,7 +15,7 @@ public class Maybe implements Value
 
     public String toString()
     {
-        return v + "";
+        return v.toString();
     }
 
     @Override

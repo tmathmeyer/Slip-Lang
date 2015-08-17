@@ -8,9 +8,9 @@ import com.tmathmeyer.interp.values.Str;
 
 public class Type implements Expression
 {
-    final Expression of;
+    private final Expression of;
 
-    public Type(Expression l)
+    private Type(Expression l)
     {
         of = l;
     }

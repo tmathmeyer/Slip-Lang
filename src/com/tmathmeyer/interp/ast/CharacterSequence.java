@@ -15,7 +15,7 @@ public interface CharacterSequence
         private char[] seq;
         private int index;
 
-        public BasicCharacterSequence(String s)
+        private BasicCharacterSequence(String s)
         {
             seq = s.toCharArray();
             index = 0;
@@ -49,9 +49,9 @@ public interface CharacterSequence
     static class FileCharacterSequence implements CharacterSequence
     {
         private Reader r;
-        char[] buffer = new char[128];
-        int bufferpos = 0;
-        int max = 0;
+        private char[] buffer = new char[128];
+        private int bufferpos = 0;
+        private int max = 0;
 
         public String toString()
         {
@@ -64,7 +64,7 @@ public interface CharacterSequence
             return sb.toString();
         }
 
-        public FileCharacterSequence(BufferedReader reader)
+        private FileCharacterSequence(BufferedReader reader)
         {
             r = reader;
             try

@@ -9,12 +9,12 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public abstract class Def implements Expression
 {
-    public static class ValueDefinition extends Def
+    private static class ValueDefinition extends Def
     {
-        public final Symbol name;
-        public final Expression expr;
+        private final Symbol name;
+        private final Expression expr;
 
-        public ValueDefinition(Symbol name, Expression asExpression)
+        private ValueDefinition(Symbol name, Expression asExpression)
         {
             this.name = name;
             this.expr = asExpression;

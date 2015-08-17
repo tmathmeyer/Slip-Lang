@@ -6,8 +6,8 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class FunctionMapping implements Expression
 {
-    public final Symbol name;
-    public final Expression body;
+    private final Symbol name;
+    private final Expression body;
 
     public FunctionMapping(Symbol n, Expression b)
     {
@@ -18,7 +18,7 @@ public class FunctionMapping implements Expression
     @Override
     public Expression desugar()
     {
-        throw new RuntimeException("can't desugar a DefSans");
+        throw new RuntimeException("can't desugar a FunctionMapping");
     }
 
     @Override

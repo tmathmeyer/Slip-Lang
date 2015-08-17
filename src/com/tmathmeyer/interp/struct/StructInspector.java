@@ -7,12 +7,12 @@ import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
 
-public class StructInspector implements Expression
+class StructInspector implements Expression
 {
-    public static Symbol name;
-    public static final Symbol STRUCT_SYM = new Symbol("struct");
+    private static Symbol name;
+    private static final Symbol STRUCT_SYM = new Symbol("struct");
 
-    public StructInspector(Symbol in)
+    StructInspector(Symbol in)
     {
         name = in;
     }

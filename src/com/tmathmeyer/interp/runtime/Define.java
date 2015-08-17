@@ -2,7 +2,7 @@ package com.tmathmeyer.interp.runtime;
 
 import com.tmathmeyer.interp.values.ImmutableList;
 
-public class Define extends RuntimeMacro
+class Define extends RuntimeMacro
 {
 
     @Override

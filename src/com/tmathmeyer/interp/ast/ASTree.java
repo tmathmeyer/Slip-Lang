@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.tmathmeyer.interp.expr.Application;
 import com.tmathmeyer.interp.expr.Def;
+import com.tmathmeyer.interp.expr.Eval;
 import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.expr.If;
 import com.tmathmeyer.interp.expr.Lambda;
@@ -16,7 +17,7 @@ import com.tmathmeyer.interp.expr.Type;
 import com.tmathmeyer.interp.list.Cons;
 import com.tmathmeyer.interp.list.First;
 import com.tmathmeyer.interp.macro.Macro;
-import com.tmathmeyer.interp.maths.BinaryMathExpression;
+import com.tmathmeyer.interp.maths.MathExpression;
 import com.tmathmeyer.interp.struct.StructDefn;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.values.EmptyList;
@@ -48,34 +49,43 @@ public class ASTree implements AST
         if (list.first() instanceof ASNode)
         {
             ASNode node = (ASNode) list.first();
-            int switchval = SymbolLookupTable.lookup(node.value);
 
-            switch (switchval)
+            switch (node.value)
             {
-                case 0:
-                    return BinaryMathExpression.fromAST(list.rest(), node.value);
-                case 1:
+                case "+":
+                case "-":
+                case "/":
+                case "*":
+                case ">":
+                case "<":
+                case "&":
+                case "=":
+                case "!":
+                    return MathExpression.fromAST(list.rest(), node.value);
+                case "lambda":
                     return new Lambda(list.rest().rest().first().asExpression(), Lambda.getArgs(list.rest().first()));
-                case 3:
+                case "if":
                     return new If(list.rest());
-                case 4:
+                case "print":
                     return new Print(list.rest());
-                case 5:
+                case "cons":
                     return new Cons(list.rest());
-                case 6:
+                case "first":
                     return new First(list.rest());
-                case 7:
+                case "rest":
                     return new Rest(list.rest());
-                case 8:
+                case "#def":
                     return Def.getDefn(list.rest());
-                case 9:
+                case "sdef":
                     return new StructDefn(list.rest());
-                case 10:
+                case "type":
                     return new Type(list.rest());
-                case 11:
+                case "#":
                     return new Macro(list.rest().first(), list.rest().rest().first());
-                case 13:
+                case "load":
                     return new Loader(list.rest().first());
+                case "eval":
+                    return new Eval(list.rest().first());
                 default:
                     return new Application(list);
 

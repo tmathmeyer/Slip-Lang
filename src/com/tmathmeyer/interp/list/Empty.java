@@ -21,6 +21,7 @@ public class Empty implements Expression
         return new EmptyList<>();
     }
 
+    @Override
     public String toString()
     {
         return "empty";

@@ -47,13 +47,14 @@ public class Loader implements Expression
             {
                 throw new LoaderException(v);
             }
-        } else
+        }
+        else
         {
             throw new InvalidTypeException(filename, this);
         }
     }
 
-    public static class LoaderException extends InterpException
+    private static class LoaderException extends InterpException
     {
         private final String s;
 
@@ -62,7 +63,7 @@ public class Loader implements Expression
             System.out.println("Cannot load file: " + s);
         }
 
-        public LoaderException(String file)
+        private LoaderException(String file)
         {
             s = file;
         }

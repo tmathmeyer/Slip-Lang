@@ -41,13 +41,6 @@ public class Symbol implements Comparable<Symbol>
         return value;
     }
 
-    private static int val = (int) Math.random();
-
-    public static Symbol gensym()
-    {
-        return new Symbol("GENERATED_" + val++);
-    }
-
     public Symbol append(String string)
     {
         return new Symbol(value + string);

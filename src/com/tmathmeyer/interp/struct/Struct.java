@@ -5,12 +5,12 @@ import com.tmathmeyer.interp.expr.Symbol;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
 
-public class Struct implements Value
+class Struct implements Value
 {
-    public final ImmutableList<Binding> values;
-    public final Symbol name;
+    final ImmutableList<Binding> values;
+    private final Symbol name;
 
-    public Struct(Symbol sname, ImmutableList<Binding> intersect)
+    Struct(Symbol sname, ImmutableList<Binding> intersect)
     {
         values = intersect;
         name = sname;

@@ -7,9 +7,9 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Rest implements Expression
 {
-    final Expression list;
+    private final Expression list;
 
-    public Rest(Expression l)
+    private Rest(Expression l)
     {
         list = l;
     }

@@ -2,7 +2,6 @@ package com.tmathmeyer.interp.expr;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Consumer;
 
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
@@ -26,14 +25,6 @@ public class FunctionMappingCollection implements Expression
     public ImmutableList<FunctionMapping> getFunctions()
     {
         return functions;
-    }
-
-    public void doWithCopy(Consumer<FunctionMapping> consumer)
-    {
-        for (FunctionMapping ds : backing)
-        {
-            consumer.accept(ds);
-        }
     }
 
     @Override

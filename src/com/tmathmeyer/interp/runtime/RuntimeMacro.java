@@ -5,7 +5,7 @@ import com.tmathmeyer.interp.ast.ASTGen;
 import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 
-public abstract class RuntimeMacro
+abstract class RuntimeMacro
 {
     private static ImmutableList<RuntimeMacro> macros = new EmptyList<>();
 
@@ -30,7 +30,7 @@ public abstract class RuntimeMacro
         return result;
     }
 
-    public static ImmutableList<AST> getMacros()
+    static ImmutableList<AST> getMacros()
     {
         return ImmutableList.collapse(macros.map(M -> M.getSrc().map(S -> new ASTGen().generate(S))));
     }

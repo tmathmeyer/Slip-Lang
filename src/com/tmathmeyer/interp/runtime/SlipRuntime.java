@@ -24,12 +24,13 @@ import com.tmathmeyer.lex.Builder;
 
 public class SlipRuntime
 {
+    public static final ImmutableList<Binding> JUST_VOID = new EmptyList<Binding>().add(new Binding(new Symbol("#void"), Maybe.NOTHING));
     private final ImmutableList<AST> program;
     private ImmutableList<Binding> runtime;
 
     public SlipRuntime(File file) throws FileNotFoundException
     {
-        this(file, new EmptyList<>());
+        this(file, JUST_VOID);
     }
 
     public SlipRuntime(File file, ImmutableList<Binding> runtime) throws FileNotFoundException
@@ -39,20 +40,20 @@ public class SlipRuntime
 
     public SlipRuntime(String source)
     {
-        this(source, new EmptyList<>());
+        this(source, JUST_VOID);
     }
 
-    public SlipRuntime(String source, ImmutableList<Binding> runtime)
+    public SlipRuntime(String source, ImmutableList<Binding> runtime) // NO_UCD (use private)
     {
         this(CharacterSequence.make(source), runtime);
     }
 
-    public SlipRuntime(BufferedReader file)
+    public SlipRuntime(BufferedReader file) // NO_UCD (use private)
     {
-        this(file, new EmptyList<>());
+        this(file, JUST_VOID);
     }
 
-    public SlipRuntime(BufferedReader file, ImmutableList<Binding> runtime)
+    public SlipRuntime(BufferedReader file, ImmutableList<Binding> runtime) // NO_UCD (use private)
     {
         this(CharacterSequence.make(file), runtime);
     }
@@ -82,13 +83,17 @@ public class SlipRuntime
         return source.filter(A -> !A.isMacro());
     }
 
+    public ImmutableList<Expression> getProgramData()
+    {
+        return runMacros().map(a -> a.asExpression().desugar());
+    }
+    
     public ImmutableList<Value> evaluate()
     {
         ImmutableList<Binding> bindings = runtime;
         ImmutableList<Expression> ndefs = new EmptyList<>();
 
-        ImmutableList<Expression> exprs = runMacros().map(a -> a.asExpression().desugar());
-        bindings = bindings.add(new Binding(new Symbol("#void"), Maybe.NOTHING));
+        ImmutableList<Expression> exprs = getProgramData();
 
         for (Expression e : exprs)
         {
@@ -97,10 +102,12 @@ public class SlipRuntime
                 final ImmutableList<Binding> binds = bindings;
                 bindings = bindings.append(((FunctionMappingCollection) e).getFunctions()
                         .map(F -> F.catchInterp(binds)));
-            } else if (e instanceof FunctionMapping)
+            }
+            else if (e instanceof FunctionMapping)
             {
                 bindings = bindings.add(((FunctionMapping) e).catchInterp(bindings));
-            } else
+            }
+            else
             {
                 ndefs = ndefs.add(e);
             }

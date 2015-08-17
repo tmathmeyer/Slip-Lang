@@ -7,30 +7,34 @@ import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.Bool;
 import com.tmathmeyer.interp.values.ImmutableList;
 
-public class Equals implements Expression
+class Equals implements Expression
 {
-    public final Expression L, R;
+    private final ImmutableList<Expression> exprs;
 
-    public Equals(Expression left, Expression right)
+    Equals(ImmutableList<Expression> exprs)
     {
-        L = left;
-        R = right;
+        this.exprs = exprs;
     }
 
     @Override
     public Expression desugar()
     {
-        return new Equals(L.desugar(), R.desugar());
+        return new Equals(exprs.map(E -> E.desugar()));
     }
 
     @Override
     public Value interp(ImmutableList<Binding> env) throws InterpException
     {
-        return L.interp(env).equals(R.interp(env)) ? Bool.TRUE : Bool.FALSE;
-    }
-
-    public String toString()
-    {
-        return "(" + L + " == " + R + ")";
+        Value v = exprs.first().interp(env);
+        
+        for(Expression e : exprs.rest())
+        {
+            if (!e.interp(env).equals(v))
+            {
+                return Bool.FALSE;
+            }
+        }
+        
+        return Bool.TRUE;
     }
 }
