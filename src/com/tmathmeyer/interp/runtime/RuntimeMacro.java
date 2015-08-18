@@ -1,24 +1,29 @@
 package com.tmathmeyer.interp.runtime;
 
 import com.tmathmeyer.interp.ast.AST;
-import com.tmathmeyer.interp.ast.ASTGen;
 import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 
 abstract class RuntimeMacro
 {
-    private static ImmutableList<RuntimeMacro> macros = new EmptyList<>();
+    private static ImmutableList<String> macros = new EmptyList<>();
 
     public abstract ImmutableList<String> getSrc();
 
     static
     {
-        macros = macros.add(new BMatch());
-        macros = macros.add(new EmptyHuh());
-        macros = macros.add(new Define());
-        macros = macros.add(new Let());
-        macros = macros.add(new List());
+        load(new BMatch());
+        load(new EmptyHuh());
+        load(new Define());
+        load(new Let());
+        load(new List());
     }
+    
+    private static void load(RuntimeMacro macro)
+    {
+        macros = macros.append(macro.getSrc());
+    }
+    
 
     protected static ImmutableList<String> asList(String... str)
     {
@@ -32,6 +37,6 @@ abstract class RuntimeMacro
 
     static ImmutableList<AST> getMacros()
     {
-        return ImmutableList.collapse(macros.map(M -> M.getSrc().map(S -> new ASTGen().generate(S))));
+        return macros.map(S -> new SlipRuntime(S).getSyntaxTree().first());
     }
 }

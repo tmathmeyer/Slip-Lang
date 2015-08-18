@@ -29,40 +29,38 @@ public class SlipRuntime
     private final ImmutableList<AST> program;
     private ImmutableList<Binding> runtime;
 
-    public SlipRuntime(File file) throws IOException
+    public SlipRuntime(File file) throws FileNotFoundException
     {
         this(file, JUST_VOID);
     }
 
-    public SlipRuntime(File file, ImmutableList<Binding> runtime) throws FileNotFoundException, IOException
+    public SlipRuntime(File file, ImmutableList<Binding> runtime) throws FileNotFoundException
     {
         this(new FileInputStream(file), runtime);
     }
     
-    public SlipRuntime(String string) throws IOException
+    public SlipRuntime(String string)
     {
         this(string, JUST_VOID);
     }
     
-    public SlipRuntime(String string, ImmutableList<Binding> runtime) throws IOException
+    public SlipRuntime(String string, ImmutableList<Binding> runtime)
     {
         this(new ByteArrayInputStream(string.getBytes()), runtime);
     }
     
     
     
-    
-    
 
-    private SlipRuntime(InputStream source, ImmutableList<Binding> runtime) throws IOException
+    private SlipRuntime(InputStream source, ImmutableList<Binding> runtime)
     {
         this.runtime = runtime;
-        program = new Builder(new StreamParser(source).getTokens()).syntaxTrees().append(RuntimeMacro.getMacros());
+        program = new Builder(new StreamParser(source).getTokens()).syntaxTrees();
     }
 
     public ImmutableList<AST> runMacros()
     {
-        ImmutableList<Macro> macros = program.filter(A -> A.isMacro()).map(A -> (Macro) A.asExpression());
+        ImmutableList<Macro> macros = program.append(RuntimeMacro.getMacros()).filter(A -> A.isMacro()).map(A -> (Macro) A.asExpression());
         ImmutableList<AST> source = program;
         boolean continuation;
         do
@@ -82,6 +80,11 @@ public class SlipRuntime
     public ImmutableList<Expression> getProgramData()
     {
         return runMacros().map(a -> a.asExpression().desugar());
+    }
+    
+    public ImmutableList<AST> getSyntaxTree()
+    {
+        return program;
     }
     
     public ImmutableList<Value> evaluate()

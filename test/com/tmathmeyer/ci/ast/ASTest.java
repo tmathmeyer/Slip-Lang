@@ -2,8 +2,6 @@ package com.tmathmeyer.ci.ast;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
-
 import org.junit.Test;
 
 import com.tmathmeyer.interp.expr.InterpException;
@@ -21,7 +19,7 @@ public class ASTest
     }
 
     @Test
-    public void reallisp() throws InterpException, IOException
+    public void reallisp() throws InterpException
     {
         String input = "(+ 99 (+ 1 (+ 2 (+ 3 (+ 4 (+ 5 6))))))";
 
@@ -29,49 +27,49 @@ public class ASTest
     }
 
     @Test
-    public void letTest() throws InterpException, IOException
+    public void letTest() throws InterpException
     {
         String input = "(let ((x 5) (y 6)) (+ x y))";
         assertEquals(new SlipRuntime(input).evaluate().first(), new Number(11));
     }
 
     @Test
-    public void spaces() throws InterpException, IOException
+    public void spaces() throws InterpException
     {
         String input = "    1      ";
         assertEquals(new SlipRuntime(input).evaluate().first(), new Number(1));
     }
 
     @Test
-    public void morespaces() throws InterpException, IOException
+    public void morespaces() throws InterpException
     {
         String input = "    (  +      1  2   )   ";
         assertEquals(new SlipRuntime(input).evaluate().first(), new Number(3));
     }
 
     @Test
-    public void listTests() throws InterpException, IOException
+    public void listTests() throws InterpException
     {
         String input = "(let ((X (lambda (y) empty))) (print (X 5)))";
         assertEquals(new SlipRuntime(input).evaluate().first(), Maybe.NOTHING);
     }
 
     @Test
-    public void morelistTests() throws InterpException, IOException
+    public void morelistTests() throws InterpException
     {
         String input = "(cons 5 empty)";
         assertEquals(new SlipRuntime(input).evaluate().first().toString(), "[5]");
     }
 
     @Test
-    public void evenMorelistTests() throws InterpException, IOException
+    public void evenMorelistTests() throws InterpException
     {
         String input = "(first (rest (cons 1 (cons 4 (cons 99 (cons 5 empty))))))";
         assertEquals(new SlipRuntime(input).evaluate().first(), new Number(4));
     }
 
     @Test
-    public void evenMorelistTestsLast() throws InterpException, IOException
+    public void evenMorelistTestsLast() throws InterpException
     {
         String input = "(rest (cons 1 (cons 4 (cons 99 (cons 5 empty)))))";
         assertEquals(new SlipRuntime(input).evaluate().first().toString(), "[4, 99, 5]");

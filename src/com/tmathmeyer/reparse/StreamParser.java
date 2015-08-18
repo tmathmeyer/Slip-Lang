@@ -19,72 +19,82 @@ public class StreamParser
         br = new BufferedReader(new InputStreamReader(input));
     }
     
-    public ImmutableList<Token> getTokens() throws IOException
+    public ImmutableList<Token> getTokens()
     {
         ImmutableList<Token> result = new EmptyList<>();
-        int line = 0;
-        int khar = 0;
-        int parens = 0;
-        boolean inString = false;
-        Token next = null;
-        
-        int i = 0;
-        
-        while(  (((i=br.read())!=-1) && isFile)  ||  parens != 0)
+        try
         {
-            char c = (char) i;
-            khar++;
-            switch(c)
+            int line = 0;
+            int khar = 0;
+            int parens = 0;
+            boolean inString = false;
+            Token next = null;
+            boolean first = true;
+            
+            int i = 0;
+            
+            while(  (((i=br.read())!=-1) && isFile)  ||  parens != 0  ||  first)
             {
-                case '"':
-                    inString = !inString;
-                    next = craftToken(next, c, khar, line);
-                    break;
-                default:
-                    if (inString)
-                    {
-                        if (c == '\\')
+                char c = (char) i;
+                khar++;
+                first = false;
+                switch(c)
+                {
+                    case '"':
+                        inString = !inString;
+                        next = craftToken(next, c, khar, line);
+                        break;
+                    default:
+                        if (inString)
                         {
-                            next = craftToken(next, escape(br.read()), khar, line);
+                            if (c == '\\')
+                            {
+                                next = craftToken(next, escape(br.read()), khar, line);
+                            }
+                            else
+                            {
+                                next = craftToken(next, c, khar, line);
+                            }
                         }
                         else
                         {
-                            next = craftToken(next, c, khar, line);
+                            switch(c)
+                            {
+                                case ')':
+                                    parens -=2; // intentional fall through
+                                case '(':
+                                    parens++;
+                                    if (notEmpty(next))
+                                    {
+                                        result = result.add(next);
+                                        next = null;
+                                    }
+                                    result = result.add(craftToken(null, c, khar, line));
+                                    break;
+                                case '\n':
+                                    line++;
+                                    khar=0; // intentional fall through
+                                case ' ':
+                                case '\t':
+                                    if (notEmpty(next))
+                                    {
+                                        result = result.add(next);
+                                        next = null;
+                                    }
+                                    break;
+                                default:
+                                    next = craftToken(next, c, khar, line);
+                                    break;
+                                    
+                            }
                         }
-                    }
-                    else
-                    {
-                        switch(c)
-                        {
-                            case ')':
-                                parens -=2; // intentional fall through
-                            case '(':
-                                parens++;
-                                if (notEmpty(next))
-                                {
-                                    result = result.add(next);
-                                    next = null;
-                                }
-                                result = result.add(craftToken(null, c, khar, line));
-                                break;
-                            case '\n':
-                                line++;
-                                khar=0; // intentional fall through
-                            case ' ':
-                            case '\t':
-                                if (notEmpty(next))
-                                {
-                                    result = result.add(next);
-                                    next = null;
-                                }
-                                break;
-                            default:
-                                next = craftToken(next, c, khar, line);
-                                break;
-                                
-                        }
-                    }
+                }
             }
+        }
+        catch(IOException ioe)
+        {
+            ioe.printStackTrace();
+            throw new RuntimeException("fuck");
         }
         return result.reverse();
     }
