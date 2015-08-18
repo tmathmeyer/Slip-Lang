@@ -1,4 +1,4 @@
-package com.tmathmeyer.interp.ast;
+package com.tmathmeyer.reparse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,6 +44,12 @@ public interface CharacterSequence
         {
             return index < seq.length;
         }
+
+        @Override
+        public int getPosition()
+        {
+            return index;
+        }
     }
 
     static class FileCharacterSequence implements CharacterSequence
@@ -52,6 +58,7 @@ public interface CharacterSequence
         private char[] buffer = new char[128];
         private int bufferpos = 0;
         private int max = 0;
+        private int total = 0;
 
         public String toString()
         {
@@ -80,6 +87,7 @@ public interface CharacterSequence
         @Override
         public void incr()
         {
+            total++;
             bufferpos++;
             if (bufferpos >= max && max >= 0)
             {
@@ -128,6 +136,12 @@ public interface CharacterSequence
             return buffer[bufferpos];
         }
 
+        @Override
+        public int getPosition()
+        {
+            return total;
+        }
+
     }
 
     void incr();
@@ -137,6 +151,8 @@ public interface CharacterSequence
     char pop();
 
     char get();
+    
+    int getPosition();
 
     public static CharacterSequence make(String string)
     {

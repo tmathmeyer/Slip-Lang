@@ -3,8 +3,8 @@ package com.tmathmeyer.lex;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tmathmeyer.interp.ast.CharacterSequence;
 import com.tmathmeyer.interp.values.ImmutableList;
+import com.tmathmeyer.reparse.CharacterSequence;
 
 public class Tokenizer
 {

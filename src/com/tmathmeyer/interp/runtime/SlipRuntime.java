@@ -1,13 +1,10 @@
 package com.tmathmeyer.interp.runtime;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 import com.tmathmeyer.interp.ast.AST;
-import com.tmathmeyer.interp.ast.CharacterSequence;
 import com.tmathmeyer.interp.expr.Binding;
 import com.tmathmeyer.interp.expr.FunctionMapping;
 import com.tmathmeyer.interp.expr.FunctionMappingCollection;
@@ -21,6 +18,8 @@ import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 import com.tmathmeyer.interp.values.Maybe;
 import com.tmathmeyer.lex.Builder;
+import com.tmathmeyer.reparse.CharacterSequence;
+import com.tmathmeyer.reparse.StreamParser;
 
 public class SlipRuntime
 {
@@ -28,14 +27,15 @@ public class SlipRuntime
     private final ImmutableList<AST> program;
     private ImmutableList<Binding> runtime;
 
-    public SlipRuntime(File file) throws FileNotFoundException
+    public SlipRuntime(File file) throws IOException
     {
         this(file, JUST_VOID);
     }
 
-    public SlipRuntime(File file, ImmutableList<Binding> runtime) throws FileNotFoundException
+    public SlipRuntime(File file, ImmutableList<Binding> runtime) throws IOException
     {
-        this(new BufferedReader(new FileReader(file)), runtime);
+        this.runtime = runtime;
+        this.program = new Builder(new StreamParser(file).getTokens().map(T -> T.a())).syntaxTrees().append(RuntimeMacro.getMacros());
     }
 
     public SlipRuntime(String source)
@@ -46,16 +46,6 @@ public class SlipRuntime
     public SlipRuntime(String source, ImmutableList<Binding> runtime) // NO_UCD (use private)
     {
         this(CharacterSequence.make(source), runtime);
-    }
-
-    public SlipRuntime(BufferedReader file) // NO_UCD (use private)
-    {
-        this(file, JUST_VOID);
-    }
-
-    public SlipRuntime(BufferedReader file, ImmutableList<Binding> runtime) // NO_UCD (use private)
-    {
-        this(CharacterSequence.make(file), runtime);
     }
 
     private SlipRuntime(CharacterSequence raw, ImmutableList<Binding> runtime)
@@ -135,7 +125,7 @@ public class SlipRuntime
         return runtime;
     }
 
-    public static void main(String... args) throws FileNotFoundException, InterpException
+    public static void main(String... args) throws InterpException, IOException
     {
         if (args.length == 0)
         {
@@ -162,7 +152,7 @@ public class SlipRuntime
 
         String filepath = args[0];
 
-        ImmutableList<Value> values = new SlipRuntime(new BufferedReader(new FileReader(new File(filepath))))
+        ImmutableList<Value> values = new SlipRuntime(new File(filepath))
                 .evaluate();
 
         values.isEmpty();

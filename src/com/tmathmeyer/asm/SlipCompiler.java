@@ -1,7 +1,7 @@
 package com.tmathmeyer.asm;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import com.tmathmeyer.interp.runtime.SlipRuntime;
 import com.tmathmeyer.interp.types.Expression;
@@ -16,7 +16,7 @@ public class SlipCompiler // NO_UCD (unused code)
         this.exprs = exprs;
     }
     
-    public SlipCompiler(File f) throws FileNotFoundException
+    public SlipCompiler(File f) throws IOException
     {
         this(new SlipRuntime(f).getProgramData());
     }

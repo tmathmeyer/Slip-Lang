@@ -6,7 +6,7 @@ public class Token
     final int line_num;
     final int col_nom;
 
-    Token(String tok, int line, int col)
+    public Token(String tok, int line, int col)
     {
         piece = tok;
         line_num = line;

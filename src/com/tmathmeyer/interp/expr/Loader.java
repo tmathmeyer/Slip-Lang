@@ -1,7 +1,7 @@
 package com.tmathmeyer.interp.expr;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.maths.InvalidTypeException;
@@ -43,7 +43,7 @@ public class Loader implements Expression
             {
                 return new SlipRuntime(new File(v), env).evaluate().first();
             }
-            catch (FileNotFoundException e)
+            catch (IOException e)
             {
                 throw new LoaderException(v);
             }
