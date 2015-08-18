@@ -37,7 +37,10 @@ public class StreamParser
             {
                 char c = (char) i;
                 khar++;
-                first = false;
+                if (!Character.isWhitespace(c))
+                {
+                    first = false;
+                }
                 switch(c)
                 {
                     case '"':
@@ -89,6 +92,10 @@ public class StreamParser
                             }
                         }
                 }
+            }
+            if (notEmpty(next))
+            {
+                result = result.add(next);
             }
         }
         catch(IOException ioe)

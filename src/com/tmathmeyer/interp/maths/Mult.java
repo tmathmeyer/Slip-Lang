@@ -29,7 +29,7 @@ class Mult implements Expression
     @Override
     public Value interp(ImmutableList<Binding> env) throws InterpException
     {
-        Number result = new Number(0);
+        Number result = new Number(1);
 
         for (Expression e : exprs)
         {

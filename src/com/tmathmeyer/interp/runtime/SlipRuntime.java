@@ -39,14 +39,19 @@ public class SlipRuntime
         this(new FileInputStream(file), runtime, true);
     }
     
-    public SlipRuntime(String string)
+    public SlipRuntime(String string, boolean emulateFile)
     {
-        this(string, JUST_VOID);
+        this(string, JUST_VOID, emulateFile);
     }
     
-    public SlipRuntime(String string, ImmutableList<Binding> runtime)
+    public SlipRuntime(String string)
     {
-        this(new ByteArrayInputStream(string.getBytes()), runtime, false);
+        this(string, JUST_VOID, false);
+    }
+    
+    public SlipRuntime(String string, ImmutableList<Binding> runtime, boolean emulateFile)
+    {
+        this(new ByteArrayInputStream(string.getBytes()), runtime, emulateFile);
     }
     
     

@@ -24,7 +24,7 @@ public class MacroTest
     public void macrodef()
     {
         String input = "(# (conc a b) (cons a (cons b empty)))" + "(conc 2 3)";
-        assertEquals(new SlipRuntime(input).evaluate().toString(), "[[2, 3]]");
+        assertEquals(new SlipRuntime(input, true).evaluate().toString(), "[[2, 3]]");
     }
 
     @Test
