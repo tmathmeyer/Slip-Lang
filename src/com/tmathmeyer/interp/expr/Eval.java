@@ -1,5 +1,7 @@
 package com.tmathmeyer.interp.expr;
 
+import java.io.IOException;
+
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.maths.InvalidTypeException;
 import com.tmathmeyer.interp.runtime.SlipRuntime;
@@ -35,7 +37,14 @@ public class Eval implements Expression
 
         if (val instanceof Str)
         {
-            return new SlipRuntime(((Str) val).value, env).evaluate().first();
+            try
+            {
+                return new SlipRuntime(((Str) val).value, env).evaluate().first();
+            }
+            catch (IOException e)
+            {
+                throw new InterpException();
+            }
         }
         else
         {

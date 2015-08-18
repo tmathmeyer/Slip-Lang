@@ -1,8 +1,11 @@
 package com.tmathmeyer.interp.runtime;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
+import java.io.InputStream;
 
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.expr.Binding;
@@ -17,8 +20,7 @@ import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 import com.tmathmeyer.interp.values.Maybe;
-import com.tmathmeyer.lex.Builder;
-import com.tmathmeyer.reparse.CharacterSequence;
+import com.tmathmeyer.reparse.Builder;
 import com.tmathmeyer.reparse.StreamParser;
 
 public class SlipRuntime
@@ -32,26 +34,30 @@ public class SlipRuntime
         this(file, JUST_VOID);
     }
 
-    public SlipRuntime(File file, ImmutableList<Binding> runtime) throws IOException
+    public SlipRuntime(File file, ImmutableList<Binding> runtime) throws FileNotFoundException, IOException
+    {
+        this(new FileInputStream(file), runtime);
+    }
+    
+    public SlipRuntime(String string) throws IOException
+    {
+        this(string, JUST_VOID);
+    }
+    
+    public SlipRuntime(String string, ImmutableList<Binding> runtime) throws IOException
+    {
+        this(new ByteArrayInputStream(string.getBytes()), runtime);
+    }
+    
+    
+    
+    
+    
+
+    private SlipRuntime(InputStream source, ImmutableList<Binding> runtime) throws IOException
     {
         this.runtime = runtime;
-        this.program = new Builder(new StreamParser(file).getTokens().map(T -> T.a())).syntaxTrees().append(RuntimeMacro.getMacros());
-    }
-
-    public SlipRuntime(String source)
-    {
-        this(source, JUST_VOID);
-    }
-
-    public SlipRuntime(String source, ImmutableList<Binding> runtime) // NO_UCD (use private)
-    {
-        this(CharacterSequence.make(source), runtime);
-    }
-
-    private SlipRuntime(CharacterSequence raw, ImmutableList<Binding> runtime)
-    {
-        this.runtime = runtime;
-        program = new Builder(raw.asTokens()).syntaxTrees().append(RuntimeMacro.getMacros());
+        program = new Builder(new StreamParser(source).getTokens()).syntaxTrees().append(RuntimeMacro.getMacros());
     }
 
     public ImmutableList<AST> runMacros()
@@ -131,13 +137,11 @@ public class SlipRuntime
         {
             ImmutableList<Binding> saved = new EmptyList<>();
 
-            @SuppressWarnings("resource")
-            Scanner s = new Scanner(System.in);
             while (true)
             {
                 System.out.print("\n> ");
 
-                SlipRuntime slip = new SlipRuntime(s.nextLine(), saved);
+                SlipRuntime slip = new SlipRuntime(System.in, saved);
                 Value v = slip.evaluate().first();
                 System.out.println(v);
                 saved = slip.getBindings();

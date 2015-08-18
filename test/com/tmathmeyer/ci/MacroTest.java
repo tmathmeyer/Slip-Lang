@@ -2,7 +2,7 @@ package com.tmathmeyer.ci;
 
 import static org.junit.Assert.*;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class MacroTest
 {
 
     @Test
-    public void evals() throws FileNotFoundException
+    public void evals() throws IOException
     {
         String input = "(+ 1 2)";
 
@@ -23,21 +23,21 @@ public class MacroTest
     }
 
     @Test
-    public void macrodef() throws FileNotFoundException
+    public void macrodef() throws IOException
     {
         String input = "(# (conc a b) (cons a (cons b empty)))" + "(conc 2 3)";
         assertEquals(new SlipRuntime(input).evaluate().toString(), "[[2, 3]]");
     }
 
     @Test
-    public void testBmatch() throws FileNotFoundException
+    public void testBmatch() throws IOException
     {
         String input = "((lambda (x) (bmatch ((= x 1) 2) ((= x 3) 4) ((= x 5) 6))) 1)";
         assertEquals(new SlipRuntime(input).evaluate().toString(), "[2]");
     }
 
     @Test
-    public void testLet() throws FileNotFoundException
+    public void testLet() throws IOException
     {
         String input = "(let ((x 2) (y 3)) (+ x y))";
 
@@ -47,7 +47,7 @@ public class MacroTest
     }
 
     @Test
-    public void testList()
+    public void testList() throws IOException
     {
         String input = "(list 1 2 3 4 5)";
 
@@ -57,7 +57,7 @@ public class MacroTest
     }
 
     @Test
-    public void testNestedMacros()
+    public void testNestedMacros() throws IOException
     {
         String input = "(list (list 1 2 3) (list 4 5 6))";
 

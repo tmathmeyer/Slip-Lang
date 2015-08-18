@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-import com.tmathmeyer.reparse.CharacterSequence;
-
 public class ASTGen
 {
     private ASTGen(File file)

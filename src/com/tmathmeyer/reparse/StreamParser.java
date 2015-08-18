@@ -1,9 +1,6 @@
 package com.tmathmeyer.reparse;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,12 +17,6 @@ public class StreamParser
     {
         isFile = false;
         br = new BufferedReader(new InputStreamReader(input));
-    }
-    
-    public StreamParser(File f) throws FileNotFoundException
-    {
-        isFile = true;
-        br = new BufferedReader(new FileReader(f));
     }
     
     public ImmutableList<Token> getTokens() throws IOException

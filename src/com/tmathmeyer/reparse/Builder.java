@@ -1,4 +1,4 @@
-package com.tmathmeyer.lex;
+package com.tmathmeyer.reparse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +25,13 @@ public class Builder
 
     private Pair<AST, ImmutableList<Token>> singleFromTokens(ImmutableList<Token> tokens)
     {
-        switch (tokens.first().piece.charAt(0))
+        switch (tokens.first().toString().charAt(0))
         {
             case '(':
                 Token last = tokens.first();
                 tokens = tokens.rest();
                 ASTree tree = new ASTree();
-                while ((!tokens.isEmpty()) && !tokens.first().piece.equals(")"))
+                while ((!tokens.isEmpty()) && !tokens.first().toString().equals(")"))
                 {
                     last = tokens.first();
                     Pair<AST, ImmutableList<Token>> res = singleFromTokens(tokens);
@@ -40,16 +40,16 @@ public class Builder
                 }
                 if (tokens.isEmpty())
                 {
-                    throw new RuntimeException("expected a ) at col:" + last.col_nom + ", row:" + last.line_num
+                    throw new RuntimeException("expected a ) at col:" + last.charPos() + ", row:" + last.lineNumber()
                             + " but found nothing");
                 }
                 return new Pair<AST, ImmutableList<Token>>(tree, tokens.rest());
             case ')':
-                System.out.println("error, encountered an unexpected \")\" at col:" + tokens.first().col_nom + ", row:"
-                        + tokens.first().line_num);
+                System.out.println("error, encountered an unexpected \")\" at col:" + tokens.first().charPos() + ", row:"
+                        + tokens.first().lineNumber());
                 break;
             default:
-                return new Pair<AST, ImmutableList<Token>>(new ASNode(tokens.first().piece), tokens.rest());
+                return new Pair<AST, ImmutableList<Token>>(new ASNode(tokens.first().toString()), tokens.rest());
         }
 
         return new Pair<AST, ImmutableList<Token>>(null, tokens.rest());

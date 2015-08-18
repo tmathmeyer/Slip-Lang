@@ -2,6 +2,8 @@ package com.tmathmeyer.ci;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 import com.tmathmeyer.interp.runtime.SlipRuntime;
@@ -11,21 +13,21 @@ public class DefineTest
 {
 
     @Test
-    public void testInlineFunction()
+    public void testInlineFunction() throws IOException
     {
         String input = "(#def double (x) (+ x x))" + " (double 2) ";
         assertEquals(new SlipRuntime(input).evaluate().first(), new Number(4));
     }
 
     @Test
-    public void testDefineAsNumber()
+    public void testDefineAsNumber() throws IOException
     {
         String input = "(#def shitty-pi 3) (+ 1 shitty-pi)";
         assertEquals(new SlipRuntime(input).evaluate().first(), new Number(4));
     }
 
     @Test
-    public void testDefineAsFunction()
+    public void testDefineAsFunction() throws IOException
     {
         String input = "(#def square (lambda (x) (* x x))) (square 3)";
         assertEquals(new SlipRuntime(input).evaluate().first(), new Number(9));

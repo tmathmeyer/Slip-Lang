@@ -22,9 +22,14 @@ public class Token
     {
         return value;
     }
-    
-    public com.tmathmeyer.lex.Token a()
+
+    public int lineNumber()
     {
-        return new com.tmathmeyer.lex.Token(value, charPos, lineNum);
+        return lineNum;
+    }
+
+    public int charPos()
+    {
+        return charPos;
     }
 }
