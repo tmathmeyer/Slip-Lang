@@ -13,10 +13,10 @@ public class StreamParser
     private final BufferedReader br;
     private final boolean isFile;
     
-    public StreamParser(InputStream input)
+    public StreamParser(InputStream input, boolean isFile)
     {
-        isFile = false;
-        br = new BufferedReader(new InputStreamReader(input));
+        this.isFile = isFile;
+        this.br = new BufferedReader(new InputStreamReader(input));
     }
     
     public ImmutableList<Token> getTokens()

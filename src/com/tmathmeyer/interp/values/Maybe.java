@@ -15,7 +15,7 @@ public class Maybe implements Value
 
     public String toString()
     {
-        return v.toString();
+        return v+"";
     }
 
     @Override

@@ -36,7 +36,7 @@ public class SlipRuntime
 
     public SlipRuntime(File file, ImmutableList<Binding> runtime) throws FileNotFoundException
     {
-        this(new FileInputStream(file), runtime);
+        this(new FileInputStream(file), runtime, true);
     }
     
     public SlipRuntime(String string)
@@ -46,16 +46,16 @@ public class SlipRuntime
     
     public SlipRuntime(String string, ImmutableList<Binding> runtime)
     {
-        this(new ByteArrayInputStream(string.getBytes()), runtime);
+        this(new ByteArrayInputStream(string.getBytes()), runtime, false);
     }
     
     
     
 
-    private SlipRuntime(InputStream source, ImmutableList<Binding> runtime)
+    private SlipRuntime(InputStream source, ImmutableList<Binding> runtime, boolean isFile)
     {
         this.runtime = runtime;
-        program = new Builder(new StreamParser(source).getTokens()).syntaxTrees();
+        program = new Builder(new StreamParser(source, isFile).getTokens()).syntaxTrees();
     }
 
     public ImmutableList<AST> runMacros()
@@ -144,7 +144,7 @@ public class SlipRuntime
             {
                 System.out.print("\n> ");
 
-                SlipRuntime slip = new SlipRuntime(System.in, saved);
+                SlipRuntime slip = new SlipRuntime(System.in, saved, false);
                 Value v = slip.evaluate().first();
                 System.out.println(v);
                 saved = slip.getBindings();
