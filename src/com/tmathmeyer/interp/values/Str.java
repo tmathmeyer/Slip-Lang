@@ -34,6 +34,12 @@ public class Str implements Expression, Value
     }
 
     @Override
+    public String toString()
+    {
+    	return getPrintString();
+    }
+
+    @Override
     public Expression desugar()
     {
         return this;
@@ -45,7 +51,8 @@ public class Str implements Expression, Value
         return new Str(value);
     }
 
-    public String toString()
+    @Override
+    public String getPrintString()
     {
         return value;
     }

@@ -6,4 +6,5 @@ package com.tmathmeyer.interp.types;
 public interface Value
 {
     String getTypeName();
+    String getPrintString();
 }

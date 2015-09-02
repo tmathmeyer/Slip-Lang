@@ -10,7 +10,6 @@ import java.io.InputStream;
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.expr.Binding;
 import com.tmathmeyer.interp.expr.FunctionMapping;
-import com.tmathmeyer.interp.expr.FunctionMappingCollection;
 import com.tmathmeyer.interp.expr.InterpException;
 import com.tmathmeyer.interp.expr.Symbol;
 import com.tmathmeyer.interp.expr.Function.Pair;
@@ -101,13 +100,7 @@ public class SlipRuntime
 
         for (Expression e : exprs)
         {
-            if (e instanceof FunctionMappingCollection)
-            {
-                final ImmutableList<Binding> binds = bindings;
-                bindings = bindings.append(((FunctionMappingCollection) e).getFunctions()
-                        .map(F -> F.catchInterp(binds)));
-            }
-            else if (e instanceof FunctionMapping)
+            if (e instanceof FunctionMapping)
             {
                 bindings = bindings.add(((FunctionMapping) e).catchInterp(bindings));
             }
@@ -151,7 +144,10 @@ public class SlipRuntime
 
                 SlipRuntime slip = new SlipRuntime(System.in, saved, false);
                 Value v = slip.evaluate().first();
-                System.out.println(v);
+                if (v != null)
+                {
+                    System.out.println(v.getPrintString());
+                }
                 saved = slip.getBindings();
                 if (v != null && v.toString().equals("exit"))
                 {

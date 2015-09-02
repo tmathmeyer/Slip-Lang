@@ -37,7 +37,8 @@ public class ID implements Expression
 
     private static class IDLookUpException extends InterpException
     {
-        private final Symbol s;
+    	static final long serialVersionUID = 1L;
+		private final Symbol s;
 
         public void printStackTrace()
         {

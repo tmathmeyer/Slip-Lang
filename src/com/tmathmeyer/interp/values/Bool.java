@@ -6,11 +6,6 @@ public enum Bool implements Value
 {
     TRUE(), FALSE();
 
-    public String toString()
-    {
-        return this == TRUE ? "true" : "false";
-    }
-
     public Value other()
     {
         if (this == TRUE)
@@ -25,4 +20,16 @@ public enum Bool implements Value
     {
         return "bool";
     }
+
+    @Override
+    public String toString()
+    {
+    	return getPrintString();
+    }
+
+	@Override
+	public String getPrintString()
+	{
+		return this == TRUE ? "true" : "false";
+	}
 }

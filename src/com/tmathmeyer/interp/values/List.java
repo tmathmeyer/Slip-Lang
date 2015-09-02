@@ -57,13 +57,19 @@ class List<T> extends ImmutableList<T>
     @Override
     public String asCSV()
     {
-        return ", " + data + rest.asCSV();
+        return " " + data + rest.asCSV();
     }
 
     @Override
     public String toString()
     {
-        return "[" + data + rest.asCSV() + "]";
+        return "(" + data + rest.asCSV() + ")";
+    }
+    
+    @Override
+    public String getPrintString()
+    {
+    	return "'"+this;
     }
 
     @Override

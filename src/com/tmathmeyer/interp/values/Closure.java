@@ -49,9 +49,16 @@ public class Closure implements Value
         return true;
     }
 
-    public String toString()
+    @Override
+    public String getPrintString()
     {
         return "#Closure";
+    }
+
+    @Override
+    public String toString()
+    {
+    	return getPrintString();
     }
 
     @Override

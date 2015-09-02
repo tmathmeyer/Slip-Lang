@@ -16,7 +16,8 @@ public class Binding implements Value
         name = s;
     }
 
-    public String toString()
+    @Override
+    public String getPrintString()
     {
         return name + ":" + val;
     }

@@ -1,10 +1,16 @@
 package com.tmathmeyer.interp.runtime;
 
 import com.tmathmeyer.interp.ast.AST;
+import com.tmathmeyer.interp.runtime.macro.BMatch;
+import com.tmathmeyer.interp.runtime.macro.Define;
+import com.tmathmeyer.interp.runtime.macro.EmptyHuh;
+import com.tmathmeyer.interp.runtime.macro.Let;
+import com.tmathmeyer.interp.runtime.macro.List;
+import com.tmathmeyer.interp.runtime.macro.Struct;
 import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 
-abstract class RuntimeMacro
+public abstract class RuntimeMacro
 {
     private static ImmutableList<String> macros = new EmptyList<>();
 
@@ -17,6 +23,8 @@ abstract class RuntimeMacro
         load(new Define());
         load(new Let());
         load(new List());
+
+        load(new Struct());
     }
     
     private static void load(RuntimeMacro macro)

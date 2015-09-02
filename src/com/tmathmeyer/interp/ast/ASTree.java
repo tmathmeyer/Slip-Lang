@@ -13,12 +13,12 @@ import com.tmathmeyer.interp.expr.Lambda;
 import com.tmathmeyer.interp.expr.Loader;
 import com.tmathmeyer.interp.expr.Print;
 import com.tmathmeyer.interp.expr.Rest;
+import com.tmathmeyer.interp.expr.Sym;
 import com.tmathmeyer.interp.expr.Type;
 import com.tmathmeyer.interp.list.Cons;
 import com.tmathmeyer.interp.list.First;
 import com.tmathmeyer.interp.macro.Macro;
 import com.tmathmeyer.interp.maths.MathExpression;
-import com.tmathmeyer.interp.struct.StructDefn;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
@@ -39,14 +39,23 @@ public class ASTree implements AST
 
     public String toString()
     {
-        return parts.toString();
+    	StringBuilder sb = new StringBuilder("(");
+    	boolean first = true;
+    	for(AST t : parts)
+    	{
+    		if (!first)
+    		{
+    			sb.append(" ");
+    		}
+    		first = false;
+    		sb.append(t.toString());
+    	}
+        return sb.append(")").toString();
     }
 
-    @Override
-    public Expression asExpression()
+    public Expression createExpression(ImmutableList<AST> list)
     {
-        ImmutableList<AST> list = ImmutableList.fromSTD(parts);
-        if (list.first() instanceof ASNode)
+    	if (list.first() instanceof ASNode)
         {
             ASNode node = (ASNode) list.first();
 
@@ -76,8 +85,6 @@ public class ASTree implements AST
                     return new Rest(list.rest());
                 case "#def":
                     return Def.getDefn(list.rest());
-                case "sdef":
-                    return new StructDefn(list.rest());
                 case "type":
                     return new Type(list.rest());
                 case "#":
@@ -86,6 +93,8 @@ public class ASTree implements AST
                     return new Loader(list.rest().first());
                 case "eval":
                     return new Eval(list.rest().first());
+                case "sym":
+                	return new Sym(list.rest().first());
                 default:
                     return new Application(list);
 
@@ -93,6 +102,12 @@ public class ASTree implements AST
         }
 
         return new Application(list);
+    }
+    
+    @Override
+    public Expression asExpression()
+    {
+        return createExpression(ImmutableList.fromSTD(parts));
     }
 
     @Override
@@ -131,7 +146,7 @@ public class ASTree implements AST
     {
         if (t.parts.size() != parts.size())
         {
-            return null;
+            throw new MismatchedRepetitionSizeException();
         }
         Iterator<AST> a = parts.iterator();
         Iterator<AST> b = t.parts.iterator();
@@ -215,9 +230,18 @@ public class ASTree implements AST
         {
             if (asts.get(0).toString().equals(macro.getName()))
             {
+            	AST oldtree = tree;
                 tree = macro.macrotize(tree);
-                changed = true;
+                changed |= !tree.equals(oldtree);
             }
+        }
+        
+        boolean tst = changed;
+        while(tst)
+        {
+        	Pair<AST, Boolean> n = tree.applyMacro(macro);
+        	tst = n.b;
+        	tree = n.a;
         }
 
         return new Pair<>(tree, changed);

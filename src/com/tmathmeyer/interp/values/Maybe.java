@@ -13,7 +13,8 @@ public class Maybe implements Value
 
     public static final Maybe NOTHING = new Maybe(null);
 
-    public String toString()
+    @Override
+    public String getPrintString()
     {
         return v+"";
     }
@@ -22,6 +23,12 @@ public class Maybe implements Value
     public String getTypeName()
     {
         return "maybe";
+    }
+
+    @Override
+    public String toString()
+    {
+    	return getPrintString();
     }
 
 }

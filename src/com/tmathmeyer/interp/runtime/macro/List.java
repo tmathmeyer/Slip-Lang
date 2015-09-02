@@ -1,8 +1,9 @@
-package com.tmathmeyer.interp.runtime;
+package com.tmathmeyer.interp.runtime.macro;
 
+import com.tmathmeyer.interp.runtime.RuntimeMacro;
 import com.tmathmeyer.interp.values.ImmutableList;
 
-class List extends RuntimeMacro
+public class List extends RuntimeMacro
 {
     @Override
     public ImmutableList<String> getSrc()

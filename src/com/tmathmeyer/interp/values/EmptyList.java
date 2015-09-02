@@ -44,9 +44,15 @@ public class EmptyList<T> extends ImmutableList<T>
     }
 
     @Override
+    public String getPrintString()
+    {
+        return "'()";
+    }
+    
+    @Override
     public String toString()
     {
-        return "[]";
+    	return "";
     }
 
     @Override

@@ -34,6 +34,12 @@ public class Number implements Expression, Value
         value = new Real(n, 1);
     }
 
+    @Override
+    public String toString()
+    {
+    	return getPrintString();
+    }
+
     public Number(Real r)
     {
         value = r;
@@ -51,7 +57,8 @@ public class Number implements Expression, Value
         return new Number(value);
     }
 
-    public String toString()
+    @Override
+    public String getPrintString()
     {
         return value.toString();
     }

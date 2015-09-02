@@ -1,15 +1,36 @@
 package com.tmathmeyer.interp.ast;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import com.tmathmeyer.interp.expr.Sym;
 import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.macro.Macro;
 import com.tmathmeyer.interp.types.Expression;
+import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 
 public interface AST
 {
+	public static AST fromILA(Value list)
+    {
+    	if (list instanceof Sym)
+    	{
+    		return new ASNode(list.toString());
+    	}
+    	
+    	if (list instanceof ImmutableList)
+    	{
+    		ImmutableList<Value> input = (ImmutableList<Value>)list;
+    		List<AST> t = new LinkedList<AST>();
+    		input.forEach(A -> t.add(fromILA(A)));
+    		return new ASTree(t);
+    	}
+    	
+    	throw new RuntimeException("cannot create an AST from :: "+list);
+    }
+	
     Expression asExpression();
 
     String name();

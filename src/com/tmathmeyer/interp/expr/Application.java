@@ -83,7 +83,8 @@ public class Application implements Expression
 
     private static class ApplicationEvaluationException extends InterpException
     {
-        private final InterpException ide;
+		private static final long serialVersionUID = 1L;
+		private final InterpException ide;
         private final Application app;
 
         private ApplicationEvaluationException(InterpException ide, Application app)
@@ -101,7 +102,8 @@ public class Application implements Expression
 
     private static class InvalidFunctionException extends InterpException
     {
-        private final Value val;
+		private static final long serialVersionUID = 1L;
+		private final Value val;
         private final Expression exp;
 
         private InvalidFunctionException(Expression exp, Value val)

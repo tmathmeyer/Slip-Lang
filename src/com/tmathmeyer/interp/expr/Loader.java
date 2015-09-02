@@ -56,7 +56,11 @@ public class Loader implements Expression
 
     private static class LoaderException extends InterpException
     {
-        private final String s;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private final String s;
 
         public void printStackTrace()
         {

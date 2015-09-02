@@ -58,7 +58,7 @@ public class ASTest
     public void morelistTests() throws InterpException
     {
         String input = "(cons 5 empty)";
-        assertEquals(new SlipRuntime(input).evaluate().first().toString(), "[5]");
+        assertEquals(new SlipRuntime(input).evaluate().first().toString(), "(5)");
     }
 
     @Test
@@ -72,7 +72,7 @@ public class ASTest
     public void evenMorelistTestsLast() throws InterpException
     {
         String input = "(rest (cons 1 (cons 4 (cons 99 (cons 5 empty)))))";
-        assertEquals(new SlipRuntime(input).evaluate().first().toString(), "[4, 99, 5]");
+        assertEquals(new SlipRuntime(input).evaluate().first().toString(), "(4 99 5)");
     }
 
 }
