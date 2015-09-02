@@ -44,6 +44,6 @@ public class If implements Expression
 
     public String toString()
     {
-        return "(if " + conditional + " then>>" + left + "  else>>" + right + ")";
+        return "(if " + conditional + " " + left + " " + right + ")";
     }
 }

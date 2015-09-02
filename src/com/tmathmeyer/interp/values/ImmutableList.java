@@ -1,6 +1,7 @@
 package com.tmathmeyer.interp.values;
 
-import com.tmathmeyer.interp.expr.Function;
+import java.util.function.Function;
+
 import com.tmathmeyer.interp.types.Value;
 
 /**

@@ -1,7 +1,9 @@
 package com.tmathmeyer.interp.maths;
 
 import com.tmathmeyer.interp.expr.Binding;
+import com.tmathmeyer.interp.expr.ID;
 import com.tmathmeyer.interp.expr.InterpException;
+import com.tmathmeyer.interp.expr.Symbol;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.Bool;
@@ -36,5 +38,10 @@ class Equals implements Expression
         }
         
         return Bool.TRUE;
+    }
+    
+    public String toString()
+    {
+        return exprs.add(new ID(new Symbol("="))).toString();
     }
 }

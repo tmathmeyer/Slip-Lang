@@ -10,7 +10,7 @@ public class Define extends RuntimeMacro
     public ImmutableList<String> getSrc()
     {
         return asList("(# (#def name args body)"
-                + "  (#def name ((lambda (le) ((lambda (f) (f f)) (lambda (f) (le (lambda (x) ((f f) x)))))) (lambda (name) (lambda args body)))))");
+                + "  (#def name ((lambda (le) ((lambda (f) (f f)) (lambda (f) (le (lambda args (eval (attribute ((lambda (x) (cons (sym (f f)) x))) args))))))) (lambda (name) (lambda args body)))))");
     }
 
 }

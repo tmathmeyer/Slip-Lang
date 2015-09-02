@@ -2,8 +2,7 @@ package com.tmathmeyer.interp.values;
 
 import java.util.Iterator;
 import java.util.function.Consumer;
-
-import com.tmathmeyer.interp.expr.Function;
+import java.util.function.Function;
 
 class List<T> extends ImmutableList<T>
 {
@@ -81,13 +80,13 @@ class List<T> extends ImmutableList<T>
     @Override
     public <R> ImmutableList<R> map(Function<? super T, ? extends R> fn)
     {
-        return new List<R>(fn.eval(data), rest.map(fn));
+        return new List<R>(fn.apply(data), rest.map(fn));
     }
 
     @Override
     public ImmutableList<T> filter(Function<? super T, Boolean> fn)
     {
-        if (fn.eval(data))
+        if (fn.apply(data))
         {
             return new List<T>(data, rest.filter(fn));
         }

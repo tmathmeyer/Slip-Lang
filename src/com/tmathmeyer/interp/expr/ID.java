@@ -22,7 +22,7 @@ public class ID implements Expression
     @Override
     public Value interp(ImmutableList<Binding> env) throws InterpException
     {
-        Binding b = env.filter(B -> B.name.equals(I)).first();
+        Binding b = env.filter(B -> B.name != null && B.name.equals(I)).first(); //yikes
         if (b == null)
         {
             throw new IDLookUpException(I);

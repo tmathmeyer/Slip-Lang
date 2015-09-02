@@ -52,7 +52,7 @@ public class Closure implements Value
     @Override
     public String getPrintString()
     {
-        return "#Closure";
+        return "(lambda "+args+" "+body+")";
     }
 
     @Override

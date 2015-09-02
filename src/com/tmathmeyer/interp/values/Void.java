@@ -2,16 +2,16 @@ package com.tmathmeyer.interp.values;
 
 import com.tmathmeyer.interp.types.Value;
 
-public class Maybe implements Value
+public class Void implements Value
 {
     private final Value v;
 
-    private Maybe(Value v)
+    private Void(Value v)
     {
         this.v = v;
     }
 
-    public static final Maybe NOTHING = new Maybe(null);
+    public static final Void NOTHING = new Void(null);
 
     @Override
     public String getPrintString()

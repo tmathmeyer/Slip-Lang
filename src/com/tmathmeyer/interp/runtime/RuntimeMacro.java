@@ -1,6 +1,7 @@
 package com.tmathmeyer.interp.runtime;
 
 import com.tmathmeyer.interp.ast.AST;
+import com.tmathmeyer.interp.runtime.macro.Attribute;
 import com.tmathmeyer.interp.runtime.macro.BMatch;
 import com.tmathmeyer.interp.runtime.macro.Define;
 import com.tmathmeyer.interp.runtime.macro.EmptyHuh;
@@ -23,8 +24,9 @@ public abstract class RuntimeMacro
         load(new Define());
         load(new Let());
         load(new List());
-
         load(new Struct());
+        
+        load(new Attribute());
     }
     
     private static void load(RuntimeMacro macro)

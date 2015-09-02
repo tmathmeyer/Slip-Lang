@@ -8,7 +8,7 @@ import com.tmathmeyer.interp.expr.InterpException;
 import com.tmathmeyer.interp.expr.Real;
 import com.tmathmeyer.interp.runtime.SlipRuntime;
 import com.tmathmeyer.interp.types.Value;
-import com.tmathmeyer.interp.values.Maybe;
+import com.tmathmeyer.interp.values.Void;
 import com.tmathmeyer.interp.values.Number;
 
 public class ASTest
@@ -51,7 +51,7 @@ public class ASTest
     public void listTests() throws InterpException
     {
         String input = "(let ((X (lambda (y) empty))) (print (X 5)))";
-        assertEquals(new SlipRuntime(input).evaluate().first(), Maybe.NOTHING);
+        assertEquals(new SlipRuntime(input).evaluate().first(), Void.NOTHING);
     }
 
     @Test
@@ -73,6 +73,13 @@ public class ASTest
     {
         String input = "(rest (cons 1 (cons 4 (cons 99 (cons 5 empty)))))";
         assertEquals(new SlipRuntime(input).evaluate().first().toString(), "(4 99 5)");
+    }
+    
+    @Test
+    public void testNegativeNumbers()
+    {
+    	String input = "(+ -2 2)";
+    	assertEquals(new SlipRuntime(input).evaluate().first().toString(), "0");
     }
 
 }

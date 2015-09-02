@@ -4,7 +4,7 @@ import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
-import com.tmathmeyer.interp.values.Maybe;
+import com.tmathmeyer.interp.values.Void;
 
 public class Print implements Expression
 {
@@ -33,6 +33,6 @@ public class Print implements Expression
         {
             System.out.println(e.interp(env));
         }
-        return Maybe.NOTHING;
+        return Void.NOTHING;
     }
 }

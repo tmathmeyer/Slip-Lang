@@ -2,8 +2,7 @@ package com.tmathmeyer.interp.values;
 
 import java.util.Iterator;
 import java.util.function.Consumer;
-
-import com.tmathmeyer.interp.expr.Function;
+import java.util.function.Function;
 
 public class EmptyList<T> extends ImmutableList<T>
 {

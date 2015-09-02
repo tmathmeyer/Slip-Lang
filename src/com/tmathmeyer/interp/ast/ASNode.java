@@ -3,7 +3,6 @@ package com.tmathmeyer.interp.ast;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.expr.ID;
 import com.tmathmeyer.interp.expr.Real;
 import com.tmathmeyer.interp.expr.Symbol;

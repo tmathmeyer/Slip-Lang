@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.tmathmeyer.interp.expr.Sym;
-import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.macro.Macro;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
@@ -13,6 +12,7 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public interface AST
 {
+	@SuppressWarnings("unchecked") // checked in the CCE
 	public static AST fromILA(Value list)
     {
     	if (list instanceof Sym)
@@ -22,13 +22,22 @@ public interface AST
     	
     	if (list instanceof ImmutableList)
     	{
-    		ImmutableList<Value> input = (ImmutableList<Value>)list;
-    		List<AST> t = new LinkedList<AST>();
-    		input.forEach(A -> t.add(fromILA(A)));
-    		return new ASTree(t);
+    		try
+    		{
+	    		ImmutableList<Value> input = (ImmutableList<Value>)list;
+	    		List<AST> t = new LinkedList<AST>();
+	    		input.forEach(A -> t.add(fromILA(A)));
+	    		return new ASTree(t);
+    		}
+    		catch (ClassCastException cce)
+    		{
+    			throw new RuntimeException("can't create an ast from a list of " + ((ImmutableList<?>)list).first().getClass().getSimpleName());
+    		}
     	}
     	
-    	throw new RuntimeException("cannot create an AST from :: "+list);
+    	return new ASNode(list.toString());
+    	
+    	//throw new RuntimeException("cannot create an AST from :: "+list);
     }
 	
     Expression asExpression();

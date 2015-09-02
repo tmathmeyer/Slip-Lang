@@ -4,6 +4,7 @@ import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.Closure;
+import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
 
 public class Application implements Expression
@@ -38,7 +39,7 @@ public class Application implements Expression
             ImmutableList<Expression> expTemp = args;
             ImmutableList<Symbol> symTemp = cloj.args;
 
-            ImmutableList<Binding> passOn = env.append(cloj.environment);
+            ImmutableList<Binding> passOn = new EmptyList<>();
 
             while (!expTemp.isEmpty())
             {
@@ -56,10 +57,10 @@ public class Application implements Expression
 
             if (!symTemp.isEmpty())
             {
-                throw new RuntimeException("mismatched arg length - " + this);
+                throw new InvalidArgumentCountException(cloj.args, args);
             }
 
-            return cloj.body.interp(passOn);
+            return cloj.body.interp(passOn.append(cloj.environment));
         }
         catch (InterpException ide)
         {
@@ -97,6 +98,25 @@ public class Application implements Expression
         {
             ide.printStackTrace();
             System.out.println("in " + app);
+        }
+    }
+    
+    private static class InvalidArgumentCountException extends InterpException
+    {
+		private static final long serialVersionUID = 1L;
+		private final ImmutableList<Symbol> syms;
+		private final ImmutableList<Expression> expr;
+
+        private InvalidArgumentCountException(ImmutableList<Symbol> syms, ImmutableList<Expression> expr)
+        {
+            this.syms = syms;
+            this.expr = expr;
+        }
+
+        public void printStackTrace()
+        {
+            System.out.println("expected arguments: "+syms);
+            System.out.println("provided arguments: "+expr);
         }
     }
 

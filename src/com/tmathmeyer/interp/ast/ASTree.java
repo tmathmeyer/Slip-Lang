@@ -7,16 +7,14 @@ import java.util.List;
 import com.tmathmeyer.interp.expr.Application;
 import com.tmathmeyer.interp.expr.Def;
 import com.tmathmeyer.interp.expr.Eval;
-import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.expr.If;
 import com.tmathmeyer.interp.expr.Lambda;
-import com.tmathmeyer.interp.expr.Loader;
 import com.tmathmeyer.interp.expr.Print;
-import com.tmathmeyer.interp.expr.Rest;
 import com.tmathmeyer.interp.expr.Sym;
 import com.tmathmeyer.interp.expr.Type;
 import com.tmathmeyer.interp.list.Cons;
 import com.tmathmeyer.interp.list.First;
+import com.tmathmeyer.interp.list.Rest;
 import com.tmathmeyer.interp.macro.Macro;
 import com.tmathmeyer.interp.maths.MathExpression;
 import com.tmathmeyer.interp.types.Expression;
@@ -89,8 +87,6 @@ public class ASTree implements AST
                     return new Type(list.rest());
                 case "#":
                     return new Macro(list.rest().first(), list.rest().rest().first());
-                case "load":
-                    return new Loader(list.rest().first());
                 case "eval":
                     return new Eval(list.rest().first());
                 case "sym":

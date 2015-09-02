@@ -8,23 +8,24 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import com.tmathmeyer.interp.ast.AST;
+import com.tmathmeyer.interp.ast.Pair;
 import com.tmathmeyer.interp.expr.Binding;
 import com.tmathmeyer.interp.expr.FunctionMapping;
 import com.tmathmeyer.interp.expr.InterpException;
 import com.tmathmeyer.interp.expr.Symbol;
-import com.tmathmeyer.interp.expr.Function.Pair;
 import com.tmathmeyer.interp.macro.Macro;
+import com.tmathmeyer.interp.runtime.lib.RuntimeLibraries;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.EmptyList;
 import com.tmathmeyer.interp.values.ImmutableList;
-import com.tmathmeyer.interp.values.Maybe;
+import com.tmathmeyer.interp.values.Void;
 import com.tmathmeyer.reparse.Builder;
 import com.tmathmeyer.reparse.StreamParser;
 
 public class SlipRuntime
 {
-    public static final ImmutableList<Binding> JUST_VOID = new EmptyList<Binding>().add(new Binding(new Symbol("#void"), Maybe.NOTHING));
+    public static final ImmutableList<Binding> JUST_VOID = new EmptyList<Binding>().add(new Binding(new Symbol("#void"), Void.NOTHING));
     private final ImmutableList<AST> program;
     private ImmutableList<Binding> runtime;
 
@@ -65,7 +66,7 @@ public class SlipRuntime
     public ImmutableList<AST> runMacros()
     {
         ImmutableList<Macro> macros = program.append(RuntimeMacro.getMacros()).filter(A -> A.isMacro()).map(A -> (Macro) A.asExpression());
-        ImmutableList<AST> source = program;
+        ImmutableList<AST> source = program.append(RuntimeLibraries.getLibraries());
         boolean continuation;
         do
         {

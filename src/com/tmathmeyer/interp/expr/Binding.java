@@ -12,6 +12,10 @@ public class Binding implements Value
 
     public Binding(Symbol s, Value v)
     {
+    	if (s == null)
+    	{
+    		System.out.println("uh oh...");
+    	}
         val = v;
         name = s;
     }
@@ -19,12 +23,18 @@ public class Binding implements Value
     @Override
     public String getPrintString()
     {
-        return name + ":" + val;
+        return toString();
     }
 
     @Override
     public String getTypeName()
     {
         return "binding";
+    }
+    
+    @Override
+    public String toString()
+    {
+    	return name +"->"+ val;
     }
 }
