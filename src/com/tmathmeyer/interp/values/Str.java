@@ -36,7 +36,7 @@ public class Str implements Expression, Value
     @Override
     public String toString()
     {
-    	return getPrintString();
+        return getPrintString();
     }
 
     @Override

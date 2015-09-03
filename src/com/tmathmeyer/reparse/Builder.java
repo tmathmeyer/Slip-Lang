@@ -45,8 +45,8 @@ public class Builder
                 }
                 return new Pair<AST, ImmutableList<Token>>(tree, tokens.rest());
             case ')':
-                System.out.println("error, encountered an unexpected \")\" at col:" + tokens.first().charPos() + ", row:"
-                        + tokens.first().lineNumber());
+                System.out.println("error, encountered an unexpected \")\" at col:" + tokens.first().charPos()
+                        + ", row:" + tokens.first().lineNumber());
                 break;
             default:
                 return new Pair<AST, ImmutableList<Token>>(new ASNode(tokens.first().toString()), tokens.rest());

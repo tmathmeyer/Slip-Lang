@@ -16,7 +16,7 @@ class Minus implements Expression
     {
         this(exprs.first(), new Plus(exprs.rest()));
     }
-    
+
     private Minus(Expression from, Expression by)
     {
         this.from = from;

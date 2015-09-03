@@ -9,7 +9,6 @@ public class Struct extends RuntimeMacro
     public ImmutableList<String> getSrc()
     {
         return asList("(# (struct name (args ...)) (lambda (args ...) (list (sym name) (list (list (sym args) args) ...))))");
-    
-    
+
     }
 }

@@ -5,8 +5,8 @@ import com.tmathmeyer.interp.types.Expression;
 
 public class InvalidTypeException extends InterpException
 {
-	private static final long serialVersionUID = 1L;
-	private final Expression expr;
+    private static final long serialVersionUID = 1L;
+    private final Expression expr;
     private final Expression in;
 
     public InvalidTypeException(Expression l, Expression plus)

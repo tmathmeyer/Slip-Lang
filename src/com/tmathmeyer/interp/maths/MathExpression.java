@@ -9,7 +9,7 @@ public class MathExpression
     public static Expression fromAST(ImmutableList<AST> list, String type)
     {
         ImmutableList<Expression> exprs = list.map(A -> A.asExpression());
-        
+
         switch (type.charAt(0))
         {
             case '+':

@@ -29,8 +29,8 @@ class GreaterThan implements Expression
         try
         {
             Number n = (Number) exprs.first().interp(env);
-            
-            for(Expression e : exprs.rest())
+
+            for (Expression e : exprs.rest())
             {
                 Number v = (Number) e.interp(env);
                 if (n.value.greaterThan(v.value) != Bool.TRUE)
@@ -39,7 +39,7 @@ class GreaterThan implements Expression
                 }
                 n = v;
             }
-            
+
             return Bool.TRUE;
         }
         catch (ClassCastException cce)

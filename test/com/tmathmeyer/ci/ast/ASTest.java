@@ -74,12 +74,12 @@ public class ASTest
         String input = "(rest (cons 1 (cons 4 (cons 99 (cons 5 empty)))))";
         assertEquals(new SlipRuntime(input).evaluate().first().toString(), "(4 99 5)");
     }
-    
+
     @Test
     public void testNegativeNumbers()
     {
-    	String input = "(+ -2 2)";
-    	assertEquals(new SlipRuntime(input).evaluate().first().toString(), "0");
+        String input = "(+ -2 2)";
+        assertEquals(new SlipRuntime(input).evaluate().first().toString(), "0");
     }
 
 }

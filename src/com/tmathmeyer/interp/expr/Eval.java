@@ -30,18 +30,16 @@ public class Eval implements Expression
 
     @Override
     public Value interp(ImmutableList<Binding> env) throws InterpException
-    {	
+    {
         Value val = source.interp(env);
 
         if (val instanceof Str)
         {
             return new SlipRuntime(((Str) val).value, env, true).evaluate().first();
-        }
-        else if (val instanceof ImmutableList)
+        } else if (val instanceof ImmutableList)
         {
-        	return AST.fromILA(val).asExpression().interp(env);
-        }
-        else
+            return AST.fromILA(val).asExpression().interp(env);
+        } else
         {
             throw new InvalidTypeException(source, this);
         }

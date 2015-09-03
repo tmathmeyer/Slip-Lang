@@ -28,15 +28,15 @@ public class Sym implements Expression, Value
     {
         if (I instanceof ASNode)
         {
-        	return this;
+            return this;
         }
         ImmutableList<Value> result = new EmptyList<>();
         ASTree tree = (ASTree) I;
-        for(AST t : tree.getParts())
+        for (AST t : tree.getParts())
         {
-        	result = result.add(new Sym(t).interp(env));
+            result = result.add(new Sym(t).interp(env));
         }
-        
+
         return result.reverse();
     }
 
@@ -49,17 +49,17 @@ public class Sym implements Expression, Value
     @Override
     public String toString()
     {
-    	return getPrintString();
+        return getPrintString();
     }
-    
-	@Override
-	public String getTypeName()
-	{
-		return "Symbol";
-	}
 
-	public Value eval(ImmutableList<Binding> env) throws InterpException
-	{
-		return I.asExpression().interp(env);
-	}
+    @Override
+    public String getTypeName()
+    {
+        return "Symbol";
+    }
+
+    public Value eval(ImmutableList<Binding> env) throws InterpException
+    {
+        return I.asExpression().interp(env);
+    }
 }

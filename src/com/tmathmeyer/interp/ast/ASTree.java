@@ -37,23 +37,23 @@ public class ASTree implements AST
 
     public String toString()
     {
-    	StringBuilder sb = new StringBuilder("(");
-    	boolean first = true;
-    	for(AST t : parts)
-    	{
-    		if (!first)
-    		{
-    			sb.append(" ");
-    		}
-    		first = false;
-    		sb.append(t.toString());
-    	}
+        StringBuilder sb = new StringBuilder("(");
+        boolean first = true;
+        for (AST t : parts)
+        {
+            if (!first)
+            {
+                sb.append(" ");
+            }
+            first = false;
+            sb.append(t.toString());
+        }
         return sb.append(")").toString();
     }
 
     public Expression createExpression(ImmutableList<AST> list)
     {
-    	if (list.first() instanceof ASNode)
+        if (list.first() instanceof ASNode)
         {
             ASNode node = (ASNode) list.first();
 
@@ -90,7 +90,7 @@ public class ASTree implements AST
                 case "eval":
                     return new Eval(list.rest().first());
                 case "sym":
-                	return new Sym(list.rest().first());
+                    return new Sym(list.rest().first());
                 default:
                     return new Application(list);
 
@@ -99,7 +99,7 @@ public class ASTree implements AST
 
         return new Application(list);
     }
-    
+
     @Override
     public Expression asExpression()
     {
@@ -226,18 +226,18 @@ public class ASTree implements AST
         {
             if (asts.get(0).toString().equals(macro.getName()))
             {
-            	AST oldtree = tree;
+                AST oldtree = tree;
                 tree = macro.macrotize(tree);
                 changed |= !tree.equals(oldtree);
             }
         }
-        
+
         boolean tst = changed;
-        while(tst)
+        while (tst)
         {
-        	Pair<AST, Boolean> n = tree.applyMacro(macro);
-        	tst = n.b;
-        	tree = n.a;
+            Pair<AST, Boolean> n = tree.applyMacro(macro);
+            tst = n.b;
+            tree = n.a;
         }
 
         return new Pair<>(tree, changed);

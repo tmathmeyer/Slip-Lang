@@ -16,7 +16,7 @@ class Divide implements Expression
     {
         this(exprs.first(), new Mult(exprs.rest()));
     }
-    
+
     private Divide(Expression from, Expression by)
     {
         this.from = from;

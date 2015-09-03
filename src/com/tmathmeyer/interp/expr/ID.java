@@ -22,7 +22,7 @@ public class ID implements Expression
     @Override
     public Value interp(ImmutableList<Binding> env) throws InterpException
     {
-        Binding b = env.filter(B -> B.name != null && B.name.equals(I)).first(); //yikes
+        Binding b = env.filter(B -> B.name != null && B.name.equals(I)).first(); // yikes
         if (b == null)
         {
             throw new IDLookUpException(I);
@@ -37,8 +37,8 @@ public class ID implements Expression
 
     private static class IDLookUpException extends InterpException
     {
-    	static final long serialVersionUID = 1L;
-		private final Symbol s;
+        static final long serialVersionUID = 1L;
+        private final Symbol s;
 
         public void printStackTrace()
         {

@@ -25,15 +25,14 @@ public abstract class RuntimeMacro
         load(new Let());
         load(new List());
         load(new Struct());
-        
+
         load(new Attribute());
     }
-    
+
     private static void load(RuntimeMacro macro)
     {
         macros = macros.append(macro.getSrc());
     }
-    
 
     protected static ImmutableList<String> asList(String... str)
     {

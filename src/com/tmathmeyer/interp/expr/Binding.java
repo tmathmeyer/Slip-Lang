@@ -12,10 +12,10 @@ public class Binding implements Value
 
     public Binding(Symbol s, Value v)
     {
-    	if (s == null)
-    	{
-    		System.out.println("uh oh...");
-    	}
+        if (s == null)
+        {
+            System.out.println("uh oh...");
+        }
         val = v;
         name = s;
     }
@@ -31,10 +31,10 @@ public class Binding implements Value
     {
         return "binding";
     }
-    
+
     @Override
     public String toString()
     {
-    	return name +"->"+ val;
+        return name + "->" + val;
     }
 }

@@ -33,10 +33,10 @@ public class Rest implements Expression
     {
         return ((ImmutableList<Value>) list.interp(env)).rest();
     }
-    
+
     @Override
     public String toString()
     {
-    	return "(rest "+list+")";
+        return "(rest " + list + ")";
     }
 }

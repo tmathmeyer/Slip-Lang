@@ -12,13 +12,13 @@ public class StreamParser
 {
     private final BufferedReader br;
     private final boolean isFile;
-    
+
     public StreamParser(InputStream input, boolean isFile)
     {
         this.isFile = isFile;
         this.br = new BufferedReader(new InputStreamReader(input));
     }
-    
+
     public ImmutableList<Token> getTokens()
     {
         ImmutableList<Token> result = new EmptyList<>();
@@ -30,10 +30,10 @@ public class StreamParser
             boolean inString = false;
             Token next = null;
             boolean first = true;
-            
+
             int i = 0;
-            
-            while(  (((i=br.read())!=-1) && isFile)  ||  parens != 0  ||  first)
+
+            while ((((i = br.read()) != -1) && isFile) || parens != 0 || first)
             {
                 char c = (char) i;
                 khar++;
@@ -41,7 +41,7 @@ public class StreamParser
                 {
                     first = false;
                 }
-                switch(c)
+                switch (c)
                 {
                     case '"':
                         inString = !inString;
@@ -53,18 +53,16 @@ public class StreamParser
                             if (c == '\\')
                             {
                                 next = craftToken(next, escape(br.read()), khar, line);
-                            }
-                            else
+                            } else
                             {
                                 next = craftToken(next, c, khar, line);
                             }
-                        }
-                        else
+                        } else
                         {
-                            switch(c)
+                            switch (c)
                             {
                                 case ')':
-                                    parens -=2; // intentional fall through
+                                    parens -= 2; // intentional fall through
                                 case '(':
                                     parens++;
                                     if (notEmpty(next))
@@ -76,7 +74,7 @@ public class StreamParser
                                     break;
                                 case '\n':
                                     line++;
-                                    khar=0; // intentional fall through
+                                    khar = 0; // intentional fall through
                                 case ' ':
                                 case '\t':
                                     if (notEmpty(next))
@@ -88,7 +86,7 @@ public class StreamParser
                                 default:
                                     next = craftToken(next, c, khar, line);
                                     break;
-                                    
+
                             }
                         }
                 }
@@ -98,7 +96,7 @@ public class StreamParser
                 result = result.add(next);
             }
         }
-        catch(IOException ioe)
+        catch (IOException ioe)
         {
             ioe.printStackTrace();
             throw new RuntimeException("fuck");
@@ -108,7 +106,7 @@ public class StreamParser
 
     private char escape(int i)
     {
-        switch(i)
+        switch (i)
         {
             case 'n':
                 return '\n';
@@ -117,18 +115,18 @@ public class StreamParser
             case '\\':
                 return '\\';
         }
-        throw new RuntimeException("cant find escape sequence: '"+i+"'");
+        throw new RuntimeException("cant find escape sequence: '" + i + "'");
     }
 
     private Token craftToken(Token t, char c, int pos, int ln)
     {
         if (t == null)
         {
-            return new Token(c+"", pos, ln);
+            return new Token(c + "", pos, ln);
         }
-        return new Token(t.value+c, t.charPos, t.lineNum);
+        return new Token(t.value + c, t.charPos, t.lineNum);
     }
-    
+
     private boolean notEmpty(Token t)
     {
         return t != null && t.notEmpty();

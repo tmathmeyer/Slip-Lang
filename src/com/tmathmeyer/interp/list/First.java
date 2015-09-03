@@ -33,10 +33,10 @@ public class First implements Expression
     {
         return ((ImmutableList<Value>) list.interp(env)).first();
     }
-    
+
     @Override
     public String toString()
     {
-    	return "(first "+list+")";
+        return "(first " + list + ")";
     }
 }

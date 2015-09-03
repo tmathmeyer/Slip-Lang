@@ -9,8 +9,7 @@ public class Attribute extends RuntimeMacro
     public ImmutableList<String> getSrc()
     {
         return asList("(# (attribute (fname) function) (fname (sym function)))",
-        			  "(# (attribute (fname fns ...) function) (fname (attribute (fns ...) function)))");
-    
-    
+                "(# (attribute (fname fns ...) function) (fname (attribute (fns ...) function)))");
+
     }
 }

@@ -5,7 +5,7 @@ public class Token
     final String value;
     final int charPos;
     final int lineNum;
-    
+
     public Token(String value, int cp, int ln)
     {
         this.value = value;
@@ -17,7 +17,7 @@ public class Token
     {
         return value.length() > 0;
     }
-    
+
     public String toString()
     {
         return value;

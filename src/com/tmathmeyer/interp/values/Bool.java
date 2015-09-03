@@ -24,12 +24,12 @@ public enum Bool implements Value
     @Override
     public String toString()
     {
-    	return getPrintString();
+        return getPrintString();
     }
 
-	@Override
-	public String getPrintString()
-	{
-		return this == TRUE ? "true" : "false";
-	}
+    @Override
+    public String getPrintString()
+    {
+        return this == TRUE ? "true" : "false";
+    }
 }

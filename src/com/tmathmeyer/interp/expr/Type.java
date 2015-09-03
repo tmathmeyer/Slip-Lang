@@ -31,7 +31,7 @@ public class Type implements Expression
     {
         return new Str(of.interp(env).getClass().getSimpleName());
     }
-    
+
     public String toString()
     {
         return "(type " + of + ")";

@@ -16,7 +16,7 @@ public class Void implements Value
     @Override
     public String getPrintString()
     {
-        return v+"";
+        return v + "";
     }
 
     @Override
@@ -28,7 +28,7 @@ public class Void implements Value
     @Override
     public String toString()
     {
-    	return getPrintString();
+        return getPrintString();
     }
 
 }

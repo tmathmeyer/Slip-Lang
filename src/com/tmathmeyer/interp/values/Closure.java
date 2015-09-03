@@ -52,13 +52,13 @@ public class Closure implements Value
     @Override
     public String getPrintString()
     {
-        return "(lambda "+args+" "+body+")";
+        return "(lambda " + args + " " + body + ")";
     }
 
     @Override
     public String toString()
     {
-    	return getPrintString();
+        return getPrintString();
     }
 
     @Override

@@ -10,7 +10,7 @@ import com.tmathmeyer.interp.values.Number;
 public class DefineTest
 {
     public static final boolean FILE = true;
-    
+
     @Test
     public void testInlineFunction()
     {

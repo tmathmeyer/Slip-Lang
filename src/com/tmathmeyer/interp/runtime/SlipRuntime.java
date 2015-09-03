@@ -25,7 +25,8 @@ import com.tmathmeyer.reparse.StreamParser;
 
 public class SlipRuntime
 {
-    public static final ImmutableList<Binding> JUST_VOID = new EmptyList<Binding>().add(new Binding(new Symbol("#void"), Void.NOTHING));
+    public static final ImmutableList<Binding> JUST_VOID = new EmptyList<Binding>().add(new Binding(
+            new Symbol("#void"), Void.NOTHING));
     private final ImmutableList<AST> program;
     private ImmutableList<Binding> runtime;
 
@@ -38,24 +39,21 @@ public class SlipRuntime
     {
         this(new FileInputStream(file), runtime, true);
     }
-    
+
     public SlipRuntime(String string, boolean emulateFile)
     {
         this(string, JUST_VOID, emulateFile);
     }
-    
+
     public SlipRuntime(String string)
     {
         this(string, JUST_VOID, false);
     }
-    
+
     public SlipRuntime(String string, ImmutableList<Binding> runtime, boolean emulateFile)
     {
         this(new ByteArrayInputStream(string.getBytes()), runtime, emulateFile);
     }
-    
-    
-    
 
     private SlipRuntime(InputStream source, ImmutableList<Binding> runtime, boolean isFile)
     {
@@ -65,7 +63,8 @@ public class SlipRuntime
 
     public ImmutableList<AST> runMacros()
     {
-        ImmutableList<Macro> macros = program.append(RuntimeMacro.getMacros()).filter(A -> A.isMacro()).map(A -> (Macro) A.asExpression());
+        ImmutableList<Macro> macros = program.append(RuntimeMacro.getMacros()).filter(A -> A.isMacro())
+                .map(A -> (Macro) A.asExpression());
         ImmutableList<AST> source = program.append(RuntimeLibraries.getLibraries());
         boolean continuation;
         do
@@ -86,12 +85,12 @@ public class SlipRuntime
     {
         return runMacros().map(a -> a.asExpression().desugar());
     }
-    
+
     public ImmutableList<AST> getSyntaxTree()
     {
         return program;
     }
-    
+
     public ImmutableList<Value> evaluate()
     {
         ImmutableList<Binding> bindings = runtime;
@@ -104,8 +103,7 @@ public class SlipRuntime
             if (e instanceof FunctionMapping)
             {
                 bindings = bindings.add(((FunctionMapping) e).catchInterp(bindings));
-            }
-            else
+            } else
             {
                 ndefs = ndefs.add(e);
             }
@@ -161,8 +159,7 @@ public class SlipRuntime
 
         String filepath = args[0];
 
-        ImmutableList<Value> values = new SlipRuntime(new File(filepath))
-                .evaluate();
+        ImmutableList<Value> values = new SlipRuntime(new File(filepath)).evaluate();
 
         values.isEmpty();
     }

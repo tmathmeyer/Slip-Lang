@@ -47,11 +47,11 @@ public class EmptyList<T> extends ImmutableList<T>
     {
         return "'()";
     }
-    
+
     @Override
     public String toString()
     {
-    	return "";
+        return "";
     }
 
     @Override
@@ -80,7 +80,8 @@ public class EmptyList<T> extends ImmutableList<T>
 
     @Override
     public void forEach(Consumer<? super T> fn)
-    { }
+    {
+    }
 
     @Override
     public Iterator<T> iterator()

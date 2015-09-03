@@ -12,34 +12,36 @@ import com.tmathmeyer.interp.values.ImmutableList;
 
 public interface AST
 {
-	@SuppressWarnings("unchecked") // checked in the CCE
-	public static AST fromILA(Value list)
+    @SuppressWarnings("unchecked")
+    // checked in the CCE
+    public static AST fromILA(Value list)
     {
-    	if (list instanceof Sym)
-    	{
-    		return new ASNode(list.toString());
-    	}
-    	
-    	if (list instanceof ImmutableList)
-    	{
-    		try
-    		{
-	    		ImmutableList<Value> input = (ImmutableList<Value>)list;
-	    		List<AST> t = new LinkedList<AST>();
-	    		input.forEach(A -> t.add(fromILA(A)));
-	    		return new ASTree(t);
-    		}
-    		catch (ClassCastException cce)
-    		{
-    			throw new RuntimeException("can't create an ast from a list of " + ((ImmutableList<?>)list).first().getClass().getSimpleName());
-    		}
-    	}
-    	
-    	return new ASNode(list.toString());
-    	
-    	//throw new RuntimeException("cannot create an AST from :: "+list);
+        if (list instanceof Sym)
+        {
+            return new ASNode(list.toString());
+        }
+
+        if (list instanceof ImmutableList)
+        {
+            try
+            {
+                ImmutableList<Value> input = (ImmutableList<Value>) list;
+                List<AST> t = new LinkedList<AST>();
+                input.forEach(A -> t.add(fromILA(A)));
+                return new ASTree(t);
+            }
+            catch (ClassCastException cce)
+            {
+                throw new RuntimeException("can't create an ast from a list of "
+                        + ((ImmutableList<?>) list).first().getClass().getSimpleName());
+            }
+        }
+
+        return new ASNode(list.toString());
+
+        // throw new RuntimeException("cannot create an AST from :: "+list);
     }
-	
+
     Expression asExpression();
 
     String name();

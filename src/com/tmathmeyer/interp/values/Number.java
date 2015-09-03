@@ -37,7 +37,7 @@ public class Number implements Expression, Value
     @Override
     public String toString()
     {
-    	return getPrintString();
+        return getPrintString();
     }
 
     public Number(Real r)

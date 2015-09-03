@@ -25,14 +25,14 @@ class And implements Expression
     @Override
     public Value interp(ImmutableList<Binding> env) throws InterpException
     {
-        for(Expression e : exprs)
+        for (Expression e : exprs)
         {
             Value v = e.interp(env);
             if (v == Bool.FALSE)
             {
                 return Bool.TRUE;
             }
-            if (! (v instanceof Bool))
+            if (!(v instanceof Bool))
             {
                 throw new RuntimeException("cannot do boolean arithmetic on " + v.toString());
             }

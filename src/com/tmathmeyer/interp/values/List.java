@@ -64,11 +64,11 @@ class List<T> extends ImmutableList<T>
     {
         return "(" + data + rest.asCSV() + ")";
     }
-    
+
     @Override
     public String getPrintString()
     {
-    	return "'"+this;
+        return "'" + this;
     }
 
     @Override

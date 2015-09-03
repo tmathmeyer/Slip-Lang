@@ -137,7 +137,7 @@ public class ASNode implements AST
     {
         if (value.equals(macro.getName()))
         {
-        	AST t = macro.macrotize(this);
+            AST t = macro.macrotize(this);
             return new Pair<>(t, !this.equals(t));
         }
 

@@ -28,18 +28,18 @@ class Equals implements Expression
     public Value interp(ImmutableList<Binding> env) throws InterpException
     {
         Value v = exprs.first().interp(env);
-        
-        for(Expression e : exprs.rest())
+
+        for (Expression e : exprs.rest())
         {
             if (!e.interp(env).equals(v))
             {
                 return Bool.FALSE;
             }
         }
-        
+
         return Bool.TRUE;
     }
-    
+
     public String toString()
     {
         return exprs.add(new ID(new Symbol("="))).toString();
