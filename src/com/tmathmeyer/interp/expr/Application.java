@@ -68,7 +68,7 @@ public class Application implements Expression
         }
         catch (ClassCastException cce)
         {
-            throw new ApplicationEvaluationException(new InvalidFunctionException(func, func.interp(env)), this);
+            throw new ApplicationEvaluationException(new InvalidFunctionException(func, func.interp(env), cce), this);
         }
     }
 
@@ -125,16 +125,19 @@ public class Application implements Expression
         private static final long serialVersionUID = 1L;
         private final Value val;
         private final Expression exp;
+        private final ClassCastException cce;
 
-        private InvalidFunctionException(Expression exp, Value val)
+        private InvalidFunctionException(Expression exp, Value val, ClassCastException cce)
         {
             this.val = val;
             this.exp = exp;
+            this.cce = cce;
         }
 
         public void printStackTrace()
         {
             System.out.println(exp + " is of type " + val.getTypeName() + " and cannot be evaluated");
+            cce.printStackTrace();
         }
     }
 }

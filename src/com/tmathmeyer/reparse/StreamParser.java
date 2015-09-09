@@ -37,7 +37,7 @@ public class StreamParser
             {
                 char c = (char) i;
                 khar++;
-                if (!Character.isWhitespace(c))
+                if (!Character.isWhitespace(c) && c != '\'')
                 {
                     first = false;
                 }
@@ -71,6 +71,14 @@ public class StreamParser
                                         next = null;
                                     }
                                     result = result.add(craftToken(null, c, khar, line));
+                                    break;
+                                case '\'':
+                                    if (notEmpty(next))
+                                    {
+                                        result = result.add(next);
+                                        next = null;
+                                    }
+                                    result = result.add(craftToken(null, '\'', khar, line));
                                     break;
                                 case '\n':
                                     line++;

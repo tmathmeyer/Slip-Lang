@@ -2,11 +2,9 @@ package com.tmathmeyer.interp.expr;
 
 import com.tmathmeyer.interp.ast.AST;
 import com.tmathmeyer.interp.maths.InvalidTypeException;
-import com.tmathmeyer.interp.runtime.SlipRuntime;
 import com.tmathmeyer.interp.types.Expression;
 import com.tmathmeyer.interp.types.Value;
 import com.tmathmeyer.interp.values.ImmutableList;
-import com.tmathmeyer.interp.values.Str;
 
 public class Eval implements Expression
 {
@@ -33,13 +31,15 @@ public class Eval implements Expression
     {
         Value val = source.interp(env);
 
-        if (val instanceof Str)
+        if (val instanceof Sym)
         {
-            return new SlipRuntime(((Str) val).value, env, true).evaluate().first();
-        } else if (val instanceof ImmutableList)
+            return ((Sym) val).interp(env);
+        }
+        else if (val instanceof ImmutableList)
         {
             return AST.fromILA(val).asExpression().interp(env);
-        } else
+        }
+        else
         {
             throw new InvalidTypeException(source, this);
         }

@@ -48,6 +48,12 @@ public class Builder
                 System.out.println("error, encountered an unexpected \")\" at col:" + tokens.first().charPos()
                         + ", row:" + tokens.first().lineNumber());
                 break;
+            case '\'':
+                Pair<AST, ImmutableList<Token>> res = singleFromTokens(tokens.rest());
+                ASTree t = new ASTree();
+                t.getParts().add(new ASNode("sym"));
+                t.getParts().add(res.a);
+                return new Pair<>(t, res.b);
             default:
                 return new Pair<AST, ImmutableList<Token>>(new ASNode(tokens.first().toString()), tokens.rest());
         }

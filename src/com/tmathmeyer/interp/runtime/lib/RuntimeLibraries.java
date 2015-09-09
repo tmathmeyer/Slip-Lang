@@ -11,8 +11,9 @@ public class RuntimeLibraries
 
     static
     {
-        libraries = libraries.add("(#def cons? (x) (= (type x) \"List\"))");
-        libraries = libraries.add("(#def map (fn l) (if (empty? l) l (cons (fn (first l)) (map fn (rest l)))))");
+        libraries = libraries.add("(define cons? (x) (= (type x) \"List\"))");
+        libraries = libraries.add("(define map (fn l) (if (empty? l) l (cons (fn (first l)) (map fn (rest l)))))");
+        libraries = libraries.add("(define fold (fn in ls) (if (empty? ls) in (fold fn (fn in (first ls)) (rest ls)))))");
     }
 
     public static ImmutableList<AST> getLibraries()

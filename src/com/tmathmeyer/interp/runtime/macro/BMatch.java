@@ -8,8 +8,7 @@ public class BMatch extends RuntimeMacro
     @Override
     public ImmutableList<String> getSrc()
     {
-        return asList("(# (bmatch (ftest fexp) (test exp) ...)" + "        (if ftest fexp"
-                + "            (bmatch (test exp) ...)))", "(# (bmatch (ftest fexp))"
-                + "        (if ftest fexp #void))");
+        return asList("(# (cond (bool expr)) (if bool expr #void))",
+                "(# (cond (bool expr) (bools exprs) ...) (if bool expr (cond (bools exprs) ...)))");
     }
 }

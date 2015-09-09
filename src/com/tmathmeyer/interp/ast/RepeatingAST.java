@@ -13,7 +13,7 @@ class RepeatingAST implements AST
 {
     private final List<AST> tree;
 
-    RepeatingAST(List<AST> tree)
+    public RepeatingAST(List<AST> tree)
     {
         this.tree = tree;
     }

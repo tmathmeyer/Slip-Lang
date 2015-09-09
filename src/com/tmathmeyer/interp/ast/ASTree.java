@@ -81,7 +81,7 @@ public class ASTree implements AST
                     return new First(list.rest());
                 case "rest":
                     return new Rest(list.rest());
-                case "#def":
+                case "define":
                     return Def.getDefn(list.rest());
                 case "type":
                     return new Type(list.rest());

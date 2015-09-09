@@ -43,13 +43,13 @@ public class Sym implements Expression, Value
     @Override
     public String getPrintString()
     {
-        return I.toString();
+        return "'"+toString();
     }
 
     @Override
     public String toString()
     {
-        return getPrintString();
+        return I.toString();
     }
 
     @Override
